@@ -1,115 +1,75 @@
-import { ArrowRight, Users, Award, BookOpen } from "lucide-react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../ui/Button";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
-    <section id="home" className="pt-20 md:pt-24 min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-purple-50">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full mb-6">
-              <span className="font-semibold">Since 2010</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              S P Coaching Center
-              <span className="block text-blue-600 mt-2">Empowering Students for a Bright Future</span>
-            </h1>
-            
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              We provide quality education for students of classes 9 to 12 with strong conceptual learning, 
-              disciplined study guidance, and result-focused preparation at Paudali Bazar, Deoria, Uttar Pradesh.
+    <section className="relative w-full min-h-screen  pt-14 flex items-center overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/hero-pages.png')" }}
+      ></div>
+
+      {/* LEFT BLUE PANEL - 50% width */}
+      <div className="absolute top-0 left-0 h-full w-full md:w-1/2 bg-[#0b3d87]/92"></div>
+
+      {/* GRADIENT OVERLAY */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0b3d87]/95 via-[#0b3d87]/30 to-transparent"></div>
+
+      {/* CONTENT CONTAINER - कम padding */}
+      <div className="relative w-full max-w-7xl mx-auto  mt-6 px-1 sm:px-2 md:px-4 h-full flex items-center ">
+        {/* CONTENT - compact layout */}
+        <div className="w-full md:w-1/2 px-1 sm:px-2 md:px-3 lg:px-5 text-white">
+          
+          {/* HEADING - छोटा टेक्स्ट */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-snug">
+            Learn Today.<br />Build Your Future.
+          </h1>
+
+          {/* THIN WHITE LINE */}
+          <div className="w-28 sm:w-32 md:w-36 h-[1.5px] bg-white/70 mt-3 md:mt-4 mb-3 md:mb-4"></div>
+
+          {/* SUB TEXT - छोटा */}
+          <div className="space-y-1">
+            <p className="text-sm sm:text-base md:text-lg">
+              Quality coaching for
             </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Users className="text-blue-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">500+</h3>
-                  <p className="text-sm text-gray-600">Students Taught</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-purple-100 rounded-lg">
-                  <Award className="text-purple-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">95%</h3>
-                  <p className="text-sm text-gray-600">Success Rate</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <BookOpen className="text-green-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">4</h3>
-                  <p className="text-sm text-gray-600">Subjects</p>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group">
-                Enroll Now
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300">
-                Contact Us
-              </button>
-            </div>
+            <p className="text-base sm:text-lg md:text-xl font-semibold">
+              Class 9th to 12th | B.Sc Students | ITI Courses
+            </p>
           </div>
 
-          {/* Right Image/Illustration */}
-          <div className="relative">
-            <div className="relative z-10">
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 transform rotate-3">
-                <div className="bg-white rounded-xl p-6 transform -rotate-3 shadow-2xl">
-                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-white text-2xl font-bold">SP</span>
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-800 mb-2">Quality Education</h3>
-                      <p className="text-gray-600">Classes 9-12 • UP Board</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Floating Cards */}
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-xl">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <span className="text-green-600 font-bold text-xl">✓</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">Expert Faculty</h4>
-                    <p className="text-sm text-gray-500">Santosh Sir</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="absolute -top-6 -right-6 bg-white rounded-xl p-4 shadow-xl">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <span className="text-blue-600 font-bold text-xl">★</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">4.9/5 Rating</h4>
-                    <p className="text-sm text-gray-500">Student Reviews</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* EXPERT GUIDANCE STRIP - compact */}
+          <div className="mt-4 md:mt-6 bg-white/20 px-3 py-2.5 w-full max-w-sm border border-white/30">
+            <p className="italic text-white text-sm sm:text-base md:text-lg">
+              Expert Guidance for Your Success!
+            </p>
           </div>
+
+          {/* BUTTONS - compact */}
+          <div className="flex flex-col sm:flex-row gap-2.5 md:gap-4 mt-4 md:mt-6">
+            <Button
+              onClick={() => navigate("/enroll")}
+              className="bg-orange-500 hover:bg-orange-600 text-white px-5 sm:px-6 py-2.5 rounded text-sm sm:text-base font-medium w-full sm:w-auto text-center"
+            >
+              Enroll Now
+            </Button>
+
+            <Button
+              onClick={() => navigate("/contact")}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 sm:px-6 py-2.5 rounded text-sm sm:text-base font-medium w-full sm:w-auto text-center"
+            >
+              Contact Us
+            </Button>
+          </div>
+
         </div>
+        
+        {/* RIGHT HALF */}
+        <div className="hidden md:block md:w-1/2"></div>
       </div>
     </section>
   );
