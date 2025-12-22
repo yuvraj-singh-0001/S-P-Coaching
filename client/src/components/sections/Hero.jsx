@@ -6,70 +6,67 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full min-h-screen  pt-14 flex items-center overflow-hidden">
-      {/* Background Image */}
+    <section className="relative w-full min-h-screen pt-16 flex items-center justify-center md:justify-start">
+      {/* FULL SCREEN BANNER */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/hero-pages.png')" }}
       ></div>
 
-      {/* LEFT BLUE PANEL - 50% width */}
-      <div className="absolute top-0 left-0 h-full w-full md:w-1/2 bg-[#0b3d87]/92"></div>
+      {/* VERTICAL BLUE STRIP ON LEFT - EXACTLY LIKE YOUR IMAGE */}
+      {/* <div className="absolute left-0 top-0 h-full w-5 md:w-6 bg-[#0b3d87]"></div> */}
 
-      {/* GRADIENT OVERLAY */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0b3d87]/95 via-[#0b3d87]/30 to-transparent"></div>
-
-      {/* CONTENT CONTAINER - कम padding */}
-      <div className="relative w-full max-w-7xl mx-auto  mt-6 px-1 sm:px-2 md:px-4 h-full flex items-center ">
-        {/* CONTENT - compact layout */}
-        <div className="w-full md:w-1/2 px-1 sm:px-2 md:px-3 lg:px-5 text-white">
+      {/* CONTENT - POSITIONED BESIDE BLUE STRIP */}
+      <div className="relative ml-6 md:ml-10 lg:ml-16 mr-4 md:mr-8 max-w-2xl hover:scale-105 transition-transform duration-300">
+        
+        {/* CONTENT WITH TRANSPARENT BACKGROUND */}
+        <div className="bg-black/20 md:bg-black/30 p-4 md:p-8 rounded-r-lg backdrop-blur-sm">
           
-          {/* HEADING - छोटा टेक्स्ट */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-snug">
-            Learn Today.<br />Build Your Future.
-          </h1>
+          <div className="text-white">
+            
+            {/* MAIN HEADING */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight">
+              Learn Today.<br />Build Your Future.
+            </h1>
 
-          {/* THIN WHITE LINE */}
-          <div className="w-28 sm:w-32 md:w-36 h-[1.5px] bg-white/70 mt-3 md:mt-4 mb-3 md:mb-4"></div>
+            {/* DIVIDER LINE */}
+            <div className="w-32 h-[1px] bg-white/80 my-4 md:my-6"></div>
 
-          {/* SUB TEXT - छोटा */}
-          <div className="space-y-1">
-            <p className="text-sm sm:text-base md:text-lg">
+            {/* SUBTITLE */}
+            <p className="text-lg md:text-xl mb-1">
               Quality coaching for
             </p>
-            <p className="text-base sm:text-lg md:text-xl font-semibold">
+            <p className="text-xl md:text-2xl font-semibold mb-6">
               Class 9th to 12th | B.Sc Students | ITI Courses
             </p>
+
+            {/* EXPERT GUIDANCE - SIMPLE BOX */}
+            <div className="mb-8">
+              <p className="text-lg md:text-xl italic border-l-3 border-yellow-400 pl-4 py-2">
+                Expert Guidance for Your Success!
+              </p>
+            </div>
+
+            {/* BUTTONS */}
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+              <Button
+                onClick={() => navigate("/enroll")}
+                className="bg-orange-600 hover:bg-orange-700 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center"
+              >
+                Enroll Now
+              </Button>
+
+              <Button
+                onClick={() => navigate("Contact")}
+                className="bg-blue-700 hover:bg-blue-800 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center"
+              >
+                Contact Us
+              </Button>
+            </div>
+
           </div>
-
-          {/* EXPERT GUIDANCE STRIP - compact */}
-          <div className="mt-4 md:mt-6 bg-white/20 px-3 py-2.5 w-full max-w-sm border border-white/30">
-            <p className="italic text-white text-sm sm:text-base md:text-lg">
-              Expert Guidance for Your Success!
-            </p>
-          </div>
-
-          {/* BUTTONS - compact */}
-          <div className="flex flex-col sm:flex-row gap-2.5 md:gap-4 mt-4 md:mt-6">
-            <Button
-              onClick={() => navigate("/enroll")}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-5 sm:px-6 py-2.5 rounded text-sm sm:text-base font-medium w-full sm:w-auto text-center"
-            >
-              Enroll Now
-            </Button>
-
-            <Button
-              onClick={() => navigate("/contact")}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-5 sm:px-6 py-2.5 rounded text-sm sm:text-base font-medium w-full sm:w-auto text-center"
-            >
-              Contact Us
-            </Button>
-          </div>
-
         </div>
-        
-        {/* RIGHT HALF */}
-        <div className="hidden md:block md:w-1/2"></div>
+
       </div>
     </section>
   );
