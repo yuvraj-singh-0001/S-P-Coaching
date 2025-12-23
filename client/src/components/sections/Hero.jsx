@@ -51,7 +51,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Button
                 onClick={() => navigate("/enroll")}
-                className="bg-orange-600 hover:bg-orange-700 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center"
+                className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center"
               >
                 Enroll Now
               </Button>
