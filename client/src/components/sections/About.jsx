@@ -22,17 +22,26 @@ const AboutBanner = () => {
         if (entry.isIntersecting) {
           // Title animation
           if (entry.target === titleRef.current) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.remove('opacity-0', '-translate-y-8');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
           }
           
           // Cards animation
           if (cardsRef.current.includes(entry.target)) {
             const index = cardsRef.current.indexOf(entry.target);
             setTimeout(() => {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateX(0)';
-            }, index * 200); // Stagger effect
+              entry.target.classList.remove('opacity-0');
+              if (index === 0) {
+                entry.target.classList.remove('-translate-x-20');
+                entry.target.classList.add('translate-x-0');
+              } else if (index === 1) {
+                entry.target.classList.remove('translate-y-20');
+                entry.target.classList.add('translate-y-0');
+              } else if (index === 2) {
+                entry.target.classList.remove('translate-x-20');
+                entry.target.classList.add('translate-x-0');
+              }
+            }, index * 200);
           }
         }
       });
@@ -42,32 +51,12 @@ const AboutBanner = () => {
 
     // Observe title
     if (titleRef.current) {
-      titleRef.current.style.opacity = '0';
-      titleRef.current.style.transform = 'translateY(-30px)';
-      titleRef.current.style.transition = 'all 0.6s ease-out';
       observer.observe(titleRef.current);
     }
 
-    // Observe cards with different directions
+    // Observe cards
     cardsRef.current.forEach((card, index) => {
       if (card) {
-        // Card 1: Slide from left
-        if (index === 0) {
-          card.style.opacity = '0';
-          card.style.transform = 'translateX(-100px)';
-        }
-        // Card 2: Slide from bottom
-        else if (index === 1) {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(100px)';
-        }
-        // Card 3: Slide from right
-        else if (index === 2) {
-          card.style.opacity = '0';
-          card.style.transform = 'translateX(100px)';
-        }
-        
-        card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
         observer.observe(card);
       }
     });
@@ -77,35 +66,27 @@ const AboutBanner = () => {
     };
   }, []);
 
-  // Hover animation using CSS
-  const handleMouseEnter = (e) => {
-    e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
-    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.2)';
-  };
-
-  const handleMouseLeave = (e) => {
-    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-    e.currentTarget.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
-  };
-
   const cards = [
     { 
       img: schoolImg, 
       title: "School Classes 9th to 12th", 
       subtitle: "Biology & Mathematics",
-      bgColor: "bg-blue-700"
+      bgColor: "bg-blue-700",
+      fromLeft: true
     },
     { 
       img: bscImg, 
       title: "B.Sc Coaching", 
       subtitle: "Zoology • Botany • Chemistry • Physics • Mathematics",
-      bgColor: "bg-indigo-700"
+      bgColor: "bg-indigo-700",
+      fromBottom: true
     },
     { 
       img: itiImg, 
       title: "ITI Courses", 
       subtitle: "Technical & Vocational Training",
-      bgColor: "bg-indigo-700"
+      bgColor: "bg-indigo-700",
+      fromRight: true
     }
   ];
 
@@ -117,7 +98,7 @@ const AboutBanner = () => {
     >
       <h2 
         ref={titleRef}
-        className="text-2xl md:text-4xl font-bold text-gray-900 mb-4 text-center mb-12"
+        className="text-2xl md:text-4xl font-bold text-gray-900 mb-4 text-center mb-12 opacity-0 -translate-y-8 transition-all duration-700"
       >
         Welcome to SP Coaching Center
       </h2>
@@ -128,26 +109,34 @@ const AboutBanner = () => {
             <div
               key={index}
               ref={(el) => (cardsRef.current[index] = el)}
-              className="rounded-xl overflow-hidden shadow-xl bg-white/95 transition-all duration-300"
+              className={`
+                rounded-xl overflow-hidden shadow-xl bg-white/95 
+                transition-all duration-700
+                transform
+                ${card.fromLeft ? '-translate-x-20' : ''}
+                ${card.fromRight ? 'translate-x-20' : ''}
+                ${card.fromBottom ? 'translate-y-20' : ''}
+                opacity-0
+                hover:shadow-2xl hover:-translate-y-2
+              `}
               style={{
-                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)'
+                transitionDelay: `${index * 100}ms`,
+                transitionProperty: 'transform, opacity, box-shadow'
               }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
             >
-              {/* Image Container */}
+              {/* Image Container - NO ZOOM EFFECT */}
               <div className="overflow-hidden">
                 <img
                   src={card.img}
-                  className="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-110"
+                  className="w-full aspect-[4/3] object-cover"
                   alt={card.title}
                 />
               </div>
               
               {/* Card Content */}
-              <div className={`${card.bgColor} text-white text-center py-4 relative overflow-hidden`}>
-                {/* Shine effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              <div className={`${card.bgColor} text-white text-center py-4 relative overflow-hidden group`}>
+                {/* Simple shine effect - no animation */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 <h3 className="text-xl font-bold mb-2 relative z-10">
                   {card.title}
@@ -155,9 +144,6 @@ const AboutBanner = () => {
                 <p className="text-sm opacity-90 relative z-10">
                   {card.subtitle}
                 </p>
-                
-                {/* Animated underline */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-3/4" />
               </div>
             </div>
           ))}
