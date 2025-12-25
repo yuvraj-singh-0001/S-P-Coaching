@@ -17,7 +17,7 @@ const Hero = () => {
       <div className="relative ml-6 md:ml-10 lg:ml-16 mr-4 md:mr-8 max-w-2xl hover:scale-[1.02] transition-transform duration-500 ease-in-out flex items-center">
         
         {/* CONTENT WITH TRANSPARENT BACKGROUND */}
-        <div className="bg-black/20 md:bg-black/30 p-4 md:p-8 rounded-r-lg backdrop-blur-sm">
+        <div className="bg-black/20 md:bg-black/30 p-2 md:p-4 rounded-r-lg backdrop-blur-sm">
           
           <div className="text-white">
             
