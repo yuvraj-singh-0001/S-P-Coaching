@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const AboutBanner = () => {
+const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
@@ -209,4 +209,4 @@ const AboutBanner = () => {
   );
 };
 
-export default AboutBanner;
+export default About;
