@@ -33,19 +33,20 @@ const About = () => {
         {/* INTRO CARD - Your original introduction */}
         <div
           className={`w-full mx-auto mb-8 md:mb-10
-          bg-white p-5 md:p-7 rounded-xl border border-gray-200  shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300 hover:shadow-xl hover:scale-[1.02]
+          bg-white p-5 md:p-7 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 
+          transition-all duration-300 hover:shadow-xl hover:scale-[1.02]
           ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <p className="text-gray-900 text-sm md:text-base leading-relaxed mb-4">
             <span className="font-bold">Established in 2018</span> in Paudali Bazar, Deoria, SP Coaching Center has emerged as a trusted name in quality education. Founded by{" "}
-            <span className="text-yellow-400 font-semibold">
+            <span className="text-yellow-600 font-semibold">
               Mr. Santosh Prasad
             </span>, we are committed to nurturing young minds and guiding them towards academic excellence.
           </p>
 
           <p className="text-gray-900 text-sm md:text-base leading-relaxed mb-4">
             We specialize in{" "}
-            <span className="text-yellow-400 font-semibold">
+            <span className="text-yellow-600 font-semibold">
               Class 9–12 (Science & Mathematics), B.Sc & ITI Courses
             </span>.
             Personalized attention + modern teaching = better results.
@@ -53,7 +54,7 @@ const About = () => {
 
           <p className="text-gray-900 text-sm md:text-base leading-relaxed">
             We believe in{" "}
-            <span className="text-yellow-400 font-semibold">
+            <span className="text-yellow-600 font-semibold">
               "Strong Foundation, Bright Future"
             </span>
             .
@@ -69,9 +70,10 @@ const About = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-6xl mx-auto">
             
             {/* DIGITAL RESOURCES */}
-            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]">
+            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 
+            transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                <div className="text-2xl md:text-3xl text-yellow-400">💻</div>
+                <div className="text-2xl md:text-3xl text-yellow-600">💻</div>
                 <h4 className="text-lg md:text-xl font-bold text-gray-900">Digital Features</h4>
               </div>
               <ul className="space-y-2 md:space-y-2.5">
@@ -95,9 +97,10 @@ const About = () => {
             </div>
 
             {/* STUDY MATERIALS */}
-            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]">
+            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 
+            transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                <div className="text-2xl md:text-3xl text-yellow-400">📚</div>
+                <div className="text-2xl md:text-3xl text-yellow-600">📚</div>
                 <h4 className="text-lg md:text-xl font-bold text-gray-900">Study Support</h4>
               </div>
               <ul className="space-y-2 md:space-y-2.5">
@@ -121,9 +124,10 @@ const About = () => {
             </div>
 
             {/* FACILITIES */}
-            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]">
+            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 
+            transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                <div className="text-2xl md:text-3xl text-yellow-400">🏫</div>
+                <div className="text-2xl md:text-3xl text-yellow-600">🏫</div>
                 <h4 className="text-lg md:text-xl font-bold text-gray-900">Facilities</h4>
               </div>
               <ul className="space-y-2 md:space-y-2.5">
@@ -151,8 +155,9 @@ const About = () => {
 
         {/* FOUNDER SECTION */}
         <div
-          className={`w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10 
-          bg-white rounded-xl border border-gray-200 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]"
+          className={`w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10
+          bg-white rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 
+          transition-all duration-300 hover:shadow-xl hover:scale-[1.02] p-5 md:p-7
           ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           {/* IMAGE */}
@@ -166,7 +171,7 @@ const About = () => {
 
           {/* DETAILS */}
           <div className="flex flex-col justify-center">
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-400">
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-600">
               Mr. Santosh Prasad
             </h3>
 
@@ -197,7 +202,7 @@ const About = () => {
 
             <a
               href="/teachers"
-              className="inline-block px-5 md:px-6 py-2 md:py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition text-sm md:text-base"
+              className="inline-block px-5 md:px-6 py-2 md:py-3 bg-yellow-600 text-white font-medium rounded-lg hover:bg-yellow-700 transition text-sm md:text-base"
             >
               See All Teachers
             </a>
