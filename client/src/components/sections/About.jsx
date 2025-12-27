@@ -163,7 +163,7 @@ const About = () => {
           {/* IMAGE */}
           <div className="flex items-center justify-center">
             <img
-              src="/founder.jpg"
+              src="/images/Founder.png"
               alt="Founder"
               className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg shadow"
             />
@@ -172,10 +172,10 @@ const About = () => {
           {/* DETAILS */}
           <div className="flex flex-col justify-center">
             <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-600">
-              Mr. Santosh Prasad
+              Mr. Santosh Sir 
             </h3>
 
-            <p className="text-gray-500 text-sm md:text-base mb-3 md:mb-4">
+            <p className="text-gray-700 text-sm md:text-base mb-3 md:mb-4 font-bold">
               Founder & Teacher
             </p>
 
@@ -186,9 +186,9 @@ const About = () => {
             </p>
 
             <ul className="text-gray-900 text-sm md:text-base space-y-2 mb-5 md:mb-6">
-              <li className="flex items-center">
-                <span className="mr-2">🎓</span>
-                M.Sc, B.Ed | UPTET | CTET
+              <li className="flex items-center font-bold">
+                <span className="mr-2 ">🎓</span>
+               BSc, M.Sc, B.Ed | UPTET | CTET |BSTET
               </li>
               <li className="flex items-center">
                 <span className="mr-2">⏳</span>

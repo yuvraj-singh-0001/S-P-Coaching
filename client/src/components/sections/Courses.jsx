@@ -7,10 +7,9 @@ const Courses = () => {
   const courses = [
     {
       id: 1,
-      title: "Class 9-12 Science",
-      subjects: ["Physics", "Mathematics"],
+      title: "Class 9-12 Science Math & Biology",
+      subjects: ["Physics", "Mathematics","Biology","Chemistry","English","Hindi"],
       duration: "Annual Program",
-      icon: "🎓",
       image: "/images/school.png",
       features: [
         "Complete UP Board Syllabus",
@@ -27,11 +26,10 @@ const Courses = () => {
       title: "B.Sc Programs",
       subjects: ["Physics", "Chemistry", "Mathematics", "Zoology", "Botany"],
       duration: "Semester-wise",
-      icon: "🔬",
       image: "/images/bsc.png",
       features: [
         "University Syllabus Coverage",
-        "Practical Lab Guidance",
+        "Lab Guidance",
         "Semester Exam Preparation",
         "Model Papers Practice",
         "Study Material Provided",
@@ -44,10 +42,8 @@ const Courses = () => {
       title: "ITI Courses",
       subjects: ["Technical Training", "Vocational Skills"],
       duration: "1-2 Years",
-      icon: "⚙️",
       image: "/images/iti.png",
       features: [
-        "Industry-relevant Training",
         "Practical Workshops",
         "Skill Development",
         "Placement Assistance",
@@ -61,7 +57,6 @@ const Courses = () => {
       title: "Polytechnic",
       subjects: ["Diploma in Engineering"],
       duration: "3 Years",
-      icon: "🏗️",
       image: "/images/hero-pages.png",
       features: [
         "Engineering Fundamentals",
@@ -95,101 +90,106 @@ const Courses = () => {
         </div>
 
         {/* COURSES GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
-          {courses.map((course) => (
-            <div
-              key={course.id}
-              className="relative rounded-lg md:rounded-xl shadow-lg border border-gray-200 
-              hover:shadow-xl transition-all duration-300 overflow-hidden group min-h-[250px] md:min-h-[280px]"
-            >
-              {/* BACKGROUND IMAGE COVERING ENTIRE CARD */}
-              <div className="absolute inset-0">
-                <img 
-                  src={course.image} 
-                  alt={course.title}
-                  className="w-full h-full object-cover"
-                />
-                {/* DARK OVERLAY FOR BETTER TEXT READABILITY */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
-              </div>
+<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
+  {courses.map((course) => (
+    <div
+  key={course.id}
+  className="relative rounded-lg md:rounded-xl 
+  shadow-lg border-2 border-gray-300
+  hover:border-blue-400 hover:shadow-lg hover:scale-[1.02]
+  transition-all duration-300 overflow-hidden group 
+  min-h-[250px] md:min-h-[280px]"
+>
+  {/* BACKGROUND IMAGE */}
+  <div className="absolute inset-0">
+    <img
+      src={course.image}
+      alt={course.title}
+      className="w-full h-full object-cover transform-none transition-none"
+    />
 
-              {/* CONTENT OVERLAY */}
-              <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-5">
-                {/* TOP CONTENT */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl md:text-3xl text-white drop-shadow-lg">{course.icon}</span>
-                    <div>
-                      <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">
-                        {course.title}
-                      </h3>
-                      <p className="text-white/90 text-xs md:text-sm bg-yellow-600/80 px-2 py-0.5 rounded-full inline-block mt-1">
-                        {course.duration}
-                      </p>
-                    </div>
-                  </div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
+  </div>
 
-                  {/* SUBJECTS */}
-                  <div className="mb-2">
-                    <p className="text-white/90 text-xs mb-1">Subjects:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {course.subjects.map((subject, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-0.5 bg-white/20 backdrop-blur-sm text-white rounded text-xs border border-white/30"
-                        >
-                          {subject}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+      {/* CONTENT OVERLAY */}
+      <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-5">
 
-                {/* EXPANDABLE CONTENT - WITH SCROLL */}
-                <div className={`transition-all duration-300 ${
-                  expandedCard === course.id ? 'max-h-32 md:max-h-36' : 'max-h-0'
-                } overflow-hidden`}>
-                  <div className="mt-2 pt-2 border-t border-white/30">
-                    {/* DETAILS */}
-                    <div className="mb-2">
-                      <p className="text-white/90 text-xs md:text-sm">{course.details}</p>
-                    </div>
+        {/* TOP CONTENT */}
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            {/* <span className="text-2xl md:text-3xl text-white drop-shadow-lg">{course.icon}</span> */}
+            <div>
+              <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">
+                {course.title}
+              </h3>
 
-                    {/* FEATURES WITH SCROLL */}
-                    <div className="max-h-20 overflow-y-auto pr-2 scrollbar-thin">
-                      <p className="text-white font-medium text-xs md:text-sm mb-1">Features:</p>
-                      <ul className="space-y-1">
-                        {course.features.map((feature, index) => (
-                          <li key={index} className="flex items-start gap-1">
-                            <CheckCircle className="text-yellow-400 mt-0.5 flex-shrink-0" size={12} />
-                            <span className="text-white/90 text-xs">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* TOGGLE BUTTON - BOTTOM */}
-                <button
-                  onClick={() => toggleExpand(course.id)}
-                  className="w-full mt-2 flex items-center justify-center gap-1 text-white text-xs font-semibold 
-                  hover:text-yellow-300 transition-colors py-1 bg-black/30 backdrop-blur-sm rounded-lg"
-                >
-                  {expandedCard === course.id ? (
-                    <>
-                      Show Less <ChevronUp size={14} />
-                    </>
-                  ) : (
-                    <>
-                      View Details <ChevronDown size={14} />
-                    </>
-                  )}
-                </button>
-              </div>
+              <p className="text-white/90 text-xs md:text-sm bg-yellow-600/80 px-2 py-0.5 rounded-full inline-block mt-1">
+                {course.duration}
+              </p>
             </div>
-          ))}
+          </div>
+
+          {/* SUBJECTS */}
+          <div className="mb-2">
+            <p className="text-white/90 text-xs mb-1">Subjects:</p>
+            <div className="flex flex-wrap gap-1">
+              {course.subjects.map((subject, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-0.5 bg-white/20 backdrop-blur-sm text-white rounded text-xs border border-white/30"
+                >
+                  {subject}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* EXPAND SECTION */}
+        <div className={`transition-all duration-300 ${
+          expandedCard === course.id ? 'max-h-32 md:max-h-36' : 'max-h-0'
+        } overflow-hidden`}>
+          <div className="mt-2 pt-2 border-t border-white/30">
+
+            <p className="text-white/90 text-xs md:text-sm mb-2">{course.details}</p>
+
+            <div className="max-h-20 overflow-y-auto pr-2 scrollbar-thin">
+              <p className="text-white font-medium text-xs md:text-sm mb-1">Features:</p>
+
+              <ul className="space-y-1">
+                {course.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-1">
+                    <CheckCircle className="text-yellow-400 mt-0.5 flex-shrink-0" size={12} />
+                    <span className="text-white/90 text-xs">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* TOGGLE BUTTON */}
+        <button
+          onClick={() => toggleExpand(course.id)}
+          className="w-full mt-2 flex items-center justify-center gap-1 text-white text-xs font-semibold 
+          hover:text-yellow-300 transition-colors py-1 bg-black/30 backdrop-blur-sm rounded-lg"
+        >
+          {expandedCard === course.id ? (
+            <>
+              Show Less <ChevronUp size={14} />
+            </>
+          ) : (
+            <>
+              View Details <ChevronDown size={14} />
+            </>
+          )}
+        </button>
+
+      </div>
+    </div>
+  ))}
+</div>
+
 
         {/* WHY CHOOSE SECTION */}
         <div className="bg-white rounded-lg md:rounded-xl shadow border border-gray-200 p-4 md:p-6 mb-8">

@@ -21,7 +21,7 @@ const Navbar = () => {
           <span className="text-yellow-400 font-extrabold text-4xl">SP</span>
 
           <div className="text-white font-semibold">
-            <p className="text-xl leading-none">Coaching Centre</p>
+            <p className="text-xl leading-none">Coaching Classes</p>
             <div className="w-24 h-[2px] bg-yellow-400 mt-1"></div>
           </div>
         </div>
