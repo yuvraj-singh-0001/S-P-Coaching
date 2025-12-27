@@ -4,8 +4,6 @@ const AboutBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
-  const aboutBg = new URL("/images/About-bg.png", import.meta.url).href;
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -20,104 +18,186 @@ const AboutBanner = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full py-10 text-white"
-      style={{
-        backgroundImage: `url(${aboutBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className="relative w-full py-10 md:py-14 bg-[#F9FAFB] text-gray-800"
     >
-      {/* LIGHT GLOBAL OVERLAY */}
-      <div className="absolute inset-0 bg-black/50 md:bg-black/45"></div>
-
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
 
         {/* TITLE */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">
             About SP Coaching Center
           </h2>
-          <div className="w-20 h-1 bg-yellow-400 mx-auto mt-2"></div>
+          <div className="w-16 md:w-20 h-1 bg-yellow-400 mx-auto mt-3 md:mt-4 rounded-full"></div>
         </div>
 
-        {/* INTRO CARD */}
+        {/* INTRO CARD - Your original introduction */}
         <div
-          className={`w-[95%] md:w-[85%] mx-auto mb-6
-          bg-black/70 backdrop-blur-md 
-          p-6 md:p-7 rounded-2xl border border-white/20 shadow-xl
-          transition-all duration-700 
-          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`w-full mx-auto mb-8 md:mb-10
+          bg-white p-5 md:p-7 rounded-xl border border-gray-200  shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300 hover:shadow-xl hover:scale-[1.02]
+          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <p className="text-blue-100 text-base leading-relaxed mb-3">
-            <span className="font-bold text-white">Established in 2018</span> in
-            Paudali Bazar, Deoria, SP Coaching Center has emerged as a trusted
-            name in quality education. Founded by{" "}
-            <span className="text-yellow-300">Mr. Santosh Prasad</span>, we are
-            committed to nurturing young minds and guiding them towards academic
-            excellence.
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
+            <span className="font-bold">Established in 2018</span> in Paudali Bazar, Deoria, SP Coaching Center has emerged as a trusted name in quality education. Founded by{" "}
+            <span className="text-yellow-400 font-semibold">
+              Mr. Santosh Prasad
+            </span>, we are committed to nurturing young minds and guiding them towards academic excellence.
           </p>
 
-          <p className="text-blue-100 text-base leading-relaxed mb-3">
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
             We specialize in{" "}
-            <span className="text-yellow-300">
+            <span className="text-yellow-400 font-semibold">
               Class 9–12 (Science & Mathematics), B.Sc & ITI Courses
-            </span>
-            . Personalized attention + modern teaching = better results.
+            </span>.
+            Personalized attention + modern teaching = better results.
           </p>
 
-          <p className="text-blue-100 text-base leading-relaxed">
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
             We believe in{" "}
-            <span className="text-yellow-300">
+            <span className="text-yellow-400 font-semibold">
               "Strong Foundation, Bright Future"
             </span>
             .
           </p>
         </div>
 
-        {/* FOUNDER SECTION CARD */}
+        {/* WHY CHOOSE SP COACHING - Your card design */}
+        <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-6 md:mb-8 lg:mb-10 text-gray-900">
+            Why Choose SP Coaching?
+          </h3>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-6xl mx-auto">
+            
+            {/* DIGITAL RESOURCES */}
+            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                <div className="text-2xl md:text-3xl text-yellow-400">💻</div>
+                <h4 className="text-lg md:text-xl font-bold text-gray-900">Digital Features</h4>
+              </div>
+              <ul className="space-y-2 md:space-y-2.5">
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Online Test Series & Results</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Quick Question Practice</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Online Attendance Tracking</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Gmail Notifications</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* STUDY MATERIALS */}
+            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                <div className="text-2xl md:text-3xl text-yellow-400">📚</div>
+                <h4 className="text-lg md:text-xl font-bold text-gray-900">Study Support</h4>
+              </div>
+              <ul className="space-y-2 md:space-y-2.5">
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Handwritten Notes</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Previous Year Papers</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>3 Doubt Sessions Weekly</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Weekly Test Schedule</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* FACILITIES */}
+            <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                <div className="text-2xl md:text-3xl text-yellow-400">🏫</div>
+                <h4 className="text-lg md:text-xl font-bold text-gray-900">Facilities</h4>
+              </div>
+              <ul className="space-y-2 md:space-y-2.5">
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Well-Ventilated Classrooms</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Personalized Attention</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Modern Teaching Aids</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                  <span className="text-green-600 mt-1">✓</span>
+                  <span>Fees Status Tracking</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        {/* FOUNDER SECTION */}
         <div
-          className={`w-[95%] md:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6
-          bg-black/70 backdrop-blur-md
-          rounded-2xl border border-white/20 shadow-xl
-          p-6 md:p-7
-          transition-all duration-700 
-          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10 
+          bg-white rounded-xl border border-gray-200 hover:border-blue-300 transition-colors duration-300  hover:shadow-xl hover:scale-[1.02]"
+          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           {/* IMAGE */}
           <div className="flex items-center justify-center">
             <img
-              src="/founder.jpg"   // <-- apni image ka path
+              src="/founder.jpg"
               alt="Founder"
-              className="w-full max-w-[420px] md:max-w-[500px] rounded-xl shadow-lg"
+              className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg shadow"
             />
           </div>
 
           {/* DETAILS */}
           <div className="flex flex-col justify-center">
-            <h3 className="text-2xl md:text-3xl font-bold text-yellow-300">
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-400">
               Mr. Santosh Prasad
             </h3>
 
-            <p className="text-blue-200 text-sm md:text-base mb-3">
+            <p className="text-gray-500 text-sm md:text-base mb-3 md:mb-4">
               Founder & Teacher
             </p>
 
-            <p className="text-blue-100 text-sm md:text-base leading-relaxed mb-3">
+            <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
               With a strong passion for teaching and student growth, he has been
               guiding students with excellence, discipline and concept-based
               learning.
             </p>
 
-            <ul className="text-blue-100 text-sm md:text-base space-y-2">
-              <li>🎓 M.Sc, B.Ed | UPTET | CTET</li>
-              <li>⏳ 10+ Years Teaching Experience</li>
-              <li>📍 Lohiya Intermediate College, Sahwa Deoria</li>
+            <ul className="text-gray-700 text-sm md:text-base space-y-2 mb-5 md:mb-6">
+              <li className="flex items-center">
+                <span className="mr-2">🎓</span>
+                M.Sc, B.Ed | UPTET | CTET
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">⏳</span>
+                10+ Years Teaching Experience
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">📍</span>
+                Lohiya Intermediate College, Sahwa Deoria
+              </li>
             </ul>
 
             <a
               href="/teachers"
-              className="inline-block mt-4 px-6 py-2 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition"
+              className="inline-block px-5 md:px-6 py-2 md:py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition text-sm md:text-base"
             >
               See All Teachers
             </a>
