@@ -20,7 +20,7 @@ const AboutBanner = () => {
       ref={sectionRef}
       className="relative w-full py-10 md:py-14 bg-[#F9FAFB] text-gray-800"
     >
-      <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
 
         {/* TITLE */}
         <div className="text-center mb-8 md:mb-10">
@@ -36,14 +36,14 @@ const AboutBanner = () => {
           bg-white p-5 md:p-7 rounded-xl border border-gray-200  shadow-lg border border-gray-100 hover:border-blue-300 transition-colors duration-300 hover:shadow-xl hover:scale-[1.02]
           ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
+          <p className="text-gray-900 text-sm md:text-base leading-relaxed mb-4">
             <span className="font-bold">Established in 2018</span> in Paudali Bazar, Deoria, SP Coaching Center has emerged as a trusted name in quality education. Founded by{" "}
             <span className="text-yellow-400 font-semibold">
               Mr. Santosh Prasad
             </span>, we are committed to nurturing young minds and guiding them towards academic excellence.
           </p>
 
-          <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
+          <p className="text-gray-900 text-sm md:text-base leading-relaxed mb-4">
             We specialize in{" "}
             <span className="text-yellow-400 font-semibold">
               Class 9–12 (Science & Mathematics), B.Sc & ITI Courses
@@ -51,7 +51,7 @@ const AboutBanner = () => {
             Personalized attention + modern teaching = better results.
           </p>
 
-          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+          <p className="text-gray-900 text-sm md:text-base leading-relaxed">
             We believe in{" "}
             <span className="text-yellow-400 font-semibold">
               "Strong Foundation, Bright Future"
@@ -75,19 +75,19 @@ const AboutBanner = () => {
                 <h4 className="text-lg md:text-xl font-bold text-gray-900">Digital Features</h4>
               </div>
               <ul className="space-y-2 md:space-y-2.5">
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Online Test Series & Results</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Quick Question Practice</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Online Attendance Tracking</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Gmail Notifications</span>
                 </li>
@@ -101,19 +101,19 @@ const AboutBanner = () => {
                 <h4 className="text-lg md:text-xl font-bold text-gray-900">Study Support</h4>
               </div>
               <ul className="space-y-2 md:space-y-2.5">
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Handwritten Notes</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Previous Year Papers</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>3 Doubt Sessions Weekly</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Weekly Test Schedule</span>
                 </li>
@@ -127,19 +127,19 @@ const AboutBanner = () => {
                 <h4 className="text-lg md:text-xl font-bold text-gray-900">Facilities</h4>
               </div>
               <ul className="space-y-2 md:space-y-2.5">
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Well-Ventilated Classrooms</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Personalized Attention</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Modern Teaching Aids</span>
                 </li>
-                <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 text-gray-900 text-sm md:text-base">
                   <span className="text-green-600 mt-1">✓</span>
                   <span>Fees Status Tracking</span>
                 </li>
@@ -174,13 +174,13 @@ const AboutBanner = () => {
               Founder & Teacher
             </p>
 
-            <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
+            <p className="text-gray-900 text-sm md:text-base leading-relaxed mb-4">
               With a strong passion for teaching and student growth, he has been
               guiding students with excellence, discipline and concept-based
               learning.
             </p>
 
-            <ul className="text-gray-700 text-sm md:text-base space-y-2 mb-5 md:mb-6">
+            <ul className="text-gray-900 text-sm md:text-base space-y-2 mb-5 md:mb-6">
               <li className="flex items-center">
                 <span className="mr-2">🎓</span>
                 M.Sc, B.Ed | UPTET | CTET
