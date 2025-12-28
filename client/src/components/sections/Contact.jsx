@@ -35,9 +35,10 @@ const Contact = () => {
     window.open("https://maps.app.goo.gl/2CbDJdqSJ55mFyQE8", "_blank");
   };
 
+  // SUBJECT OPTIONS BASED ON CLASS
   const getSubjectOptions = () => {
     if (["9", "10"].includes(formData.class)) {
-      return ["All Subjects", "Mathematics", "Science", "English" , "Hindi","Social Studies"];
+      return ["All Subjects", "Mathematics", "Science", "English"];
     }
 
     if (["11", "12"].includes(formData.class)) {
@@ -51,6 +52,18 @@ const Contact = () => {
         "English",
         "Hindi",
       ];
+    }
+
+    if (formData.class === "iti") {
+      return ["Electrical", "Fitter", "All Trades"];
+    }
+
+    if (formData.class === "bsc") {
+      return ["PCM", "PCB", "General Science"];
+    }
+
+    if (formData.class === "polytechnic") {
+      return ["Mechanical", "Electrical", "Civil"];
     }
 
     return [];
@@ -184,7 +197,7 @@ const Contact = () => {
           {/* VISIT CENTER — SECOND */}
           <div className="order-2 lg:order-2">
             <div className="bg-white rounded-xl shadow-md border border-gray-100 
-            hover:border-blue-300 transition-all duration-300 hover:shadow-lg h-full p-4">
+            hover;border-blue-300 transition-all duration-300 hover:shadow-lg h-full p-4">
 
               <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                 Visit Our Center
