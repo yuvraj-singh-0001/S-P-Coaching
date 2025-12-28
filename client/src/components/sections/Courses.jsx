@@ -8,7 +8,7 @@ const Courses = () => {
     {
       id: 1,
       title: "Class 9-12 Science Math & Biology",
-      subjects: ["Physics", "Mathematics","Biology","Chemistry","English","Hindi"],
+      subjects: ["Physics", "Mathematics", "Biology", "Chemistry", "English", "Hindi"],
       duration: "Annual Program",
       image: "/images/school.png",
       features: [
@@ -77,7 +77,7 @@ const Courses = () => {
   return (
     <section className="w-full py-8 md:py-12 bg-[#F9FAFB]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        
+
         {/* TITLE */}
         <div className="text-center mb-8 md:mb-10">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -90,106 +90,105 @@ const Courses = () => {
         </div>
 
         {/* COURSES GRID */}
-<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
-  {courses.map((course) => (
-    <div
-  key={course.id}
-  className="relative rounded-lg md:rounded-xl 
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
+          {courses.map((course) => (
+            <div
+              key={course.id}
+              className="relative rounded-lg md:rounded-xl 
   shadow-lg border-2 border-gray-300
   hover:border-blue-400 hover:shadow-lg hover:scale-[1.02]
   transition-all duration-300 overflow-hidden group 
   min-h-[250px] md:min-h-[280px]"
->
-  {/* BACKGROUND IMAGE */}
-  <div className="absolute inset-0">
-    <img
-      src={course.image}
-      alt={course.title}
-      className="w-full h-full object-cover transform-none transition-none"
-    />
+            >
+              {/* BACKGROUND IMAGE */}
+              <div className="absolute inset-0">
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="w-full h-full object-cover transform-none transition-none"
+                />
 
-    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
-  </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
+              </div>
 
-      {/* CONTENT OVERLAY */}
-      <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-5">
+              {/* CONTENT OVERLAY */}
+              <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-5">
 
-        {/* TOP CONTENT */}
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            {/* <span className="text-2xl md:text-3xl text-white drop-shadow-lg">{course.icon}</span> */}
-            <div>
-              <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">
-                {course.title}
-              </h3>
+                {/* TOP CONTENT */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    {/* ICON  */}
+                    {/* <span className="text-2xl md:text-3xl text-white drop-shadow-lg">{course.icon}</span> */}
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">
+                        {course.title}
+                      </h3>
 
-              <p className="text-white/90 text-xs md:text-sm bg-yellow-600/80 px-2 py-0.5 rounded-full inline-block mt-1">
-                {course.duration}
-              </p>
-            </div>
-          </div>
+                      <p className="text-white/90 text-xs md:text-sm bg-yellow-600/80 px-2 py-0.5 rounded-full inline-block mt-1">
+                        {course.duration}
+                      </p>
+                    </div>
+                  </div>
 
-          {/* SUBJECTS */}
-          <div className="mb-2">
-            <p className="text-white/90 text-xs mb-1">Subjects:</p>
-            <div className="flex flex-wrap gap-1">
-              {course.subjects.map((subject, index) => (
-                <span
-                  key={index}
-                  className="px-2 py-0.5 bg-white/20 backdrop-blur-sm text-white rounded text-xs border border-white/30"
-                >
-                  {subject}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+                  {/* SUBJECTS */}
+                  <div className="mb-2">
+                    <p className="text-white/90 text-xs mb-1">Subjects:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {course.subjects.map((subject, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-0.5 bg-white/20 backdrop-blur-sm text-white rounded text-xs border border-white/30"
+                        >
+                          {subject}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
-        {/* EXPAND SECTION */}
-        <div className={`transition-all duration-300 ${
-          expandedCard === course.id ? 'max-h-32 md:max-h-36' : 'max-h-0'
-        } overflow-hidden`}>
-          <div className="mt-2 pt-2 border-t border-white/30">
+                {/* EXPAND SECTION */}
+                <div className={`transition-all duration-300 ${expandedCard === course.id ? 'max-h-32 md:max-h-36' : 'max-h-0'
+                  } overflow-hidden`}>
+                  <div className="mt-2 pt-2 border-t border-white/30">
 
-            <p className="text-white/90 text-xs md:text-sm mb-2">{course.details}</p>
+                    <p className="text-white/90 text-xs md:text-sm mb-2">{course.details}</p>
 
-            <div className="max-h-20 overflow-y-auto pr-2 scrollbar-thin">
-              <p className="text-white font-medium text-xs md:text-sm mb-1">Features:</p>
+                    <div className="max-h-20 overflow-y-auto pr-2 scrollbar-thin">
+                      <p className="text-white font-medium text-xs md:text-sm mb-1">Features:</p>
 
-              <ul className="space-y-1">
-                {course.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-1">
-                    <CheckCircle className="text-yellow-400 mt-0.5 flex-shrink-0" size={12} />
-                    <span className="text-white/90 text-xs">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+                      <ul className="space-y-1">
+                        {course.features.map((feature, index) => (
+                          <li key={index} className="flex items-start gap-1">
+                            <CheckCircle className="text-yellow-400 mt-0.5 flex-shrink-0" size={12} />
+                            <span className="text-white/90 text-xs">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
 
-        {/* TOGGLE BUTTON */}
-        <button
-          onClick={() => toggleExpand(course.id)}
-          className="w-full mt-2 flex items-center justify-center gap-1 text-white text-xs font-semibold 
+                {/* TOGGLE BUTTON */}
+                <button
+                  onClick={() => toggleExpand(course.id)}
+                  className="w-full mt-2 flex items-center justify-center gap-1 text-white text-xs font-semibold 
           hover:text-yellow-300 transition-colors py-1 bg-black/30 backdrop-blur-sm rounded-lg"
-        >
-          {expandedCard === course.id ? (
-            <>
-              Show Less <ChevronUp size={14} />
-            </>
-          ) : (
-            <>
-              View Details <ChevronDown size={14} />
-            </>
-          )}
-        </button>
+                >
+                  {expandedCard === course.id ? (
+                    <>
+                      Show Less <ChevronUp size={14} />
+                    </>
+                  ) : (
+                    <>
+                      View Details <ChevronDown size={14} />
+                    </>
+                  )}
+                </button>
 
-      </div>
-    </div>
-  ))}
-</div>
-
+              </div>
+            </div>
+          ))}
+        </div>
 
         {/* WHY CHOOSE SECTION */}
         <div className="bg-white rounded-lg md:rounded-xl shadow border border-gray-200 p-4 md:p-6 mb-8">
@@ -200,7 +199,8 @@ const Courses = () => {
             <div className="w-12 h-1 bg-yellow-400 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {/* GRID */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
             {[
               { icon: "👨‍🏫", title: "Expert Faculty", desc: "10+ years experience" },
               { icon: "📚", title: "Study Material", desc: "Notes & PYQs" },
@@ -211,17 +211,27 @@ const Courses = () => {
               { icon: "🏫", title: "Good Facilities", desc: "Quality classrooms" },
               { icon: "💰", title: "Affordable Fees", desc: "Reasonable cost" }
             ].map((item, index) => (
-              <div 
-                key={index} 
-                className="flex flex-col items-center text-center p-2 hover:bg-gray-50 rounded transition-colors"
+              <div
+                key={index}
+                className="flex flex-col items-center text-center 
+        p-2 md:p-3 
+        bg-white border border-gray-200 rounded-lg
+        shadow-sm hover:shadow-md
+        hover:border-blue-400
+        transition-all duration-300"
               >
-                <div className="text-2xl mb-1">{item.icon}</div>
-                <h4 className="font-bold text-gray-900 text-xs md:text-sm mb-0.5">{item.title}</h4>
-                <p className="text-gray-600 text-xs">{item.desc}</p>
+                <div className="text-xl md:text-2xl mb-1">{item.icon}</div>
+                <h4 className="font-bold text-gray-900 text-xs md:text-sm mb-0.5">
+                  {item.title}
+                </h4>
+                <p className="text-gray-600 text-[10px] md:text-xs">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
+
 
         {/* CTA SECTION */}
         <div className="text-center">

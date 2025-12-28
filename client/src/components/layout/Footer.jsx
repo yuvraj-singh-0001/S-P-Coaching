@@ -3,96 +3,80 @@ import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone } from "luci
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Logo and Description */}
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-10">
+
+        <div className="grid md:grid-cols-4 gap-6 md:gap-8">
+          
+          {/* LOGO & INFO */}
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">SP</span>
               </div>
               <div>
-                <h2 className="text-2xl font-bold">S P Coaching Center</h2>
-                <p className="text-gray-400">Paudali Bazar, Deoria</p>
+                <h2 className="text-xl md:text-2xl font-bold">S P Coaching Center</h2>
+                <p className="text-gray-400 text-sm">Paudali Bazar, Deoria</p>
               </div>
             </div>
-            <p className="text-gray-400 mb-6">
-              Providing quality education for classes 9-12 with strong conceptual learning, 
-              disciplined study guidance, and result-focused preparation since 2010.
+
+            <p className="text-gray-400 text-sm md:text-base mb-5">
+              Providing quality education with disciplined guidance and result-focused learning since 2010.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                <Facebook size={20} />
+
+            <div className="flex gap-3">
+              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition">
+                <Facebook size={18} />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
-                <Instagram size={20} />
+              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                <Instagram size={18} />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors">
-                <Twitter size={20} />
+              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-400 transition">
+                <Twitter size={18} />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
-                <Youtube size={20} />
+              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition">
+                <Youtube size={18} />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* QUICK LINKS */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Quick Links</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="#home" className="text-gray-400 hover:text-white transition-colors">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="text-gray-400 hover:text-white transition-colors">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#courses" className="text-gray-400 hover:text-white transition-colors">
-                  Courses
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-gray-400 hover:text-white transition-colors">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Fee Structure
-                </a>
-              </li>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#home" className="text-gray-400 hover:text-white transition">Home</a></li>
+              <li><a href="#about" className="text-gray-400 hover:text-white transition">About Us</a></li>
+              <li><a href="#courses" className="text-gray-400 hover:text-white transition">Courses</a></li>
+              <li><a href="#contact" className="text-gray-400 hover:text-white transition">Contact</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition">Fee Structure</a></li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* CONTACT INFO */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Contact Info</h3>
-            <ul className="space-y-4">
-              <li className="flex items-center space-x-3">
-                <MapPin className="text-blue-400" size={20} />
+            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-center gap-3">
+                <MapPin className="text-blue-400" size={18} />
                 <span className="text-gray-400">Paudali Bazar, Deoria, UP</span>
               </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="text-green-400" size={20} />
-                <span className="text-gray-400">+91 XXXXX XXXXX</span>
+              <li className="flex items-center gap-3">
+                <Phone className="text-green-400" size={18} />
+                <span className="text-gray-400">+91 88875 81808</span>
               </li>
-              <li className="flex items-center space-x-3">
-                <Mail className="text-purple-400" size={20} />
-                <span className="text-gray-400">info@spcoachingdeoria.com</span>
+              <li className="flex items-center gap-3">
+                <Mail className="text-purple-400" size={18} />
+                <span className="text-gray-400">contact@spcoaching.com</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">
+        {/* BOTTOM */}
+        <div className="border-t border-gray-800 mt-6 pt-6 text-center">
+          <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} S P Coaching Center. All rights reserved.
           </p>
-          <p className="text-gray-500 text-sm mt-2">
+          <p className="text-gray-500 text-xs mt-1">
             Designed for academic excellence in Deoria, Uttar Pradesh
           </p>
         </div>
