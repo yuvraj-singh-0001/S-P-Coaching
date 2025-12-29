@@ -16,10 +16,9 @@ const About = () => {
   }, []);
 
   return (
-    <section
-      id="about"
+    <section  // ID HATA DIYA
       ref={sectionRef}
-      className="relative w-full py-10 md:py-14 bg-[#F9FAFB] text-gray-800"
+      className="relative w-full py-10 md:py-14 bg-[#F9FAFB] text-gray-800 pt-24"
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
 
@@ -67,9 +66,9 @@ const About = () => {
           <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-6 md:mb-8 lg:mb-10 text-gray-900">
             Why Choose SP Coaching?
           </h3>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-6xl mx-auto">
-            
+
             {/* DIGITAL RESOURCES */}
             <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl shadow-lg border border-gray-100 hover:border-blue-300 
             transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
@@ -173,7 +172,7 @@ const About = () => {
           {/* DETAILS */}
           <div className="flex flex-col justify-center">
             <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-600">
-              Mr. Santosh Sir 
+              Mr. Santosh Sir
             </h3>
 
             <p className="text-gray-700 text-sm md:text-base mb-3 md:mb-4 font-bold">
@@ -189,7 +188,7 @@ const About = () => {
             <ul className="text-gray-900 text-sm md:text-base space-y-2 mb-5 md:mb-6">
               <li className="flex items-center font-bold">
                 <span className="mr-2 ">🎓</span>
-               BSc, M.Sc, B.Ed | UPTET | CTET |BSTET
+                BSc, M.Sc, B.Ed | UPTET | CTET |BSTET
               </li>
               <li className="flex items-center">
                 <span className="mr-2">⏳</span>

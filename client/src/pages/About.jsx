@@ -1,11 +1,11 @@
-import AboutSection from "../components/sections/About";
+// import AboutSection from "../components/sections/About";
 
-const About = () => {
-  return (
-    <div>
-      <AboutSection />
-    </div>
-  );
-};
+// const About = () => {
+//   return (
+//     <div>
+//       <AboutSection />
+//     </div>
+//   );
+// };
 
-export default About;
+// export default About;

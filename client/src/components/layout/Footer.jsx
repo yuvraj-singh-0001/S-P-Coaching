@@ -1,10 +1,23 @@
 import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const footerLinks = [
+    { title: "Home", path: "/" },
+    { title: "About Us", path: "/about" },
+    { title: "Courses", path: "/courses" },
+    { title: "Contact", path: "/contact" },
+  ];
+
+  const handleFooterClick = (path) => {
+    navigate(path);
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-10">
-
         <div className="grid md:grid-cols-4 gap-6 md:gap-8">
           
           {/* LOGO & INFO */}
@@ -43,11 +56,17 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#home" className="text-gray-400 hover:text-white transition">Home</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-white transition">About Us</a></li>
-              <li><a href="#courses" className="text-gray-400 hover:text-white transition">Courses</a></li>
-              <li><a href="#contact" className="text-gray-400 hover:text-white transition">Contact</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition">Fee Structure</a></li>
+              {footerLinks.map((link, index) => (
+                <li key={index}>
+                  <button 
+                    onClick={() => handleFooterClick(link.path)}
+                    className="text-gray-400 hover:text-white transition text-left w-full"
+                  >
+                    {link.title}
+                  </button>
+                </li>
+              ))}
+              <li><button className="text-gray-400 hover:text-white transition text-left w-full">Fee Structure</button></li>
             </ul>
           </div>
 

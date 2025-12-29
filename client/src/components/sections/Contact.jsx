@@ -70,7 +70,9 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="w-full py-4 md:py-6 bg-[#F9FAFB]">
+    <section 
+   
+    className="w-full py-4 md:py-6 bg-[#F9FAFB] pt-24"> {/* Added pt-24 */}
       <div className="max-w-6xl mx-auto px-3 md:px-4">
 
         {/* TITLE */}

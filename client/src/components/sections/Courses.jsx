@@ -75,7 +75,9 @@ const Courses = () => {
   };
 
   return (
-    <section id="courses" className="w-full py-8 md:py-12 bg-[#F9FAFB]">
+   <section 
+
+   className="w-full py-8 md:py-12 bg-[#F9FAFB] pt-24"> {/* Added pt-24 */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
 
         {/* TITLE */}
