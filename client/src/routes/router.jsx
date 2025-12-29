@@ -7,11 +7,13 @@ const ScrollToSection = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const scrollNow = (element) => {
-      if (!element) return;
+    const scrollWithRetry = (id, tries = 10) => {
+      if (tries === 0) return;
 
-      setTimeout(() => {
-        const navHeight = document.querySelector("nav")?.offsetHeight || 100;
+      const element = document.getElementById(id);
+      const navHeight = document.querySelector("nav")?.offsetHeight || 100;
+
+      if (element) {
         const y =
           element.getBoundingClientRect().top +
           window.pageYOffset -
@@ -22,32 +24,18 @@ const ScrollToSection = () => {
           top: y,
           behavior: "smooth",
         });
-      }, 120);
+      } else {
+        setTimeout(() => scrollWithRetry(id, tries - 1), 120);
+      }
     };
 
-    // If URL has #about, #courses etc
-    if (location.hash) {
-      const id = location.hash.replace("#", "");
-      const element = document.getElementById(id);
-      scrollNow(element);
-    } 
-    else {
-      // Normal routes (/about /courses /contact)
-      const path = location.pathname;
-      let targetId = "home";
+    const path = location.pathname;
 
-      if (path === "/about") targetId = "about";
-      else if (path === "/courses") targetId = "courses";
-      else if (path === "/contact") targetId = "contact";
+    if (path === "/about") scrollWithRetry("about");
+    else if (path === "/courses") scrollWithRetry("courses");
+    else if (path === "/contact") scrollWithRetry("contact");
+    else window.scrollTo({ top: 0, behavior: "smooth" });
 
-      const element = document.getElementById(targetId);
-
-      if (element && targetId !== "home") {
-        scrollNow(element);
-      } else if (path === "/") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }
   }, [location]);
 
   return null;

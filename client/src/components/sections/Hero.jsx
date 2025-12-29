@@ -8,19 +8,19 @@ const Hero = () => {
   return (
     <section id="home" className="relative w-full min-h-screen pt-16 flex items-center justify-center md:justify-start">
       {/* FULL SCREEN BANNER */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/hero-pages.png')" }}
       ></div>
 
       {/* CONTENT */}
       <div className="relative ml-6 md:ml-10 lg:ml-16 mr-4 md:mr-8 max-w-2xl hover:scale-[1.02] transition-transform duration-500 ease-in-out flex items-center">
-        
+
         {/* CONTENT WITH TRANSPARENT BACKGROUND */}
         <div className="bg-black/20 md:bg-black/30 p-2 md:p-4 rounded-r-lg backdrop-blur-sm">
-          
+
           <div className="text-white">
-            
+
             {/* MAIN HEADING */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight">
               Your Success<br />Our Commitment
@@ -52,30 +52,31 @@ const Hero = () => {
             </div>
 
             {/* BUTTONS */}
+            {/* BUTTONS */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6">
+
+              {/* Start Free Demo → Courses Section */}
               <Button
-                onClick={() => navigate("/enroll")}
+                onClick={() => navigate("/courses")}
                 className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center transition-colors"
               >
                 Start Free Demo
               </Button>
 
+              {/* Call Now → Contact Section */}
               <Button
-                onClick={() => navigate("/contact")}
+                onClick={() => window.location.href = "tel:+918887581808"}
                 className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-900 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center transition-colors"
               >
                 📞 Call Now
               </Button>
+
             </div>
+
 
             {/* PHONE & TIMING */}
             <div className="mt-6 text-center sm:text-left">
-              <a 
-                href="tel:+918887581808" 
-                className="text-white hover:text-yellow-300 text-lg font-medium inline-flex items-center gap-2"
-              >
-                <span className="text-xl">📞</span> +91 88875 81808
-              </a>
+
               <p className="text-white/70 text-sm mt-1">
                 Mon-Sat: 6AM - 10AM (Morning Shift), 3PM - 6:30PM (Evening Shift)
               </p>

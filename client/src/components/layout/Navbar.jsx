@@ -29,7 +29,8 @@ const Navbar = () => {
     <nav className="fixed w-full z-50 bg-[#0C4A8B] shadow">
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         {/* Logo Section */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition"
+          onClick={() => navigate("/")}>
           <span className="text-yellow-400 font-extrabold text-4xl">SP</span>
           <div className="text-white font-semibold">
             <p className="text-xl leading-none">Coaching Classes</p>
