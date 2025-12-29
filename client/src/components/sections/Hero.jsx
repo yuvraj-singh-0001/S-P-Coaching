@@ -6,7 +6,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full min-h-screen pt-16 flex items-center justify-center md:justify-start">
+    <section id="home" className="relative w-full min-h-screen pt-16 flex items-center justify-center md:justify-start">
       {/* FULL SCREEN BANNER */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
