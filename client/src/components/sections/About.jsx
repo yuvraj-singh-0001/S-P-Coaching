@@ -18,7 +18,7 @@ const About = () => {
   return (
     <section  // ID HATA DIYA
       ref={sectionRef}
-      className="relative w-full py-10 md:py-14 bg-[#F9FAFB] text-gray-800 pt-24"
+      className="relative w-full py-10 md:py-14 bg-[#F9FAFB] text-gray-800 "
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
 

@@ -6,17 +6,32 @@ import Contact from "../components/sections/Contact";
 const Home = () => {
   return (
     <>
-      {/* Yeh wrappers important hain scroll ke liye */}
+      {/* ---- HERO ---- */}
       <div id="home">
         <Hero />
       </div>
-      <div id="about">
+
+      {/* ---- ABOUT ---- */}
+      <div
+        id="about"
+        className="scroll-mt-[110px]"  // fixed navbar ke liye perfect offset
+      >
         <About />
       </div>
-      <div id="courses">
+
+      {/* ---- COURSES ---- */}
+      <div
+        id="courses"
+        className="scroll-mt-[110px]"
+      >
         <Courses />
       </div>
-      <div id="contact">
+
+      {/* ---- CONTACT ---- */}
+      <div
+        id="contact"
+        className="scroll-mt-[110px]"
+      >
         <Contact />
       </div>
     </>
