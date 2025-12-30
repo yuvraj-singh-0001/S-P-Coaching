@@ -3,7 +3,7 @@ import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 const Courses = () => {
   const [expandedCard, setExpandedCard] = useState(null);
-// Course Data with details and features
+  // Course Data with details and features
   const courses = [
     {
       id: 1,
@@ -107,6 +107,7 @@ const Courses = () => {
                 <img
                   src={course.image}
                   alt={course.title}
+                  loading="lazy"
                   className="w-full h-full object-cover transform-none transition-none"
                 />
 

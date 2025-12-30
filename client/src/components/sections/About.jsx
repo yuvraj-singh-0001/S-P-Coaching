@@ -161,10 +161,11 @@ const About = () => {
           ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           {/* IMAGE */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center ">
             <img
               src="/images/Founder.webp"
               alt="Founder"
+              loading="lazy"
               className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg shadow"
             />
           </div>
