@@ -87,10 +87,14 @@ const Footer = () => {
               ))}
 
               <li>
-                <button className="text-gray-400 hover:text-yellow-400 transition text-left">
+                <button
+                  onClick={() => navigate("/fees")}
+                  className="text-gray-300 hover:text-yellow-400 transition text-left"
+                >
                   Fee Structure
                 </button>
               </li>
+
             </ul>
           </div>
 
@@ -106,7 +110,7 @@ const Footer = () => {
               <li className="flex items-center gap-3 cursor-pointer"
                 onClick={() => window.open("https://maps.app.goo.gl/2CbDJdqSJ55mFyQE8", "_blank")}>
                 <MapPin className="text-blue-400" size={18} />
-                <span className="text-gray-300 hover:text-blue-400 transition">
+                <span className="text-gray-300 hover:text-yellow-400 transition text-left">
                   Paudali Bazar, Deoria, UP
                 </span>
               </li>
@@ -114,7 +118,7 @@ const Footer = () => {
               {/* Call Click → Dial Pad */}
               <li className="flex items-center gap-3">
                 <Phone className="text-green-400" size={18} />
-                <a href="tel:+918887581808" className="text-gray-300 hover:text-green-400 transition">
+                <a href="tel:+918887581808" className="text-gray-300 hover:text-yellow-400 transition text-left">
                   +91 88875 81808
                 </a>
               </li>
@@ -124,8 +128,8 @@ const Footer = () => {
                 <Mail className="text-purple-400" size={18} />
                 <a
                   href="mailto:contact@spcoaching.com"
-                  className="text-gray-300 hover:text-purple-400 transition">
-                  contact@spcoaching.com
+                  className="text-gray-300 hover:text-yellow-400 transition text-left">
+                  spcoachingclasses888@gmail.com
                 </a>
               </li>
 
