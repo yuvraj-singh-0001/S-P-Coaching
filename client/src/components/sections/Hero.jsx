@@ -10,7 +10,7 @@ const Hero = () => {
       {/* FULL SCREEN BANNER */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/hero-pages.png')" }}
+        style={{ backgroundImage: "url('/images/hero-pages.webp')" }}
       ></div>
 
       {/* CONTENT */}

@@ -163,7 +163,7 @@ const About = () => {
           {/* IMAGE */}
           <div className="flex items-center justify-center">
             <img
-              src="/images/Founder.png"
+              src="/images/Founder.webp"
               alt="Founder"
               className="w-full max-w-xs md:max-w-sm lg:max-w-md rounded-lg shadow"
             />

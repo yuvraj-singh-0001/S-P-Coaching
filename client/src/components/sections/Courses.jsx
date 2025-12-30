@@ -3,14 +3,14 @@ import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 const Courses = () => {
   const [expandedCard, setExpandedCard] = useState(null);
-
+// Course Data with details and features
   const courses = [
     {
       id: 1,
       title: "Class 9-12 Science Math & Biology",
       subjects: ["Physics", "Mathematics", "Biology", "Chemistry", "English", "Hindi"],
       duration: "Annual Program",
-      image: "/images/school.png",
+      image: "/images/school.webp",
       features: [
         "Complete UP Board Syllabus",
         "Weekly Tests & Assessments",
@@ -26,7 +26,7 @@ const Courses = () => {
       title: "B.Sc Programs",
       subjects: ["Physics", "Chemistry", "Mathematics", "Zoology", "Botany"],
       duration: "Semester-wise",
-      image: "/images/bsc.png",
+      image: "/images/bsc.webp",
       features: [
         "University Syllabus Coverage",
         "Lab Guidance",
@@ -42,7 +42,7 @@ const Courses = () => {
       title: "ITI Courses",
       subjects: ["Technical Training", "Vocational Skills"],
       duration: "1-2 Years",
-      image: "/images/iti.png",
+      image: "/images/iti.webp",
       features: [
         "Practical Workshops",
         "Skill Development",
@@ -57,7 +57,7 @@ const Courses = () => {
       title: "Polytechnic",
       subjects: ["Diploma in Engineering"],
       duration: "3 Years",
-      image: "/images/hero-pages.png",
+      image: "/images/hero-pages.webp",
       features: [
         "Engineering Fundamentals",
         "Practical Knowledge",
