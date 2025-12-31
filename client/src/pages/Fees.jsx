@@ -139,7 +139,7 @@ const PriceCard = ({ item }) => {
 
         <button
           className="w-1/2 border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white py-1.5 rounded-md transition text-xs"
-          onClick={() => navigate("/contact")}
+          onClick={() => navigate("/admission")}
         >
           Book Demo
         </button>
