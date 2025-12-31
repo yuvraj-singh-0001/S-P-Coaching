@@ -12,6 +12,7 @@ const Navbar = () => {
     { id: 2, title: "About Us", path: "/about" },
     { id: 3, title: "Courses", path: "/courses" },
     { id: 4, title: "Contact Us", path: "/contact" },
+    { id: 5 , title: "Resources", path: "/resources" },
   ];
 
   const handleNavClick = (path) => {

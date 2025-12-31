@@ -4,6 +4,8 @@ import Layout from "../components/layout/Layout";
 import Home from "../pages/Home";
 import Fees from "../pages/Fees";
 import Admission from "../pages/Admission";
+import Teachers from "../pages/Teachers";
+import Resources from "../pages/Resources";
 
 
 
@@ -57,6 +59,8 @@ const AppRouter = () => {
         <Route path="*" element={<Layout><Home /></Layout>} />
         <Route path="/fees" element={<Layout><Fees /></Layout>} />
         <Route path="/admission" element={<Layout><Admission /></Layout>} />
+        <Route path="/teachers" element={<Layout><Teachers /></Layout>} />
+        <Route path="/resources" element={<Layout><Resources /></Layout>} />
       </Routes>
     </>
   );
