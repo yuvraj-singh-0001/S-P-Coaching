@@ -9,6 +9,7 @@ const Footer = () => {
     { title: "About Us", path: "/about" },
     { title: "Courses", path: "/courses" },
     { title: "Contact", path: "/contact" },
+    { title: "Resources", path: "/resources" },
   ];
 
   return (
@@ -43,10 +44,11 @@ const Footer = () => {
               </div>
             </div>
 
-            <p className="text-gray-300 text-sm mb-5">
-              Providing quality education with disciplined guidance and
-              result-focused learning since 2010.
+            <p className="text-gray-300 text-sm mb-1">
+              Providing quality education with disciplined guidance 
             </p>
+            <p className="text-gray-300 text-sm mb-5">and
+            result-focused learning since 2010.</p>
 
             {/* SOCIAL ICONS ) */}
             <div className="flex gap-3">

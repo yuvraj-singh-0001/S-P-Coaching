@@ -53,48 +53,48 @@ const Contact = () => {
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-3">
-<label className="font-semibold text-gray-700 text-sm">
-  Name
-</label>
+              <label className="font-semibold text-gray-700 text-sm">
+                Name<span className="text-red-700">*</span>
+              </label>
               <input
                 type="text"
                 name="name"
-                placeholder="Student Name *"
+                placeholder="Student Name"
                 required
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
-<label className="font-semibold text-gray-700 text-sm">
-  email
-</label>
+              <label className="font-semibold text-gray-700 text-sm">
+                email<span className="text-red-700">*</span>
+              </label>
               <input
                 type="email"
                 name="email"
-                placeholder="Gmail *"
+                placeholder="Gmail"
                 required
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
-<label className="font-semibold text-gray-700 text-sm">
-  Phone Number
-</label>
+              <label className="font-semibold text-gray-700 text-sm">
+                Phone Number<span className="text-red-700">*</span>
+              </label>
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone Number *"
+                placeholder="Phone Number"
                 required
                 value={formData.phone}
                 onChange={handleChange}
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
-<label className="font-semibold text-gray-700 text-sm">
-  Enquiry Type
-</label>
+              <label className="font-semibold text-gray-700 text-sm">
+                Enquiry Type<span className="text-red-700">*</span>
+              </label>
               <select
                 name="enquiryType"
                 required
@@ -103,21 +103,21 @@ const Contact = () => {
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               >
-                <option value="">Select Enquiry Type *</option>
+                <option value="">Select Enquiry Type</option>
                 <option value="Admission">Admission</option>
                 <option value="Fees Enquiry">Fees Enquiry</option>
                 <option value="Course Information">Course Information</option>
                 <option value="Other">Other</option>
               </select>
-<label className="font-semibold text-gray-700 text-sm">
-  Message / Query
-</label>
+              <label className="font-semibold text-gray-700 text-sm">
+                Message / Query<span className="text-red-700">*</span>
+              </label>
               <textarea
                 rows="3"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Message / Query (Optional)"
+                placeholder="Message / Query "
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
