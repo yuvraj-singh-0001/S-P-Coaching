@@ -1,16 +1,9 @@
 const express = require("express");
-const { register, login } = require("../controllers/auth");
-const auth = require("../middlewares/auth");
-
 const router = express.Router();
 
-// Public
-router.post("/register", register);
-router.post("/login", login);
+const studentRoutes = require("../controllers/student/index");
 
-// Protected Test
-router.get("/secure", auth, (req, res) => {
-  res.json({ message: "Protected Route Working", user: req.user });
-});
+// /api/student/*
+router.use("/student", studentRoutes);
 
 module.exports = router;

@@ -8,6 +8,13 @@ const Admission = () => {
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
 
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
   // RUN WHEN COURSE CHANGES
   useEffect(() => {
     if (!selectedCourse) return;
@@ -72,6 +79,48 @@ const Admission = () => {
 
   }, [selectedCourse]);
 
+
+  // ================= SUBMIT FORM ==================
+  const handleSubmit = async () => {
+    if (!name || !phone || !email || (!selectedSubject && !selectedCourse.includes("9th & 10th"))) {
+      setMessage("Please fill all required fields.");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/student/admission", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: phone,
+          className: selectedCourse
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setMessage("🎉 Admission Form Submitted Successfully!");
+        setName("");
+        setEmail("");
+        setPhone("");
+      } else {
+        setMessage(data.message || "Failed to submit form");
+      }
+
+    } catch (err) {
+      setMessage("Server error or API not responding");
+    }
+
+    setLoading(false);
+  };
+
+
   return (
     <section className="pt-24 pb-12 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4">
@@ -108,6 +157,8 @@ const Admission = () => {
             <input
               type="text"
               placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full mt-1 px-3 py-2 border rounded"
             />
           </div>
@@ -120,6 +171,8 @@ const Admission = () => {
             <input
               type="tel"
               placeholder="Enter your mobile number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="w-full mt-1 px-3 py-2 border rounded"
             />
           </div>
@@ -132,6 +185,8 @@ const Admission = () => {
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 px-3 py-2 border rounded"
             />
           </div>
@@ -142,7 +197,6 @@ const Admission = () => {
               Select Subject
             </label>
 
-            {/* AUTO TEXT FOR 9–10 */}
             {selectedCourse.includes("9th & 10th") ? (
               <input
                 readOnly
@@ -156,7 +210,6 @@ const Admission = () => {
                 onChange={(e) => setSelectedSubject(e.target.value)}
               >
                 <option value="">Select Subject</option>
-
                 {subjects.map((sub, i) => (
                   <option key={i}>{sub}</option>
                 ))}
@@ -164,10 +217,20 @@ const Admission = () => {
             )}
           </div>
 
-          {/* SUBMIT */}
-          <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-md font-semibold">
-            Submit Admission Form
+          {/* SUBMIT BUTTON */}
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-md font-semibold"
+          >
+            {loading ? "Please wait..." : "Submit Admission Form"}
           </button>
+
+          {message && (
+            <p className="text-center mt-3 font-semibold text-green-600">
+              {message}
+            </p>
+          )}
         </div>
       </div>
     </section>
