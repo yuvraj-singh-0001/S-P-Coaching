@@ -10,16 +10,46 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  // ===== BACKEND CONNECTED SUBMIT =====
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Enquiry submitted! We'll contact you soon.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      enquiryType: "",
-      message: "",
-    });
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          enquiryType: formData.enquiryType,
+          enquiryMessage: formData.message,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("🎉 Enquiry Submitted Successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          enquiryType: "",
+          message: "",
+        });
+      } else {
+        alert(data.message || "Failed to submit enquiry");
+      }
+
+    } catch (err) {
+      alert("Server error — please try again later");
+    }
+
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -53,6 +83,7 @@ const Contact = () => {
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-3">
+
               <label className="font-semibold text-gray-700 text-sm">
                 Name<span className="text-red-700">*</span>
               </label>
@@ -66,6 +97,7 @@ const Contact = () => {
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
+
               <label className="font-semibold text-gray-700 text-sm">
                 email<span className="text-red-700">*</span>
               </label>
@@ -79,6 +111,7 @@ const Contact = () => {
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
+
               <label className="font-semibold text-gray-700 text-sm">
                 Phone Number<span className="text-red-700">*</span>
               </label>
@@ -92,6 +125,7 @@ const Contact = () => {
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg 
                 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-all"
               />
+
               <label className="font-semibold text-gray-700 text-sm">
                 Enquiry Type<span className="text-red-700">*</span>
               </label>
@@ -109,6 +143,7 @@ const Contact = () => {
                 <option value="Course Information">Course Information</option>
                 <option value="Other">Other</option>
               </select>
+
               <label className="font-semibold text-gray-700 text-sm">
                 Message / Query<span className="text-red-700">*</span>
               </label>
@@ -124,19 +159,20 @@ const Contact = () => {
 
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg 
                 font-semibold transition-all duration-300 hover:shadow-lg flex justify-center items-center gap-2"
               >
                 <Send size={16} />
-                Submit Enquiry
+                {loading ? "Please wait..." : "Submit Enquiry"}
               </button>
             </form>
           </div>
 
-          {/* VISIT CENTER */}
+          {/* VISIT CENTER CARD — unchanged */}
+          {/* (same as your original UI, preserved exactly) */}
           <div className="bg-white rounded-xl shadow-md border border-gray-100 
           hover:border-blue-300 transition-all duration-300 hover:shadow-lg p-4 flex flex-col h-full">
-
             <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
               Visit Our Center
             </h3>
@@ -208,7 +244,6 @@ const Contact = () => {
           </div>
 
         </div>
-
       </div>
     </section>
   );
