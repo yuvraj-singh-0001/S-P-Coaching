@@ -2,43 +2,42 @@ import React from "react";
 
 const teachers = [
   {
-    name: "Rajesh Kumar",
-    role: "Senior Physics Faculty",
-    qualification: "M.Sc (Physics), B.Ed",
-    university: "Banaras Hindu University (BHU)",
-    rank: "University Top Rank Holder",
+    name: "Santosh Sir",
+    role: "Senior Biology & Chemistry Faculty",
+    qualification: "B.Sc, M.Sc, B.Ed | UPTET | CTET | BSTET",
     experience: "10+ Years of Teaching Experience",
-    achievements: "Helped 300+ students score 90%+, guided multiple board toppers",
+    achievements:
+      "Helped 300+ students score 90%+, guided multiple board toppers",
     motivation:
-      "Teaching is not about completing syllabus, it is about building confidence and creating future achievers.",
-    desc: "Specializes in concept clarity, numerical problem solving and real-life understanding of Physics to make learning interesting and practical.",
-    image: "/images/teacher1.webp",
+      "Teaching is not about completing the syllabus; it is about building confidence and creating future achievers.",
+    desc: "Specializes in concept clarity, practical understanding, and strong exam preparation strategies in Biology and Chemistry.",
+    image: "/images/Santosh-sir.webp",
   },
   {
-    name: "Neha Sharma",
-    role: "Mathematics Faculty",
-    qualification: "M.Sc (Mathematics)",
-    university: "University of Delhi",
-    rank: "Gold Medalist",
-    experience: "8+ Years Experience",
-    achievements: "Students consistently scoring above 95%, Excellent track record in weak-to-topper transformation",
+    name: "Priya Ma'am",
+    role: "Mathematics & English Faculty",
+    qualification: "B.A (Maths), B.Ed, M.A | TET | CTET | BSTET",
+    rank: "University 2st Rank Holder in B.A (Maths)",
+    experience: "6+ Years of Teaching Experience",
+    achievements:
+      "Students consistently scoring above 95% with outstanding improvement in weak students.",
     motivation:
-      "Mathematics is not hard; it becomes easy when taught with patience and love.",
-    desc: "Expert in logic building, step-by-step explanation and strong focus on exam-oriented preparation with clarity.",
-    image: "/images/teacher2.webp",
+      "Mathematics is not hard; it becomes easy when it is taught with patience and proper guidance.",
+    desc: "Expert in logic building, step-by-step explanation, and exam-oriented preparation with complete clarity.",
+    image: "/images/Priya-maam.webp",
   },
   {
-    name: "Amit Verma",
-    role: "Chemistry Faculty",
-    qualification: "M.Sc (Chemistry)",
-    university: "Allahabad University",
-    rank: "Top Department Scholar",
-    experience: "7+ Years Experience",
-    achievements: "Produced multiple district rankers, known for crystal clear explanation style",
+    name: "Ajim Sir",
+    role: "Physics Faculty",
+    qualification: "B.Sc, M.Sc",
+    rank: "University 1st Rank Holder in B.Sc & M.Sc",
+    experience: "2+ Years of Teaching Experience",
+    achievements:
+      "Produced multiple district rankers, known for crystal-clear explanation and strong command over Physics concepts.",
     motivation:
-      "Success is not luck, it is dedication + right guidance. Every student can achieve great results.",
-    desc: "Expert in chemical reactions, numerical solving, and board exam strategy with easy explanations and doubt solving.",
-    image: "/images/teacher3.webp",
+      "Success is not luck; it is dedication with the right guidance. Every student can achieve excellence.",
+    desc: "Expert in Physics concepts, numerical problem solving, and easy-to-understand explanation with doubt support.",
+    image: "/images/Ajim-sir.webp",
   },
 ];
 
@@ -65,29 +64,34 @@ const Teachers = () => {
               key={index}
               className="bg-white border border-gray-300 hover:border-blue-700 rounded-xl p-5 shadow-sm hover:shadow-xl transition-all"
             >
-              <img
-                src={t.image}
-                alt={t.name}
-                loading="lazy"
-                className="w-full h-60 object-cover rounded-lg mb-3"
-              />
-
-              <h2 className="text-xl font-bold text-gray-800">{t.name}</h2>
-
-              <p className="text-blue-700 font-semibold text-sm">
-                {t.role}
-              </p>
-
-              <div className="mt-2 text-sm text-gray-700">
-                <p><span className="font-semibold">Qualification:</span> {t.qualification}</p>
-                <p><span className="font-semibold">University:</span> {t.university}</p>
-                <p><span className="font-semibold">Rank:</span> {t.rank}</p>
-                <p><span className="font-semibold">Experience:</span> {t.experience}</p>
+              {/* IMAGE FIX — NO BACKGROUND */}
+              <div className="w-full h-60 md:h-64 flex items-center justify-center overflow-hidden rounded-lg">
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  loading="lazy"
+                  className="w-full h-full object-contain"
+                />
               </div>
 
-              <p className="text-gray-600 text-sm mt-2">
-                {t.desc}
-              </p>
+              <h2 className="text-xl font-bold text-gray-800 mt-3">{t.name}</h2>
+              <p className="text-blue-700 font-semibold text-sm">{t.role}</p>
+
+              <div className="mt-2 text-sm text-gray-700">
+                <p>
+                  <span className="font-semibold">Qualification:</span> {t.qualification}
+                </p>
+                {t.rank && (
+                  <p>
+                    <span className="font-semibold">Rank:</span> {t.rank}
+                  </p>
+                )}
+                <p>
+                  <span className="font-semibold">Experience:</span> {t.experience}
+                </p>
+              </div>
+
+              <p className="text-gray-600 text-sm mt-2">{t.desc}</p>
 
               <div className="mt-2">
                 <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
@@ -101,7 +105,6 @@ const Teachers = () => {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
