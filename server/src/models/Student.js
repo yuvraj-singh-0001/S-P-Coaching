@@ -3,25 +3,34 @@ const mongoose = require("mongoose");
 const studentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
-
-  email: {
-    type: String,
-    required: true,
-    trim: true
-  },
-
+  email: String,
   phone: {
     type: String,
-    required: true,
-    trim: true
+    required: true
+  },
+  className: String,
+
+  admissionStatus: {
+    type: String,
+    enum: ["Pending", "Approved", "Rejected"],
+    default: "Pending"
   },
 
-  className: {
-    type: String,
-    required: true
+  fees: {
+    total: {
+      type: Number,
+      default: 0
+    },
+    paid: {
+      type: Number,
+      default: 0
+    },
+    remaining: {
+      type: Number,
+      default: 0
+    }
   },
 
   admissionDate: {

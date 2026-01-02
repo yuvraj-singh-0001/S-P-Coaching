@@ -6,6 +6,7 @@ import Fees from "../pages/Fees";
 import Admission from "../pages/Admission";
 import Teachers from "../pages/Teachers";
 import Resources from "../pages/Resources";
+import AdminDashboard from "../pages/AdminDashboard";
 
 
 
@@ -61,6 +62,7 @@ const AppRouter = () => {
         <Route path="/admission" element={<Layout><Admission /></Layout>} />
         <Route path="/teachers" element={<Layout><Teachers /></Layout>} />
         <Route path="/resources" element={<Layout><Resources /></Layout>} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
     </>
   );
