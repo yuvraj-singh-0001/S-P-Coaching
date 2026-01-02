@@ -1,5 +1,7 @@
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useState } from "react";
+import API from "../../config/apiconfig";
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact/enquiry", {
+      const res = await fetch(`${API.CONTACT}/enquiry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -207,7 +209,7 @@ const Contact = () => {
                 <div>
                   <h4 className="font-semibold text-gray-900 text-sm">Email</h4>
                   <a href="mailto:contact@spcoaching.com" className="text-gray-700 hover:text-blue-600 text-sm transition-colors">
-                    contact@spcoaching.com
+                   spcoachingclasses888@gmail.com
                   </a>
                 </div>
               </div>

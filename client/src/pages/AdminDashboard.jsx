@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
 import {
   FaUsers,
   FaCheckCircle,
@@ -10,7 +11,7 @@ import {
   FaEye,
 } from "react-icons/fa";
 
-const API = "http://localhost:5000/api/admin";
+import API from "../config/apiconfig";   // <-- IMPORTANT
 
 const AdminDashboard = () => {
   const [students, setStudents] = useState([]);
@@ -19,10 +20,12 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [selectedStudent, setSelectedStudent] = useState(null);
 
+  // ================= LOAD STUDENTS =================
   const getStudents = async () => {
     try {
       setLoading(true);
-      let url = `${API}/students`;
+
+      let url = `${API.ADMIN}/students`;
 
       if (activeTab === "APPROVED") url += "?status=Approved";
       else if (activeTab === "PENDING") url += "?status=Pending";
@@ -46,31 +49,40 @@ const AdminDashboard = () => {
     getStudents();
   }, [activeTab]);
 
+  // ================= UPDATE STATUS =================
   const updateStatus = async (id, status) => {
-    await axios.put(`${API}/students/status/${id}`, { status });
+    await axios.put(`${API.ADMIN}/students/status/${id}`, { status });
     alert(`Student ${status}`);
     setSelectedStudent(null);
     getStudents();
   };
 
+  // ================= UPDATE FEES =================
   const updateFees = async (id) => {
     const total = prompt("Enter Total Fee:");
     const paid = prompt("Enter Paid Fee:");
     if (!total || !paid) return;
-    await axios.put(`${API}/students/fees/${id}`, { total, paid });
+
+    await axios.put(`${API.ADMIN}/students/fees/${id}`, { total, paid });
     alert("Fees Updated");
     getStudents();
   };
 
+  // ================= DELETE STUDENT =================
   const deleteStudent = async (id) => {
     if (!window.confirm("Delete Student?")) return;
-    await axios.delete(`${API}/students/${id}`);
+    await axios.delete(`${API.ADMIN}/students/${id}`);
     alert("Student Deleted");
     getStudents();
   };
 
+  // ================= SAVE EDIT =================
   const saveEdit = async () => {
-    await axios.put(`${API}/students/${selectedStudent._id}`, selectedStudent);
+    await axios.put(
+      `${API.ADMIN}/students/${selectedStudent._id}`,
+      selectedStudent
+    );
+
     alert("Student Updated");
     setSelectedStudent(null);
     getStudents();
@@ -78,6 +90,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
+      
       {/* SIDEBAR */}
       <div className="hidden md:block w-64 bg-gray-900 text-white p-5">
         <h2 className="text-2xl font-bold mb-6">Admin Panel</h2>
@@ -118,7 +131,8 @@ const AdminDashboard = () => {
 
       {mobileMenu && (
         <div className="absolute bg-gray-900 text-white w-64 p-5 z-50 md:hidden">
-          <button onClick={() => setMobileMenu(false)} className="text-right w-full text-lg mb-2">X</button>
+          <button onClick={() => setMobileMenu(false)}
+            className="text-right w-full text-lg mb-2">X</button>
 
           <button onClick={() => {setActiveTab("ALL"); setMobileMenu(false)}} className="block w-full p-3 bg-gray-700 mb-2 rounded">All Students</button>
           <button onClick={() => {setActiveTab("APPROVED"); setMobileMenu(false)}} className="block w-full p-3 bg-gray-700 mb-2 rounded">Approved</button>
@@ -139,6 +153,7 @@ const AdminDashboard = () => {
         </h1>
 
         <div className="bg-white p-4 rounded shadow overflow-auto">
+
           {loading ? (
             <p>Loading...</p>
           ) : students.length === 0 ? (
@@ -160,7 +175,7 @@ const AdminDashboard = () => {
                   <tr key={s._id} className="border-b hover:bg-gray-50">
                     <td className="p-3 font-semibold">{s.name}</td>
                     <td className="p-3">{s.phone}</td>
-                    <td className="p-3">{s.className || "—"}</td>
+                    <td className="p-3">{s?.className || "—"}</td>
 
                     <td className="p-3">
                       <span className={`px-3 py-1 rounded text-white ${
@@ -175,7 +190,8 @@ const AdminDashboard = () => {
                     </td>
 
                     <td className="p-3 flex gap-2 flex-wrap">
-                      <button onClick={() => setSelectedStudent(s)}
+                      <button
+                        onClick={() => setSelectedStudent(s)}
                         className="px-3 py-1 bg-blue-600 text-white rounded flex items-center gap-2">
                         <FaEye /> View / Edit
                       </button>
@@ -222,15 +238,22 @@ const AdminDashboard = () => {
 
               <input className="border p-2 rounded"
                 value={selectedStudent?.fees?.total || 0}
-                onChange={(e)=>setSelectedStudent({...selectedStudent,fees:{...selectedStudent.fees,total:e.target.value}})} />
+                onChange={(e)=>setSelectedStudent({
+                  ...selectedStudent,
+                  fees:{...selectedStudent.fees,total:e.target.value}
+                })} />
 
               <input className="border p-2 rounded"
                 value={selectedStudent?.fees?.paid || 0}
-                onChange={(e)=>setSelectedStudent({...selectedStudent,fees:{...selectedStudent.fees,paid:e.target.value}})} />
+                onChange={(e)=>setSelectedStudent({
+                  ...selectedStudent,
+                  fees:{...selectedStudent.fees,paid:e.target.value}
+                })} />
             </div>
 
             <div className="flex gap-3 mt-5 flex-wrap">
-              <button onClick={saveEdit} className="px-4 py-2 bg-green-600 text-white rounded">
+              <button onClick={saveEdit}
+                className="px-4 py-2 bg-green-600 text-white rounded">
                 Save Changes
               </button>
 
@@ -242,6 +265,11 @@ const AdminDashboard = () => {
               <button onClick={()=>updateStatus(selectedStudent._id,"Rejected")}
                 className="px-4 py-2 bg-red-600 text-white rounded">
                 Reject
+              </button>
+
+              <button onClick={()=>updateFees(selectedStudent._id)}
+                className="px-4 py-2 bg-purple-700 text-white rounded">
+                Update Fees
               </button>
 
               <button onClick={()=>setSelectedStudent(null)}

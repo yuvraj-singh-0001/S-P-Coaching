@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import API from "../config/apiconfig";
 
 const Admission = () => {
   const location = useLocation();
@@ -76,13 +77,16 @@ const Admission = () => {
       setSelectedSubject("");
       return;
     }
-
   }, [selectedCourse]);
-
 
   // ================= SUBMIT FORM ==================
   const handleSubmit = async () => {
-    if (!name || !phone || !email || (!selectedSubject && !selectedCourse.includes("9th & 10th"))) {
+    if (
+      !name ||
+      !phone ||
+      !email ||
+      (!selectedSubject && !selectedCourse.includes("9th & 10th"))
+    ) {
       setMessage("Please fill all required fields.");
       return;
     }
@@ -91,14 +95,14 @@ const Admission = () => {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/student/admission", {
+      const res = await fetch(`${API.STUDENT}/admission`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: name,
-          email: email,
-          phone: phone,
-          className: selectedCourse
+          name,
+          email,
+          phone,
+          className: selectedCourse,
         }),
       });
 
@@ -112,7 +116,6 @@ const Admission = () => {
       } else {
         setMessage(data.message || "Failed to submit form");
       }
-
     } catch (err) {
       setMessage("Server error or API not responding");
     }
@@ -120,22 +123,20 @@ const Admission = () => {
     setLoading(false);
   };
 
-
   return (
     <section className="pt-24 pb-12 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4">
-
         <h1 className="text-3xl font-bold text-gray-900 text-center">
           Admission Form
         </h1>
         <div className="w-24 h-[3px] bg-yellow-400 mx-auto my-3"></div>
 
         <p className="text-center text-gray-600 mb-6">
-          Fill your details to take admission. Most details are already selected for you.
+          Fill your details to take admission. Most details are already selected
+          for you.
         </p>
 
         <div className="bg-white p-6 rounded-xl shadow-md border">
-
           {/* COURSE */}
           <div className="mb-4">
             <label className="font-semibold text-gray-700">
@@ -151,9 +152,7 @@ const Admission = () => {
 
           {/* NAME */}
           <div className="mb-4">
-            <label className="font-semibold text-gray-700">
-              Student Name
-            </label>
+            <label className="font-semibold text-gray-700">Student Name</label>
             <input
               type="text"
               placeholder="Enter your full name"
@@ -179,9 +178,7 @@ const Admission = () => {
 
           {/* EMAIL */}
           <div className="mb-4">
-            <label className="font-semibold text-gray-700">
-              Gmail
-            </label>
+            <label className="font-semibold text-gray-700">Gmail</label>
             <input
               type="email"
               placeholder="Enter your email"

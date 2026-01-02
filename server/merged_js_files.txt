@@ -1,0 +1,531 @@
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\server.js ===
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDB = require("./src/api/config/db");
+const routes = require("./src/routes/router");
+
+dotenv.config();
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// DB
+connectDB();
+
+// API routes
+app.use("/api", routes);
+
+// Test
+app.get("/", (req, res) => {
+  res.send("Server Running Successfully 🚀");
+});
+
+app.listen(process.env.PORT, () =>
+  console.log(`Server running on port ${process.env.PORT}`)
+);
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\api\admin\students-manamennt.js ===
+const Student = require("../../models/Student");
+
+// Get all students + filters
+async function getStudents(req, res) {
+  try {
+    const { status, className, search } = req.query;
+
+    let query = {};
+
+    if (status) query.admissionStatus = status;
+    if (className) query.className = className;
+    if (search)
+      query.name = { $regex: search, $options: "i" };
+
+    const students = await Student.find(query).sort({ admissionDate: -1 });
+
+    res.json({
+      success: true,
+      students
+    });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+// Update Status
+async function updateStatus(req, res) {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    await Student.findByIdAndUpdate(id, {
+      admissionStatus: status
+    });
+
+    res.json({ success: true, message: "Status Updated Successfully" });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+// Update Fees
+async function updateFees(req, res) {
+  try {
+    const { id } = req.params;
+    const { total, paid } = req.body;
+
+    const remaining = total - paid;
+
+    await Student.findByIdAndUpdate(id, {
+      fees: { total, paid, remaining }
+    });
+
+    res.json({ success: true, message: "Fees Updated Successfully" });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+// Delete Student
+async function deleteStudent(req, res) {
+  try {
+    const { id } = req.params;
+    await Student.findByIdAndDelete(id);
+    res.json({ success: true, message: "Student Removed" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
+// UPDATE FULL STUDENT DATA
+async function updateStudent(req, res) {
+  try {
+    const { id } = req.params;
+
+    const updated = await Student.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      message: "Student Updated Successfully",
+      student: updated
+    });
+    
+  } catch (err) {
+    res.status(500).json({ success:false, message: err.message });
+  }
+}
+
+module.exports = {
+  getStudents,
+  updateStatus,
+  updateFees,
+  deleteStudent,
+  updateStudent
+};
+
+
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\api\config\db.js ===
+const mongoose = require("mongoose");
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected Successfully");
+  } catch (err) {
+    console.log("MongoDB Connection Failed", err.message);
+  }
+};
+
+module.exports = connectDB;
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\api\contact\enquiry.js ===
+const Contact = require("../../models/Contact");
+const brevo = require("@getbrevo/brevo");
+
+async function enquiry(req, res) {
+  try {
+    const { name, email, phone, enquiryType, enquiryMessage } = req.body;
+
+    if (!name || !email || !phone || !enquiryType || !enquiryMessage) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    // SAVE TO DATABASE
+    const contact = await Contact.create({
+      name,
+      email,
+      phone,
+      enquiryType,
+      enquiryMessage,
+    });
+
+    // ================= BREVO CLIENT =================
+    const client = new brevo.TransactionalEmailsApi();
+    client.setApiKey(
+      brevo.TransactionalEmailsApiApiKeys.apiKey,
+      process.env.BREVO_API_KEY
+    );
+
+    // ================= USER AUTO REPLY =================
+    let replyMessage = "";
+
+    if (enquiryType === "Admission") {
+      replyMessage = `
+        <h2>Hello ${name},</h2>
+        <p>Thank you for contacting <strong>SP Coaching</strong> regarding <b>Admission</b>.</p>
+        <p>Our team will reach out to you shortly with admission details.</p>
+        <p>Regards,<br/>SP Coaching<br/>Paudali Bazar, Deoria<br/>Contact: 8887581808</p>
+      `;
+    } 
+    else if (enquiryType === "Fees Enquiry") {
+      replyMessage = `
+        <h2>Hello ${name},</h2>
+        <p>Thank you for contacting SP Coaching regarding <b>Fees</b>.</p>
+        <p>We will contact you shortly and share full fee structure.</p>
+        <p>Regards,<br/>SP Coaching</p>
+      `;
+    } 
+    else if (enquiryType === "Course Information") {
+      replyMessage = `
+        <h2>Hello ${name},</h2>
+        <p>Thank you for contacting SP Coaching regarding <b>Course details</b>.</p>
+        <p>We will soon provide syllabus & duration information.</p>
+        <p>Regards,<br/>SP Coaching</p>
+      `;
+    } 
+    else {
+      replyMessage = `
+        <h2>Hello ${name},</h2>
+        <p>Thank you for contacting SP Coaching.</p>
+        <p>We have received your enquiry & our team will get back soon.</p>
+        <p>Regards,<br/>SP Coaching</p>
+      `;
+    }
+
+    await client.sendTransacEmail({
+      sender: { email: process.env.MAIL_FROM, name: "SP Coaching" },
+      to: [{ email }],
+      subject: "📩 We Received Your Enquiry — SP Coaching",
+      htmlContent: replyMessage,
+    });
+
+    // ================= ADMIN NOTIFICATION =================
+    await client.sendTransacEmail({
+      sender: { email: process.env.MAIL_FROM, name: "SP Coaching Website" },
+      to: [{ email: process.env.ADMIN_EMAIL }],
+      subject: `📢 New Enquiry — ${enquiryType}`,
+      htmlContent: `
+        <h2>New Contact Enquiry</h2>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Type:</b> ${enquiryType}</p>
+        <p><b>Message:</b> ${enquiryMessage}</p>
+        <hr/>
+        <p>Website: SP Coaching</p>
+      `,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Enquiry Submitted + Auto Reply Sent + Admin Notified",
+      data: contact,
+    });
+
+  } catch (err) {
+    console.log("Brevo Error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: err.message,
+    });
+  }
+}
+
+module.exports = enquiry;
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\api\student\admission.js ===
+const Student = require("../../models/Student");
+
+async function admission(req, res) {
+  try {
+    const { name, email, phone, className } = req.body;
+
+    if (!name || !email || !phone || !className) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    const student = await Student.create({
+      name,
+      email,
+      phone,
+      className,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Student Admission Successful",
+      data: student,
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+}
+
+module.exports = admission;
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\controllers\admin\index.js ===
+const express = require("express");
+const router = express.Router();
+
+const {
+  getStudents,
+  updateStatus,
+  updateFees,
+  deleteStudent,
+  updateStudent
+} = require("../../api/admin/students-manamennt");
+
+// GET students with filters
+router.get("/students", getStudents);
+
+// UPDATE status
+router.put("/students/status/:id", updateStatus);
+
+// UPDATE fees
+router.put("/students/fees/:id", updateFees);
+
+// DELETE
+router.delete("/students/:id", deleteStudent);
+// UPDATE full student data
+router.put("/students/:id", updateStudent);
+
+module.exports = router;
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\controllers\auth\index.js ===
+exports.register = async (req, res) => {
+  res.json({ message: "Register API Working" });
+};
+
+exports.login = async (req, res) => {
+  res.json({ message: "Login API Working" });
+};
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\controllers\contact\index.js ===
+const express = require("express");
+const router = express.Router();
+const enquiry = require("../../api/contact/enquiry");
+
+// Route
+router.post("/enquiry", enquiry);   
+module.exports = router;
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\controllers\student\index.js ===
+const express = require("express");
+const router = express.Router();
+
+const  admission = require("../../api/student/admission");
+
+// Route
+router.post("/admission", admission);
+
+module.exports = router;
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\middlewares\auth.js ===
+const jwt = require("jsonwebtoken");
+
+module.exports = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) return res.status(401).json({ message: "No token" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded.id;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\models\Contact.js ===
+const mongoose = require("mongoose");
+
+const contactSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+
+  email: {
+    type: String,
+    required: true
+  },
+
+  phone: {
+    type: String,
+    required: true
+  },
+
+  enquiryType: {
+    type: String,
+    required: true
+  },
+
+  enquiryMessage: {
+    type: String,
+    required: true
+  },
+
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+module.exports = mongoose.model("Contact", contactSchema);
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\models\Student.js ===
+const mongoose = require("mongoose");
+
+const studentSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  email: String,
+  phone: {
+    type: String,
+    required: true
+  },
+  className: String,
+
+  admissionStatus: {
+    type: String,
+    enum: ["Pending", "Approved", "Rejected"],
+    default: "Pending"
+  },
+
+  fees: {
+    total: {
+      type: Number,
+      default: 0
+    },
+    paid: {
+      type: Number,
+      default: 0
+    },
+    remaining: {
+      type: Number,
+      default: 0
+    }
+  },
+
+  admissionDate: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+module.exports = mongoose.model("Student", studentSchema);
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\models\User.js ===
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true },
+  password: String,
+});
+
+module.exports = mongoose.model("User", userSchema);
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\routes\router.js ===
+const express = require("express");
+const router = express.Router();
+
+const studentRoutes = require("../controllers/student/index");
+const contactRoutes = require("../controllers/contact/index");
+const adminRoutes = require("../controllers/admin/index");
+
+// /api/contact/*
+router.use("/contact", contactRoutes);
+
+// /api/student/*
+router.use("/student", studentRoutes);
+// /api/admin/*
+router.use("/admin", adminRoutes);
+
+module.exports = router;
+
+--- END OF FILE ---
+
+=== FILE: C:\Users\YUVRAJ\Desktop\S-P Coaching\server\src\utils\email.js ===
+const Brevo = require("@getbrevo/brevo");
+const apiInstance = new Brevo.TransactionalEmailsApi();
+
+apiInstance.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
+
+exports.sendMail = async (to, subject, html) => {
+  try {
+    await apiInstance.sendTransacEmail({
+      sender: { email: "spcoachingclasses888@gmail.com", name: "S-P Coaching" },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    });
+  } catch (err) {
+    console.log("Mail Error:", err.message);
+  }
+};
+
+--- END OF FILE ---
+
+
+=== END OF MERGE (Total files: 15) ===
