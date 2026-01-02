@@ -11,7 +11,7 @@ import {
   FaEye,
 } from "react-icons/fa";
 
-import API from "../config/apiconfig";   // <-- IMPORTANT
+import API from "../../config/apiconfig";   // <-- IMPORTANT
 
 const AdminDashboard = () => {
   const [students, setStudents] = useState([]);

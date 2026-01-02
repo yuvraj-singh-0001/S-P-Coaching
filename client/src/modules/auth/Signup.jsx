@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import API from "../config/apiconfig";
+import API from "../../config/apiconfig";
 
 const Signup = () => {
   const navigate = useNavigate();

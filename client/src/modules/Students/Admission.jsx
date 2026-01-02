@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import API from "../config/apiconfig";
+import API from "../../config/apiconfig";
 
 const Admission = () => {
   const location = useLocation();
