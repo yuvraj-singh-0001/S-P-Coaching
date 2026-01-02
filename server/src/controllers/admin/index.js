@@ -1,13 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-const {
-  getStudents,
-  updateStatus,
-  updateFees,
-  deleteStudent,
-  updateStudent
-} = require("../../api/admin/students-manamennt");
+const getStudents = require("../../api/admin/getStudents");
+const updateStatus = require("../../api/admin/updateStatus");
+const updateFees = require("../../api/admin/updateFees");
+const deleteStudent = require("../../api/admin/deleteStudent");
+const updateStudent = require("../../api/admin/updateStudent");
 
 // GET students with filters
 router.get("/students", getStudents);
