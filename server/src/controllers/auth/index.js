@@ -1,7 +1,10 @@
-exports.register = async (req, res) => {
-  res.json({ message: "Register API Working" });
-};
+const express = require("express");
+const router = express.Router();
 
-exports.login = async (req, res) => {
-  res.json({ message: "Login API Working" });
-};
+const {signup,login,logout} = require("../../api/auth/signupall");
+
+router.post("/signup", signup);
+router.post("/login", login);
+router.get("/logout", logout);
+
+module.exports = router;

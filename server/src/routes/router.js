@@ -4,6 +4,9 @@ const router = express.Router();
 const studentRoutes = require("../controllers/student/index");
 const contactRoutes = require("../controllers/contact/index");
 const adminRoutes = require("../controllers/admin/index");
+const authRoutes = require("../controllers/auth/index");
+// /api/auth/*
+router.use("/auth", authRoutes);
 
 // /api/contact/*
 router.use("/contact", contactRoutes);

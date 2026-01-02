@@ -1,28 +1,38 @@
-require("dotenv").config();   // note : Load before anything else ,dotenv was loading AFTER your email utility file, so the Brevo API key was read as empty.
+require("dotenv").config(); // MUST be first
 
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
 const connectDB = require("./src/api/config/db");
 const routes = require("./src/routes/router");
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// ===== CORS (IMPORTANT FOR LOGIN COOKIES) =====
+app.use(
+  cors({
+    origin: "http://localhost:3100", // your frontend URL
+    credentials: true
+  })
+);
 
-// Connect Database
+// ===== MIDDLEWARE =====
+app.use(express.json());
+app.use(cookieParser());
+
+// ===== DATABASE =====
 connectDB();
 
-// API Routes
+// ===== ROUTES =====
 app.use("/api", routes);
 
-// Test Route
+// ===== TEST =====
 app.get("/", (req, res) => {
   res.send("Server Running Successfully 🚀");
 });
 
-// PORT
+// ===== PORT =====
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
