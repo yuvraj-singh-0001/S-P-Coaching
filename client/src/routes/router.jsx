@@ -1,17 +1,16 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-
 import Layout from "../components/layout/Layout";
 
 import Home from "../pages/Home";
-import Fees from "../pages/Fees";
-import Admission from "../pages/Admission";
+import Fees from "../modules/Students/Fees";  
+import Admission from "../modules/Students/Admission";
 import Teachers from "../pages/Teachers";
 import Resources from "../pages/Resources";
-import AdminDashboard from "../pages/AdminDashboard";
+import AdminDashboard from "../modules/Admin/AdminDashboard";
 
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
+import Login from "../modules/auth/Login";
+import Signup from "../modules/auth/Signup";
 
 // ================= SCROLL HANDLER =================
 const ScrollToSection = () => {
