@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import API from "../../config/apiconfig";
 
-const StudentModal = ({ student, onClose, onRefresh }) => {
+const StudentModal = ({ student, onClose, onRefresh, onSuccess }) => {
   const [form, setForm] = useState({ ...student });
   const [loading, setLoading] = useState(false);
 
@@ -12,7 +12,6 @@ const StudentModal = ({ student, onClose, onRefresh }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // UPDATE STUDENT
   const saveChanges = async () => {
     setLoading(true);
     await axios.put(
@@ -21,13 +20,19 @@ const StudentModal = ({ student, onClose, onRefresh }) => {
       { withCredentials: true }
     );
     setLoading(false);
+
     onRefresh();
     onClose();
+
+    // ✅ SUCCESS MESSAGE
+    if (onSuccess) {
+      onSuccess("Student details updated successfully");
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white w-full max-w-xl rounded shadow p-6 relative">
+      <div className="bg-white w-full max-w-xl rounded shadow p-6">
 
         <h2 className="text-xl font-bold mb-4">
           Student Details

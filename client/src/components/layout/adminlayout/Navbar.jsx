@@ -1,11 +1,12 @@
 import { FaBars } from "react-icons/fa";
 
-const Navbar = ({ onMenuClick }) => {
+const Navbar = ({ onMobileMenu }) => {
   return (
     <header className="bg-white shadow px-4 py-3 flex items-center justify-between">
+      {/* MOBILE MENU ONLY */}
       <button
-        onClick={onMenuClick}
-        className="md:hidden text-xl"
+        onClick={onMobileMenu}
+        className="md:hidden text-xl text-gray-700"
       >
         <FaBars />
       </button>

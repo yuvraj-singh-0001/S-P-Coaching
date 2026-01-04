@@ -4,36 +4,33 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 const AdminLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setSidebarOpen(window.innerWidth >= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (window.innerWidth >= 768) {
+      setSidebarOpen(true);
+    }
   }, []);
 
   return (
-    <div className="min-h-screen flex bg-gray-100 overflow-hidden">
+    <div className="min-h-screen bg-gray-100 overflow-hidden">
       {/* SIDEBAR */}
       <Sidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
       />
 
       {/* CONTENT */}
       <div
-        className={`flex flex-col flex-1 transition-all duration-300 ${
-          sidebarOpen ? "md:ml-64" : "ml-0"
+        className={`transition-all duration-300 ${
+          sidebarOpen ? "md:ml-64" : "md:ml-16"
         }`}
       >
-        <Navbar
-          onMenuClick={() => setSidebarOpen(!sidebarOpen)}
-        />
+        <Navbar onMobileMenu={() => setSidebarOpen(true)} />
 
-        <main className="p-4 md:p-6 w-full">
+        {/* IMPORTANT: overflow-x-auto */}
+        <main className="p-3 md:p-6 overflow-x-auto">
           <Outlet />
         </main>
       </div>

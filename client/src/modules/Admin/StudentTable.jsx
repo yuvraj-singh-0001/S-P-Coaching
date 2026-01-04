@@ -4,18 +4,23 @@ const StudentTable = ({
   students,
   onView,
   onDelete,
-  onStatusChange,
-  hideActions = false
+  onApprove,
+  onReject
 }) => {
+  const showActions = onView || onDelete || onApprove || onReject;
+
   return (
-    <div className="bg-white rounded shadow overflow-auto">
-      <table className="w-full min-w-[700px]">
+    // 🔥 KEY FIX: overflow-x-auto + min-width
+    <div className="w-full overflow-x-auto bg-white rounded shadow">
+      <table className="min-w-[900px] w-full">
         <thead className="bg-gray-800 text-white">
           <tr>
-            <th className="p-3">Name</th>
-            <th className="p-3">Class</th>
-            <th className="p-3">Status</th>
-            {!hideActions && <th className="p-3">Actions</th>}
+            <th className="p-3 text-left">Name</th>
+            <th className="p-3 text-left">Class</th>
+            <th className="p-3 text-left">Status</th>
+            {showActions && (
+              <th className="p-3 text-left">Actions</th>
+            )}
           </tr>
         </thead>
 
@@ -29,7 +34,7 @@ const StudentTable = ({
           )}
 
           {students.map((s) => (
-            <tr key={s._id} className="border-b hover:bg-gray-50">
+            <tr key={s._id} className="border-b">
               <td className="p-3">{s.name}</td>
               <td className="p-3">{s.className}</td>
 
@@ -47,7 +52,7 @@ const StudentTable = ({
                 </span>
               </td>
 
-              {!hideActions && (
+              {showActions && (
                 <td className="p-3 flex gap-2">
                   {onView && (
                     <button
@@ -57,29 +62,22 @@ const StudentTable = ({
                       <FaEye />
                     </button>
                   )}
-
-                  {onStatusChange && (
-                    <>
-                      <button
-                        onClick={() =>
-                          onStatusChange(s._id, "Approved")
-                        }
-                        className="bg-green-600 text-white px-3 py-1 rounded"
-                      >
-                        <FaCheck />
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          onStatusChange(s._id, "Rejected")
-                        }
-                        className="bg-red-600 text-white px-3 py-1 rounded"
-                      >
-                        <FaTimes />
-                      </button>
-                    </>
+                  {onApprove && (
+                    <button
+                      onClick={() => onApprove(s._id)}
+                      className="bg-green-600 text-white px-3 py-1 rounded"
+                    >
+                      <FaCheck />
+                    </button>
                   )}
-
+                  {onReject && (
+                    <button
+                      onClick={() => onReject(s._id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded"
+                    >
+                      <FaTimes />
+                    </button>
+                  )}
                   {onDelete && (
                     <button
                       onClick={() => onDelete(s._id)}

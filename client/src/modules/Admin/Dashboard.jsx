@@ -7,42 +7,32 @@ const Dashboard = () => {
 
   if (loading) return <p>Loading dashboard...</p>;
 
-  const stats = {
-    total: students.length,
-    pending: students.filter(s => s.admissionStatus === "Pending").length,
-    approved: students.filter(s => s.admissionStatus === "Approved").length,
-    rejected: students.filter(s => s.admissionStatus === "Rejected").length,
-    dueFees: students.filter(s => s.fees?.remaining > 0).length
-  };
+  const stats = [
+    { label: "All Students", value: students.length, path: "/admin/students", color: "bg-blue-600" },
+    { label: "Pending", value: students.filter(s => s.admissionStatus === "Pending").length, path: "/admin/students/pending", color: "bg-yellow-500" },
+    { label: "Approved", value: students.filter(s => s.admissionStatus === "Approved").length, path: "/admin/students/approved", color: "bg-green-600" },
+    { label: "Rejected", value: students.filter(s => s.admissionStatus === "Rejected").length, path: "/admin/students/rejected", color: "bg-red-600" },
+    { label: "Due Fees", value: students.filter(s => s.fees?.remaining > 0).length, path: "/admin/fees", color: "bg-purple-600" }
+  ];
 
   return (
     <>
       <h2 className="text-2xl font-bold mb-6">Dashboard Overview</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        <Card title="Total Students" value={stats.total} color="bg-blue-600" />
-        <Card title="Pending" value={stats.pending} color="bg-yellow-500" />
-        <Card title="Approved" value={stats.approved} color="bg-green-600" />
-        <Card title="Rejected" value={stats.rejected} color="bg-red-600" />
-
-        <div
-          onClick={() => navigate("/admin/fees")}
-          className="bg-purple-600 text-white p-6 rounded shadow cursor-pointer hover:scale-105 transition"
-        >
-          <h3 className="text-lg">Due Fees</h3>
-          <p className="text-3xl font-bold">{stats.dueFees}</p>
-          <p className="text-sm mt-1 underline">View Details</p>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {stats.map(card => (
+          <div
+            key={card.label}
+            onClick={() => navigate(card.path)}
+            className={`${card.color} text-white p-5 rounded shadow cursor-pointer hover:opacity-90`}
+          >
+            <p className="text-sm">{card.label}</p>
+            <p className="text-2xl font-bold">{card.value}</p>
+          </div>
+        ))}
       </div>
     </>
   );
 };
-
-const Card = ({ title, value, color }) => (
-  <div className={`${color} text-white p-6 rounded shadow`}>
-    <h3 className="text-lg">{title}</h3>
-    <p className="text-3xl font-bold">{value}</p>
-  </div>
-);
 
 export default Dashboard;
