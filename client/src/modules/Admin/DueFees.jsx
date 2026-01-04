@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import API from "../../config/apiconfig";
+import { useAdminStudents } from "../Admin/AdminStudentContext";
 
 const DueFees = () => {
-  const [students, setStudents] = useState([]);
+  const { students, loading } = useAdminStudents();
+  if (loading) return <p>Loading...</p>;
 
-  useEffect(() => {
-    axios.get(`${API.ADMIN}/students`).then(res => {
-      const due = res.data.students.filter(
-        s => s.fees && s.fees.remaining > 0
-      );
-      setStudents(due);
-    });
-  }, []);
+  const dueStudents = students.filter(s => s.fees?.remaining > 0);
 
   return (
     <>
@@ -28,7 +20,7 @@ const DueFees = () => {
             </tr>
           </thead>
           <tbody>
-            {students.map(s => (
+            {dueStudents.map(s => (
               <tr key={s._id} className="border-b">
                 <td className="p-3">{s.name}</td>
                 <td className="p-3">{s.className}</td>

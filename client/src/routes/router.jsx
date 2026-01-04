@@ -2,18 +2,18 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Layout from "../components/layout/Layout";
 
-// PUBLIC
+/* PUBLIC */
 import Home from "../pages/Home";
 import Fees from "../modules/Students/Fees";
 import Admission from "../modules/Students/Admission";
 import Teachers from "../pages/Teachers";
 import Resources from "../pages/Resources";
 
-// AUTH
+/* AUTH */
 import Login from "../modules/auth/Login";
 import Signup from "../modules/auth/Signup";
 
-// ADMIN LAYOUT + PAGES
+/* ADMIN */
 import AdminLayout from "../components/layout/adminlayout/AdminLayout";
 import Dashboard from "../modules/Admin/Dashboard";
 import AllStudents from "../modules/Admin/AllStudents";
@@ -21,8 +21,9 @@ import PendingStudents from "../modules/Admin/PendingStudents";
 import ApprovedStudents from "../modules/Admin/ApprovedStudents";
 import RejectedStudents from "../modules/Admin/RejectedStudents";
 import DueFees from "../modules/Admin/DueFees";
+import { AdminStudentProvider } from "../modules/Admin/AdminStudentContext";
 
-// ================= SCROLL HANDLER =================
+/* ================= SCROLL HANDLER ================= */
 const ScrollToSection = () => {
   const location = useLocation();
 
@@ -57,7 +58,7 @@ const ScrollToSection = () => {
   return null;
 };
 
-// ================= ROUTER =================
+/* ================= ROUTER ================= */
 const AppRouter = () => {
   return (
     <>
@@ -79,8 +80,15 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* ADMIN (NESTED – PROFESSIONAL) */}
-        <Route path="/admin" element={<AdminLayout />}>
+        {/* ADMIN (CONTEXT CORRECTLY WRAPPED) */}
+        <Route
+          path="/admin"
+          element={
+            <AdminStudentProvider>
+              <AdminLayout />
+            </AdminStudentProvider>
+          }
+        >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="students" element={<AllStudents />} />
           <Route path="students/pending" element={<PendingStudents />} />

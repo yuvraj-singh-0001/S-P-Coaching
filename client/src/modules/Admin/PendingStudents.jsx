@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import API from "../../config/apiconfig";
-import StudentTable from "../Admin/StudentTable";
+import { useAdminStudents } from "./AdminStudentContext";
+import StudentTable from "./StudentTable";
 
 const PendingStudents = () => {
-  const [students, setStudents] = useState([]);
+  const { students, loading } = useAdminStudents();
+  if (loading) return <p>Loading...</p>;
 
-  useEffect(() => {
-    axios
-      .get(`${API.ADMIN}/students?status=Pending`)
-      .then(res => setStudents(res.data.students));
-  }, []);
+  const pending = students.filter(
+    (s) => s.admissionStatus === "Pending"
+  );
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-4">Pending Admissions</h2>
-      <StudentTable students={students} onDelete={()=>{}} onView={()=>{}} />
+      <h2 className="text-2xl font-bold mb-4">Pending Students</h2>
+      <StudentTable students={pending} hideActions />
     </>
   );
 };

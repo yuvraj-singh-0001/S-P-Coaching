@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import API from "../../config/apiconfig";
-import StudentTable from "../Admin/StudentTable";
-import StudentModal from "../Admin/StudentModal";
+import StudentTable from "./StudentTable";
+import StudentModal from "./StudentModal";
+import { useAdminStudents } from "../Admin/AdminStudentContext";
 
 const AllStudents = () => {
-  const [students, setStudents] = useState([]);
+  const { students, loading, refreshStudents } = useAdminStudents();
   const [selected, setSelected] = useState(null);
 
-  const loadStudents = async () => {
-    const res = await axios.get(`${API.ADMIN}/students`, { withCredentials: true });
-    setStudents(res.data.students);
-  };
-
-  useEffect(() => {
-    loadStudents();
-  }, []);
+  if (loading) return <p>Loading students...</p>;
 
   const deleteStudent = async (id) => {
     if (!window.confirm("Delete student?")) return;
-    await axios.delete(`${API.ADMIN}/students/${id}`, { withCredentials: true });
-    loadStudents();
+    await axios.delete(`${API.ADMIN}/students/${id}`, {
+      withCredentials: true
+    });
+    refreshStudents();
   };
 
   const updateStatus = async (id, status) => {
@@ -29,8 +25,7 @@ const AllStudents = () => {
       { status },
       { withCredentials: true }
     );
-    // EMAIL WILL STILL SEND (backend)
-    loadStudents();
+    refreshStudents();
   };
 
   return (
@@ -48,7 +43,7 @@ const AllStudents = () => {
         <StudentModal
           student={selected}
           onClose={() => setSelected(null)}
-          onRefresh={loadStudents}
+          onRefresh={refreshStudents}
         />
       )}
     </>
