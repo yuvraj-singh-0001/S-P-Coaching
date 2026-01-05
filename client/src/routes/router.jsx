@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Layout from "../components/layout/Layout";
+import ProtectedRoute from "../protected/Protected";
 
 /* PUBLIC */
 import Home from "../pages/Home";
@@ -21,38 +22,27 @@ import PendingStudents from "../modules/Admin/PendingStudents";
 import ApprovedStudents from "../modules/Admin/ApprovedStudents";
 import RejectedStudents from "../modules/Admin/RejectedStudents";
 import DueFees from "../modules/Admin/DueFees";
+import AdminProfile from "../modules/Admin/AdminProfile";
+
 import { AdminStudentProvider } from "../modules/Admin/AdminStudentContext";
+import { AdminAuthProvider } from "../modules/Admin/AdminAuthContext";
 
 /* ================= SCROLL HANDLER ================= */
 const ScrollToSection = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const scrollWithRetry = (id, tries = 10) => {
-      if (tries === 0) return;
-
-      const element = document.getElementById(id);
-      const navHeight = document.querySelector("nav")?.offsetHeight || 100;
-
-      if (element) {
-        const y =
-          element.getBoundingClientRect().top +
-          window.pageYOffset -
-          navHeight -
-          10;
-
-        window.scrollTo({ top: y, behavior: "smooth" });
-      } else {
-        setTimeout(() => scrollWithRetry(id, tries - 1), 120);
-      }
-    };
-
     const path = location.pathname;
-
-    if (path === "/about") scrollWithRetry("about");
-    else if (path === "/courses") scrollWithRetry("courses");
-    else if (path === "/contact") scrollWithRetry("contact");
-    else window.scrollTo({ top: 0, behavior: "smooth" });
+    if (
+      path === "/about" ||
+      path === "/courses" ||
+      path === "/contact"
+    ) {
+      const id = path.replace("/", "");
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0 });
+    }
   }, [location]);
 
   return null;
@@ -80,13 +70,17 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* ADMIN (CONTEXT CORRECTLY WRAPPED) */}
+        {/* ADMIN – PROTECTED (ADMIN ONLY) */}
         <Route
           path="/admin"
           element={
-            <AdminStudentProvider>
-              <AdminLayout />
-            </AdminStudentProvider>
+            <AdminAuthProvider>
+              <ProtectedRoute allowRoles={["admin"]}>
+                <AdminStudentProvider>
+                  <AdminLayout />
+                </AdminStudentProvider>
+              </ProtectedRoute>
+            </AdminAuthProvider>
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
@@ -95,6 +89,7 @@ const AppRouter = () => {
           <Route path="students/approved" element={<ApprovedStudents />} />
           <Route path="students/rejected" element={<RejectedStudents />} />
           <Route path="fees" element={<DueFees />} />
+          <Route path="profile" element={<AdminProfile />} />
         </Route>
 
         {/* FALLBACK */}

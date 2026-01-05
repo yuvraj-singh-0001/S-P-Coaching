@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import API from "../../config/apiconfig";
 
 const Login = () => {
@@ -27,21 +27,26 @@ const Login = () => {
       const res = await axios.post(
         `${API.AUTH}/login`,
         form,
-        { withCredentials: true } // IMPORTANT
+        { withCredentials: true }
       );
 
-      if (res.data.success) {
-        // Redirect based on role (optional)
-        if (res.data.user.role === "admin") {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/"); // student/home for now
-        }
-      } else {
-        setError(res.data.message || "Login failed");
+      if (!res.data.success) {
+        setError(res.data.message || "Invalid credentials");
+        setLoading(false);
+        return;
       }
-    } catch (err) {
-      setError("Invalid email or password");
+
+      const role = res.data.user.role;
+
+      // ✅ ROLE DECIDED BY BACKEND ONLY
+      if (role === "admin") {
+        navigate("/admin/dashboard", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
+
+    } catch {
+      setError("Login failed. Please try again.");
     }
 
     setLoading(false);
@@ -50,21 +55,25 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white w-full max-w-md rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold text-center mb-4">
-          Login
+        <h2 className="text-2xl font-bold text-center mb-2">
+          Welcome Back
         </h2>
+        <p className="text-center text-gray-500 mb-6">
+          Login to continue
+        </p>
 
         {error && (
-          <p className="text-red-600 text-center mb-3">
+          <p className="text-red-600 text-center mb-4">
             {error}
           </p>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email address"
             value={form.email}
             onChange={handleChange}
             required
@@ -84,14 +93,14 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="text-center text-sm mt-4">
-          Don’t have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link to="/signup" className="text-blue-600 font-semibold">
             Sign up
           </Link>
