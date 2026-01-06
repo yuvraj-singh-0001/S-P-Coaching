@@ -7,6 +7,10 @@ const logout = require("../../api/auth/logout");
 const me = require("../../api/auth/me");
 const updateProfile = require("../../api/auth/updateProfile");
 const { auth } = require("../../middlewares/auth");
+const googleAuth = require("../../api/auth/googleAuth");
+
+// GOOGLE AUTH ROUTE
+router.post("/google", googleAuth);
 
 // PROTECTED ROUTE - UPDATE PROFILE
 router.put("/update-profile", updateProfile);
