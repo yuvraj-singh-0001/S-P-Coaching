@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import API from "../../config/apiconfig";
+import { useAdminAuth } from "../Admin/AdminAuthContext";
 
 const Admission = () => {
   const location = useLocation();
+  const { user } = useAdminAuth();
+
+  // course from Fees page
   const selectedCourse = location.state?.courseName || "";
 
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
 
+  // ================= FORM STATE =================
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -16,18 +21,24 @@ const Admission = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // RUN WHEN COURSE CHANGES
+  /* ================= AUTO FILL FROM GOOGLE / LOGIN ================= */
+  useEffect(() => {
+    if (user) {
+      setName((prev) => prev || user.name || "");
+      setEmail((prev) => prev || user.email || "");
+    }
+  }, [user]);
+
+  /* ================= SUBJECT LOGIC ================= */
   useEffect(() => {
     if (!selectedCourse) return;
 
-    // CLASS 9 & 10 LOGIC
     if (selectedCourse.includes("9th & 10th")) {
       setSubjects(["All Subjects"]);
       setSelectedSubject("All Subjects");
       return;
     }
 
-    // CLASS 11 & 12 LOGIC
     if (selectedCourse.includes("11th & 12th")) {
       setSubjects([
         "All Subjects with Mathematics",
@@ -43,7 +54,6 @@ const Admission = () => {
       return;
     }
 
-    // B.Sc LOGIC
     if (selectedCourse.includes("B.Sc")) {
       setSubjects([
         "All Subjects",
@@ -57,14 +67,12 @@ const Admission = () => {
       return;
     }
 
-    // POLYTECHNIC LOGIC
     if (selectedCourse.includes("Polytechnic")) {
       setSubjects(["Physics", "Chemistry", "Mathematics"]);
       setSelectedSubject("");
       return;
     }
 
-    // ITI LOGIC
     if (selectedCourse.includes("ITI")) {
       setSubjects([
         "Electrician",
@@ -79,7 +87,7 @@ const Admission = () => {
     }
   }, [selectedCourse]);
 
-  // ================= SUBMIT FORM ==================
+  /* ================= SUBMIT FORM ================= */
   const handleSubmit = async () => {
     if (
       !name ||
@@ -103,6 +111,7 @@ const Admission = () => {
           email,
           phone,
           className: selectedCourse,
+          subject: selectedSubject,
         }),
       });
 
@@ -110,13 +119,11 @@ const Admission = () => {
 
       if (data.success) {
         setMessage("🎉 Admission Form Submitted Successfully!");
-        setName("");
-        setEmail("");
-        setPhone("");
+        setPhone(""); // optional reset
       } else {
         setMessage(data.message || "Failed to submit form");
       }
-    } catch (err) {
+    } catch {
       setMessage("Server error or API not responding");
     }
 
@@ -132,8 +139,7 @@ const Admission = () => {
         <div className="w-24 h-[3px] bg-yellow-400 mx-auto my-3"></div>
 
         <p className="text-center text-gray-600 mb-6">
-          Fill your details to take admission. Most details are already selected
-          for you.
+          Your details are auto-filled. You can edit them if needed.
         </p>
 
         <div className="bg-white p-6 rounded-xl shadow-md border">
@@ -152,10 +158,11 @@ const Admission = () => {
 
           {/* NAME */}
           <div className="mb-4">
-            <label className="font-semibold text-gray-700">Student Name</label>
+            <label className="font-semibold text-gray-700">
+              Student Name
+            </label>
             <input
               type="text"
-              placeholder="Enter your full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full mt-1 px-3 py-2 border rounded"
@@ -169,7 +176,6 @@ const Admission = () => {
             </label>
             <input
               type="tel"
-              placeholder="Enter your mobile number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full mt-1 px-3 py-2 border rounded"
@@ -178,17 +184,16 @@ const Admission = () => {
 
           {/* EMAIL */}
           <div className="mb-4">
-            <label className="font-semibold text-gray-700">Gmail</label>
+            <label className="font-semibold text-gray-700">Email</label>
             <input
               type="email"
-              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 px-3 py-2 border rounded"
             />
           </div>
 
-          {/* SUBJECT SELECT */}
+          {/* SUBJECT */}
           <div className="mb-4">
             <label className="font-semibold text-gray-700">
               Select Subject
@@ -214,7 +219,7 @@ const Admission = () => {
             )}
           </div>
 
-          {/* SUBMIT BUTTON */}
+          {/* SUBMIT */}
           <button
             onClick={handleSubmit}
             disabled={loading}

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
-import API from "../../config/apiconfig"; // ✅ correct path
+import API from "../../config/apiconfig";
 import { useAdminAuth } from "../Admin/AdminAuthContext";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser } = useAdminAuth(); // ✅ context sync
+  const { setUser } = useAdminAuth();
 
   const redirectTo = location.state?.from || "/";
 
@@ -23,6 +24,7 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  /* ================= EMAIL / PASSWORD LOGIN ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -36,15 +38,12 @@ const Login = () => {
       );
 
       if (!res.data.success) {
-        setError(res.data.message);
-        setLoading(false);
+        setError(res.data.message || "Login failed");
         return;
       }
 
-      // ✅ update context immediately
       setUser(res.data.user);
 
-      // ✅ role based redirect
       if (res.data.user.role === "admin") {
         navigate("/admin/dashboard", { replace: true });
       } else {
@@ -58,13 +57,50 @@ const Login = () => {
     }
   };
 
+  /* ================= GOOGLE LOGIN (BACKEND CONNECTED) ================= */
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        `${API.AUTH}/google`,
+        {
+          token: credentialResponse.credential,
+        },
+        { withCredentials: true }
+      );
+
+      if (!res.data.success) {
+        setError(res.data.message || "Google login failed");
+        return;
+      }
+
+      // ✅ sync context
+      setUser(res.data.user);
+
+      // ✅ Google login only for STUDENT
+      navigate(redirectTo || "/admission", { replace: true });
+
+    } catch {
+      setError("Google login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white w-full max-w-md rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold text-center mb-2">Welcome Back</h2>
+        <h2 className="text-2xl font-bold text-center mb-2">
+          Welcome Back
+        </h2>
 
-        {error && <p className="text-red-600 text-center mb-4">{error}</p>}
+        {error && (
+          <p className="text-red-600 text-center mb-4">{error}</p>
+        )}
 
+        {/* EMAIL LOGIN */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="email"
@@ -89,14 +125,27 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded"
+            className="w-full bg-blue-600 text-white py-2 rounded disabled:opacity-60"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
+        {/* OR */}
+        <div className="my-4 text-center text-gray-500 text-sm">
+          OR
+        </div>
+
+        {/* GOOGLE LOGIN */}
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError("Google Login Failed")}
+          />
+        </div>
+
         <p className="text-center text-sm mt-4">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link to="/signup" className="text-blue-600 font-semibold">
             Sign up
           </Link>

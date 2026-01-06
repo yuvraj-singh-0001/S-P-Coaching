@@ -1,31 +1,29 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import API from "../../config/apiconfig"; // ✅ correct path
+import API from "../../config/apiconfig";
+import { GoogleLogin } from "@react-oauth/google";
+import { useAdminAuth } from "../Admin/AdminAuthContext";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const { setUser } = useAdminAuth();
 
-  // ================= FORM STATE =================
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    role: "student", // ✅ default role
+    role: "student",
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // ================= HANDLE CHANGE =================
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ================= SUBMIT =================
+  /* ================= EMAIL SIGNUP ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -38,14 +36,48 @@ export default function Signup() {
         { withCredentials: true }
       );
 
-      if (res.data.success) {
-        // signup ke baad login page
-        navigate("/login");
-      } else {
+      if (!res.data.success) {
         setError(res.data.message || "Signup failed");
+        return;
       }
+
+      navigate("/login");
     } catch {
       setError("Signup failed. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* ================= GOOGLE SIGNUP / LOGIN ================= */
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        `${API.AUTH}/google`,
+        { token: credentialResponse.credential },
+        { withCredentials: true }
+      );
+
+      if (!res.data.success) {
+        setError(res.data.message || "Google signup failed");
+        return;
+      }
+
+      // ✅ sync context
+      setUser(res.data.user);
+
+      // ✅ SMART REDIRECT LOGIC
+      if (res.data.isNewUser) {
+        navigate("/fees", { replace: true });
+      } else {
+        navigate("/student/dashboard", { replace: true });
+      }
+
+    } catch {
+      setError("Google signup failed");
     } finally {
       setLoading(false);
     }
@@ -57,19 +89,13 @@ export default function Signup() {
         <h2 className="text-2xl font-bold text-center mb-2">
           Create Account
         </h2>
-        <p className="text-center text-gray-500 mb-6">
-          Sign up to get started
-        </p>
 
         {error && (
-          <p className="text-red-600 text-center mb-4">
-            {error}
-          </p>
+          <p className="text-red-600 text-center mb-4">{error}</p>
         )}
 
+        {/* EMAIL SIGNUP */}
         <form onSubmit={handleSubmit} className="space-y-4">
-
-          {/* NAME */}
           <input
             type="text"
             name="name"
@@ -80,7 +106,6 @@ export default function Signup() {
             className="w-full border p-2 rounded"
           />
 
-          {/* EMAIL */}
           <input
             type="email"
             name="email"
@@ -91,7 +116,6 @@ export default function Signup() {
             className="w-full border p-2 rounded"
           />
 
-          {/* PASSWORD */}
           <input
             type="password"
             name="password"
@@ -102,26 +126,27 @@ export default function Signup() {
             className="w-full border p-2 rounded"
           />
 
-          {/* ROLE SELECT */}
-          <select
-            name="role"
-            value={form.role}
-            onChange={handleChange}
-            className="w-full border p-2 rounded bg-white"
-          >
-            <option value="student">Student</option>
-            <option value="admin">Admin</option>
-          </select>
-
-          {/* SUBMIT */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition disabled:opacity-60"
+            className="w-full bg-green-600 text-white py-2 rounded"
           >
             {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
+
+        {/* OR */}
+        <div className="my-4 text-center text-gray-500 text-sm">
+          OR
+        </div>
+
+        {/* GOOGLE SIGNUP */}
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError("Google signup failed")}
+          />
+        </div>
 
         <p className="text-center text-sm mt-4">
           Already have an account?{" "}
