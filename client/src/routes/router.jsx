@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
 import Layout from "../components/layout/Layout";
 import ProtectedRoute from "../protected/Protected";
 
@@ -33,11 +34,7 @@ const ScrollToSection = () => {
 
   useEffect(() => {
     const path = location.pathname;
-    if (
-      path === "/about" ||
-      path === "/courses" ||
-      path === "/contact"
-    ) {
+    if (path === "/about" || path === "/courses" || path === "/contact") {
       const id = path.replace("/", "");
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     } else {
@@ -51,7 +48,7 @@ const ScrollToSection = () => {
 /* ================= ROUTER ================= */
 const AppRouter = () => {
   return (
-    <>
+    <AdminAuthProvider>
       <ScrollToSection />
 
       <Routes>
@@ -66,21 +63,19 @@ const AppRouter = () => {
         <Route path="/teachers" element={<Layout><Teachers /></Layout>} />
         <Route path="/resources" element={<Layout><Resources /></Layout>} />
 
-        {/* AUTH */}
+        {/* AUTH (same login for admin & student) */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* ADMIN – PROTECTED (ADMIN ONLY) */}
+        {/* ADMIN – PROTECTED */}
         <Route
           path="/admin"
           element={
-            <AdminAuthProvider>
-              <ProtectedRoute allowRoles={["admin"]}>
-                <AdminStudentProvider>
-                  <AdminLayout />
-                </AdminStudentProvider>
-              </ProtectedRoute>
-            </AdminAuthProvider>
+            <ProtectedRoute allowRoles={["admin"]}>
+              <AdminStudentProvider>
+                <AdminLayout />
+              </AdminStudentProvider>
+            </ProtectedRoute>
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
@@ -95,7 +90,7 @@ const AppRouter = () => {
         {/* FALLBACK */}
         <Route path="*" element={<Layout><Home /></Layout>} />
       </Routes>
-    </>
+    </AdminAuthProvider>
   );
 };
 

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../../models/User"); // ✅ FIXED PATH
+const User = require("../models/User"); // ✅ FIXED PATH
 
 exports.auth = async (req, res, next) => {
   try {

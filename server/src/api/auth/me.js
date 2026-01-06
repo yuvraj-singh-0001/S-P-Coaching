@@ -1,9 +1,12 @@
-// ================= AUTH ME =================
-// Purpose: Check logged-in user via cookie token
-
 async function me(req, res) {
   try {
-    // req.user comes from auth middleware
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authenticated"
+      });
+    }
+
     const user = req.user;
 
     res.json({
@@ -15,7 +18,6 @@ async function me(req, res) {
         role: user.role
       }
     });
-
   } catch (err) {
     res.status(500).json({
       success: false,
