@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import API from "../../config/apiconfig";
 
@@ -15,16 +15,19 @@ export const useAdminAuth = () => {
 export const AdminAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const fetchedOnce = useRef(false);
 
-  // 🔹 GET LOGGED IN USER
+  // 🔹 fetch logged-in user (cookie based)
   const fetchMe = async () => {
     try {
       const res = await axios.get(`${API.AUTH}/me`, {
-        withCredentials: true
+        withCredentials: true,
       });
 
       if (res.data.success) {
         setUser(res.data.user);
+      } else {
+        setUser(null);
       }
     } catch {
       setUser(null);
@@ -33,16 +36,10 @@ export const AdminAuthProvider = ({ children }) => {
     }
   };
 
-  // 🔹 LOGOUT
-  const logout = async () => {
-    await axios.post(`${API.AUTH}/logout`, {}, {
-      withCredentials: true
-    });
-    setUser(null);
-    window.location.href = "/login";
-  };
-
+  // 🔹 call only once on app load
   useEffect(() => {
+    if (fetchedOnce.current) return;
+    fetchedOnce.current = true;
     fetchMe();
   }, []);
 
@@ -51,8 +48,8 @@ export const AdminAuthProvider = ({ children }) => {
       value={{
         user,
         loading,
-        logout,
-        refreshUser: fetchMe
+        setUser,      // ✅ VERY IMPORTANT
+        refreshUser: fetchMe,
       }}
     >
       {children}

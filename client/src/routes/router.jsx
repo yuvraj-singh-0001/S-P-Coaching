@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 import Layout from "../components/layout/Layout";
-import ProtectedRoute from "../protected/Protected";
+import ProtectedRoute from "../protected/protected.jsx";
 
 /* PUBLIC */
 import Home from "../pages/Home";
@@ -52,22 +52,31 @@ const AppRouter = () => {
       <ScrollToSection />
 
       <Routes>
-        {/* PUBLIC */}
+        {/* ================= PUBLIC ================= */}
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/about" element={<Layout><Home /></Layout>} />
         <Route path="/courses" element={<Layout><Home /></Layout>} />
         <Route path="/contact" element={<Layout><Home /></Layout>} />
 
         <Route path="/fees" element={<Layout><Fees /></Layout>} />
-        <Route path="/admission" element={<Layout><Admission /></Layout>} />
         <Route path="/teachers" element={<Layout><Teachers /></Layout>} />
         <Route path="/resources" element={<Layout><Resources /></Layout>} />
 
-        {/* AUTH (same login for admin & student) */}
+        {/* ================= AUTH ================= */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* ADMIN – PROTECTED */}
+        {/* ================= ADMISSION (LOGIN REQUIRED) ================= */}
+        <Route
+          path="/admission"
+          element={
+            <ProtectedRoute>
+              <Layout><Admission /></Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ================= ADMIN (ADMIN ONLY) ================= */}
         <Route
           path="/admin"
           element={
@@ -87,7 +96,7 @@ const AppRouter = () => {
           <Route path="profile" element={<AdminProfile />} />
         </Route>
 
-        {/* FALLBACK */}
+        {/* ================= FALLBACK ================= */}
         <Route path="*" element={<Layout><Home /></Layout>} />
       </Routes>
     </AdminAuthProvider>

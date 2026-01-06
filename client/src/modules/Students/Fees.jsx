@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useAdminAuth } from "../../modules/Admin/AdminAuthContext";
 
 const feesData = [
   {
@@ -43,6 +44,7 @@ const feesData = [
 const PriceCard = ({ item }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
+  const { user } = useAdminAuth();
 
   const inView = useInView(ref, {
     once: true,
@@ -55,9 +57,25 @@ const PriceCard = ({ item }) => {
     if (inView) {
       setTimeout(() => {
         setShowOffer(true);
-      }, 1200); // Offer slow + premium feel
+      }, 1200);
     }
   }, [inView]);
+
+  // 🔐 CENTRALIZED HANDLER
+  const handleAdmission = () => {
+    if (!user) {
+      navigate("/login", {
+        state: {
+          from: "/admission",
+          courseName: item.title,
+        },
+      });
+    } else {
+      navigate("/admission", {
+        state: { courseName: item.title },
+      });
+    }
+  };
 
   return (
     <div
@@ -76,7 +94,7 @@ const PriceCard = ({ item }) => {
         {item.desc}
       </p>
 
-      {/* PRICE ONLY ANIMATION */}
+      {/* PRICE */}
       <div className="mt-1">
         {!showOffer && (
           <motion.p
@@ -128,18 +146,14 @@ const PriceCard = ({ item }) => {
       <div className="mt-3 flex gap-2">
         <button
           className="w-1/2 bg-blue-700 hover:bg-blue-800 text-white py-1.5 rounded-md transition text-xs"
-          onClick={() =>
-            navigate("/admission", {
-              state: { courseName: item.title },
-            })
-          }
+          onClick={handleAdmission}
         >
           Enroll Now
         </button>
 
         <button
           className="w-1/2 border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white py-1.5 rounded-md transition text-xs"
-          onClick={() => navigate("/admission")}
+          onClick={handleAdmission}
         >
           Book Demo
         </button>
@@ -152,8 +166,6 @@ const Fees = () => {
   return (
     <section className="pt-24 pb-10 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-
-        {/* HEADING */}
         <div className="text-center mb-4">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
             Fee Structure
@@ -164,7 +176,6 @@ const Fees = () => {
           </p>
         </div>
 
-        {/* FAST LOADING CARDS */}
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
           {feesData.map((item, index) => (
             <PriceCard key={index} item={item} />

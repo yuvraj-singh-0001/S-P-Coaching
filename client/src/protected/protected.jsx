@@ -1,6 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAdminAuth } from "../modules/Admin/AdminAuthContext";
 
+/**
+ * allowRoles = ["admin"]  → sirf admin
+ * allowRoles = undefined → koi bhi logged-in user
+ */
 const ProtectedRoute = ({ children, allowRoles }) => {
   const { user, loading } = useAdminAuth();
   const location = useLocation();
@@ -9,7 +13,7 @@ const ProtectedRoute = ({ children, allowRoles }) => {
     return <p className="text-center mt-10">Checking access...</p>;
   }
 
-  // not logged in → login page
+  // 🔐 login required
   if (!user) {
     return (
       <Navigate
@@ -20,7 +24,7 @@ const ProtectedRoute = ({ children, allowRoles }) => {
     );
   }
 
-  // role not allowed
+  // 🔐 role check (only if provided)
   if (allowRoles && !allowRoles.includes(user.role)) {
     return <Navigate to="/" replace />;
   }
