@@ -15,7 +15,7 @@ import Login from "../modules/auth/Login";
 import Signup from "../modules/auth/Signup";
 
 /* ADMIN */
-import AdminLayout from "../components/layout/adminlayout/AdminLayout";
+import AdminLayout from "../components/adminlayout/AdminLayout";
 import Dashboard from "../modules/Admin/Dashboard";
 import AllStudents from "../modules/Admin/AllStudents";
 import PendingStudents from "../modules/Admin/PendingStudents";

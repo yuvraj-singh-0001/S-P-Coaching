@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAdminAuth } from "../../../modules/Admin/AdminAuthContext";
+import { useAdminAuth } from "../../modules/Admin/AdminAuthContext";
 
 const Navbar = ({ onMobileMenu }) => {
   const { user, logout } = useAdminAuth();
