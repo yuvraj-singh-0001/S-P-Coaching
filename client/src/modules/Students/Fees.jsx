@@ -46,34 +46,34 @@ const PriceCard = ({ item }) => {
   const navigate = useNavigate();
   const { user } = useAdminAuth();
 
-  const inView = useInView(ref, {
-    once: true,
-    amount: 0.5,
-  });
-
+  const inView = useInView(ref, { once: true, amount: 0.5 });
   const [showOffer, setShowOffer] = useState(false);
 
   useEffect(() => {
     if (inView) {
-      setTimeout(() => {
-        setShowOffer(true);
-      }, 1200);
+      setTimeout(() => setShowOffer(true), 1200);
     }
   }, [inView]);
 
-  // 🔐 CENTRALIZED HANDLER
+  // ✅ FINAL FIX (NO UI CHANGE)
   const handleAdmission = () => {
+    const payload = {
+      courseName: item.title,
+      monthlyFee: item.offer,
+    };
+
+    // 🔒 BACKUP FOR LOGIN REDIRECT
+    sessionStorage.setItem(
+      "admissionData",
+      JSON.stringify(payload)
+    );
+
     if (!user) {
       navigate("/login", {
-        state: {
-          from: "/admission",
-          courseName: item.title,
-        },
+        state: { from: "/admission" },
       });
     } else {
-      navigate("/admission", {
-        state: { courseName: item.title },
-      });
+      navigate("/admission", { state: payload });
     }
   };
 
@@ -90,11 +90,8 @@ const PriceCard = ({ item }) => {
         {item.title}
       </h2>
 
-      <p className="text-gray-600 text-sm mb-1">
-        {item.desc}
-      </p>
+      <p className="text-gray-600 text-sm mb-1">{item.desc}</p>
 
-      {/* PRICE */}
       <div className="mt-1">
         {!showOffer && (
           <motion.p
@@ -129,12 +126,9 @@ const PriceCard = ({ item }) => {
           </>
         )}
 
-        <p className="text-gray-500 text-xs">
-          {item.duration}
-        </p>
+        <p className="text-gray-500 text-xs">{item.duration}</p>
       </div>
 
-      {/* BENEFITS */}
       <ul className="mt-2 text-gray-700 text-sm space-y-1">
         <li>• Free handwritten notes</li>
         <li>• Model papers</li>
@@ -142,7 +136,6 @@ const PriceCard = ({ item }) => {
         <li>• Regular tests & doubt clearing</li>
       </ul>
 
-      {/* BUTTONS */}
       <div className="mt-3 flex gap-2">
         <button
           className="w-1/2 bg-blue-700 hover:bg-blue-800 text-white py-1.5 rounded-md transition text-xs"

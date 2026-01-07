@@ -2,12 +2,20 @@ const Student = require("../../models/Student");
 
 async function admission(req, res) {
   try {
-    const { name, email, phone, className } = req.body;
+    const { name, email, phone, className, monthlyFee } = req.body;
 
-    if (!name || !email || !phone || !className) {
+    if (!name || !email || !phone || !className || !monthlyFee) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required",
+        message: "All fields required"
+      });
+    }
+
+    const existing = await Student.findOne({ email });
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: "Student already admitted"
       });
     }
 
@@ -16,20 +24,15 @@ async function admission(req, res) {
       email,
       phone,
       className,
+      fees: {
+        monthlyFee
+      }
     });
 
-    return res.status(200).json({
-      success: true,
-      message: "Student Admission Successful",
-      data: student,
-    });
+    res.json({ success: true, data: student });
 
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error: error.message,
-    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
 }
 

@@ -1,30 +1,19 @@
 const mongoose = require("mongoose");
 
 const feesHistorySchema = new mongoose.Schema({
-  month: {
-    type: String, // e.g. "Jan 2026"
-    required: true
-  },
-  amount: {
-    type: Number,
-    required: true
-  },
-  date: {
+  fromMonth: String,     // "2026-02"
+  toMonth: String,       // "2026-03"
+  amount: Number,
+  paidAt: {
     type: Date,
     default: Date.now
   }
 }, { _id: false });
 
 const studentSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
+  name: String,
   email: String,
-  phone: {
-    type: String,
-    required: true
-  },
+  phone: String,
   className: String,
 
   admissionStatus: {
@@ -33,16 +22,13 @@ const studentSchema = new mongoose.Schema({
     default: "Pending"
   },
 
+  admissionDate: {
+    type: Date,
+    default: Date.now
+  },
+
   fees: {
-    total: {
-      type: Number,
-      default: 0
-    },
-    paid: {
-      type: Number,
-      default: 0
-    },
-    remaining: {
+    monthlyFee: {
       type: Number,
       default: 0
     },
@@ -50,11 +36,6 @@ const studentSchema = new mongoose.Schema({
       type: [feesHistorySchema],
       default: []
     }
-  },
-
-  admissionDate: {
-    type: Date,
-    default: Date.now
   }
 });
 

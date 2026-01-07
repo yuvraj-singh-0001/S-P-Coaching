@@ -24,7 +24,7 @@ import ApprovedStudents from "../modules/Admin/ApprovedStudents";
 import RejectedStudents from "../modules/Admin/RejectedStudents";
 import DueFees from "../modules/Admin/DueFees";
 import AdminProfile from "../modules/Admin/AdminProfile";
-
+import FeesCompleted from "../modules/Admin/FeesCompleted";
 import { AdminStudentProvider } from "../modules/Admin/AdminStudentContext";
 import { AdminAuthProvider } from "../modules/Admin/AdminAuthContext";
 
@@ -93,6 +93,7 @@ const AppRouter = () => {
           <Route path="students/approved" element={<ApprovedStudents />} />
           <Route path="students/rejected" element={<RejectedStudents />} />
           <Route path="fees" element={<DueFees />} />
+          <Route path="fees-completed" element={<FeesCompleted />} />
           <Route path="profile" element={<AdminProfile />} />
         </Route>
 
