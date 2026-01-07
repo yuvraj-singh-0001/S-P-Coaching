@@ -1,5 +1,20 @@
 const mongoose = require("mongoose");
 
+const feesHistorySchema = new mongoose.Schema({
+  month: {
+    type: String, // e.g. "Jan 2026"
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
+}, { _id: false });
+
 const studentSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -30,6 +45,10 @@ const studentSchema = new mongoose.Schema({
     remaining: {
       type: Number,
       default: 0
+    },
+    history: {
+      type: [feesHistorySchema],
+      default: []
     }
   },
 

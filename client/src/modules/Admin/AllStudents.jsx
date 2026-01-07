@@ -4,10 +4,14 @@ import API from "../../config/apiconfig";
 import { useAdminStudents } from "./AdminStudentContext";
 import StudentTable from "./StudentTable";
 import StudentModal from "./StudentModal";
+import UpdateFeesModal from "./UpdateFeesModal"; // ✅ NEW
 
 const AllStudents = () => {
   const { students, loading, refreshStudents } = useAdminStudents();
-  const [selectedStudent, setSelectedStudent] = useState(null);
+
+  const [selectedStudent, setSelectedStudent] = useState(null); // view/edit
+  const [feesStudent, setFeesStudent] = useState(null);         // update fees
+
   const [loadingAction, setLoadingAction] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -18,7 +22,7 @@ const AllStudents = () => {
     setTimeout(() => setMessage(""), 3000);
   };
 
-  // APPROVE
+  // ================= APPROVE =================
   const approveStudent = async (id) => {
     setLoadingAction(true);
     await axios.put(
@@ -31,7 +35,7 @@ const AllStudents = () => {
     showMessage("Student approved successfully");
   };
 
-  // REJECT
+  // ================= REJECT =================
   const rejectStudent = async (id) => {
     setLoadingAction(true);
     await axios.put(
@@ -44,7 +48,7 @@ const AllStudents = () => {
     showMessage("Student rejected successfully");
   };
 
-  // DELETE
+  // ================= DELETE =================
   const deleteStudent = async (id) => {
     if (!window.confirm("Delete this student?")) return;
     setLoadingAction(true);
@@ -69,28 +73,42 @@ const AllStudents = () => {
         </div>
       )}
 
-      {/* LOADING ACTION INFO */}
+      {/* ACTION LOADING INFO */}
       {loadingAction && (
         <p className="mb-3 text-sm text-blue-600">
           Processing action...
         </p>
       )}
 
+      {/* STUDENT TABLE */}
       <StudentTable
         students={students}
         onView={setSelectedStudent}
         onApprove={approveStudent}
         onReject={rejectStudent}
         onDelete={deleteStudent}
+        onUpdateFees={setFeesStudent} // ✅ NEW ACTION
       />
 
-      {/* VIEW + EDIT MODAL */}
+      {/* VIEW / EDIT MODAL */}
       {selectedStudent && (
         <StudentModal
           student={selectedStudent}
           onClose={() => setSelectedStudent(null)}
           onRefresh={refreshStudents}
-          onSuccess={showMessage} 
+          onSuccess={showMessage}
+        />
+      )}
+
+      {/* UPDATE FEES MODAL */}
+      {feesStudent && (
+        <UpdateFeesModal
+          student={feesStudent}
+          onClose={() => setFeesStudent(null)}
+          onSuccess={(msg) => {
+            showMessage(msg);
+            refreshStudents(); // ✅ single refresh after fees update
+          }}
         />
       )}
     </>

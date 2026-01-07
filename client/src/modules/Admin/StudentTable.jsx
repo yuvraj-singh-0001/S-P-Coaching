@@ -1,16 +1,23 @@
-import { FaEye, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
+import {
+  FaEye,
+  FaTrash,
+  FaCheck,
+  FaTimes,
+  FaRupeeSign
+} from "react-icons/fa";
 
 const StudentTable = ({
   students,
   onView,
   onDelete,
   onApprove,
-  onReject
+  onReject,
+  onUpdateFees // ✅ NEW
 }) => {
-  const showActions = onView || onDelete || onApprove || onReject;
+  const showActions =
+    onView || onDelete || onApprove || onReject || onUpdateFees;
 
   return (
-    // 🔥 KEY FIX: overflow-x-auto + min-width
     <div className="w-full overflow-x-auto bg-white rounded shadow">
       <table className="min-w-[900px] w-full">
         <thead className="bg-gray-800 text-white">
@@ -53,35 +60,57 @@ const StudentTable = ({
               </td>
 
               {showActions && (
-                <td className="p-3 flex gap-2">
+                <td className="p-3 flex gap-2 flex-wrap">
+                  {/* VIEW */}
                   {onView && (
                     <button
                       onClick={() => onView(s)}
                       className="bg-blue-600 text-white px-3 py-1 rounded"
+                      title="View Student"
                     >
                       <FaEye />
                     </button>
                   )}
+
+                  {/* APPROVE */}
                   {onApprove && (
                     <button
                       onClick={() => onApprove(s._id)}
                       className="bg-green-600 text-white px-3 py-1 rounded"
+                      title="Approve Admission"
                     >
                       <FaCheck />
                     </button>
                   )}
+
+                  {/* REJECT */}
                   {onReject && (
                     <button
                       onClick={() => onReject(s._id)}
                       className="bg-red-600 text-white px-3 py-1 rounded"
+                      title="Reject Admission"
                     >
                       <FaTimes />
                     </button>
                   )}
+
+                  {/* 💜 UPDATE FEES */}
+                  {onUpdateFees && (
+                    <button
+                      onClick={() => onUpdateFees(s)}
+                      className="bg-purple-600 text-white px-3 py-1 rounded"
+                      title="Update Fees"
+                    >
+                      <FaRupeeSign />
+                    </button>
+                  )}
+
+                  {/* DELETE */}
                   {onDelete && (
                     <button
                       onClick={() => onDelete(s._id)}
                       className="bg-black text-white px-3 py-1 rounded"
+                      title="Delete Student"
                     >
                       <FaTrash />
                     </button>
