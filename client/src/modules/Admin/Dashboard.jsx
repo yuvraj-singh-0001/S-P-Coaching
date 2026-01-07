@@ -22,7 +22,7 @@ const Dashboard = () => {
     (s) => s.admissionStatus === "Rejected"
   ).length;
 
-  // 🔥 DUE FEES (remaining > 0)
+  // 🔥 DUE FEES
   const dueFeesCount = students.filter(
     (s) =>
       s.calculatedFees &&
@@ -34,7 +34,7 @@ const Dashboard = () => {
     (s) =>
       s.calculatedFees &&
       s.calculatedFees.remaining === 0 &&
-      (s.calculatedFees.totalPaid > 0)
+      s.calculatedFees.totalPaid > 0
   ).length;
 
   // ================= DASHBOARD CARDS =================
@@ -66,13 +66,13 @@ const Dashboard = () => {
     {
       label: "Due Fees",
       value: dueFeesCount,
-      path: "/admin/fees", // 👈 due list
+      path: "/admin/fees",
       color: "bg-purple-600",
     },
     {
       label: "Fees Completed",
       value: feesCompletedCount,
-      path: "/admin/fees-completed", // 👈 completed + advance
+      path: "/admin/fees-completed",
       color: "bg-indigo-600",
     },
   ];
@@ -83,6 +83,7 @@ const Dashboard = () => {
         Dashboard Overview
       </h2>
 
+      {/* ================= DASHBOARD CARDS ================= */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {stats.map((card) => (
           <div
@@ -96,6 +97,39 @@ const Dashboard = () => {
             </p>
           </div>
         ))}
+      </div>
+
+      {/* ================= QUICK ACTIONS ================= */}
+      <div className="mt-10">
+        <h3 className="text-lg font-semibold mb-4">
+          Quick Actions
+        </h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* SEND NOTIFICATION */}
+          <button
+            onClick={() => navigate("/admin/notifications")}
+            className="bg-blue-700 hover:bg-blue-800 text-white py-3 rounded shadow transition"
+          >
+            🔔 Send Notification
+          </button>
+
+          {/* MANAGE FEES */}
+          <button
+            onClick={() => navigate("/admin/fees")}
+            className="bg-green-700 hover:bg-green-800 text-white py-3 rounded shadow transition"
+          >
+            💰 Manage Fees
+          </button>
+
+          {/* FEES COMPLETED */}
+          <button
+            onClick={() => navigate("/admin/fees-completed")}
+            className="bg-indigo-700 hover:bg-indigo-800 text-white py-3 rounded shadow transition"
+          >
+            ✅ Fees Completed
+          </button>
+        </div>
       </div>
     </>
   );

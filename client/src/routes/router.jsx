@@ -27,6 +27,7 @@ import AdminProfile from "../modules/Admin/AdminProfile";
 import FeesCompleted from "../modules/Admin/FeesCompleted";
 import { AdminStudentProvider } from "../modules/Admin/AdminStudentContext";
 import { AdminAuthProvider } from "../modules/Admin/AdminAuthContext";
+import AdminNotify from "../modules/Admin/AdminNotifications";
 
 /* ================= SCROLL HANDLER ================= */
 const ScrollToSection = () => {
@@ -95,6 +96,7 @@ const AppRouter = () => {
           <Route path="fees" element={<DueFees />} />
           <Route path="fees-completed" element={<FeesCompleted />} />
           <Route path="profile" element={<AdminProfile />} />
+          <Route path="/admin/notifications" element={<AdminNotify />} />
         </Route>
 
         {/* ================= FALLBACK ================= */}
