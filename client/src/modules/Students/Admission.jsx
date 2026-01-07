@@ -7,13 +7,17 @@ const Admission = () => {
   const location = useLocation();
   const { user } = useAdminAuth();
 
-  // course from Fees page
-  const selectedCourse = location.state?.courseName || "";
+  // ✅ SAFE READ (ROUTER + SESSION)
+  const routerCourse = location.state?.courseName;
+  const routerFee = location.state?.monthlyFee;
 
-  const [subjects, setSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState("");
+  const saved = JSON.parse(
+    sessionStorage.getItem("admissionData") || "{}"
+  );
 
-  // ================= FORM STATE =================
+  const selectedCourse = routerCourse || saved.courseName || "";
+  const monthlyFee = routerFee || saved.monthlyFee || "";
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +25,7 @@ const Admission = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  /* ================= AUTO FILL FROM GOOGLE / LOGIN ================= */
+  // ✅ AUTO FILL LOGIN DATA
   useEffect(() => {
     if (user) {
       setName((prev) => prev || user.name || "");
@@ -29,72 +33,8 @@ const Admission = () => {
     }
   }, [user]);
 
-  /* ================= SUBJECT LOGIC ================= */
-  useEffect(() => {
-    if (!selectedCourse) return;
-
-    if (selectedCourse.includes("9th & 10th")) {
-      setSubjects(["All Subjects"]);
-      setSelectedSubject("All Subjects");
-      return;
-    }
-
-    if (selectedCourse.includes("11th & 12th")) {
-      setSubjects([
-        "All Subjects with Mathematics",
-        "All Subjects with Biology",
-        "Mathematics",
-        "Physics",
-        "Chemistry",
-        "Biology",
-        "English",
-        "Hindi",
-      ]);
-      setSelectedSubject("");
-      return;
-    }
-
-    if (selectedCourse.includes("B.Sc")) {
-      setSubjects([
-        "All Subjects",
-        "Physics",
-        "Chemistry",
-        "Mathematics",
-        "Zoology",
-        "Botany",
-      ]);
-      setSelectedSubject("");
-      return;
-    }
-
-    if (selectedCourse.includes("Polytechnic")) {
-      setSubjects(["Physics", "Chemistry", "Mathematics"]);
-      setSelectedSubject("");
-      return;
-    }
-
-    if (selectedCourse.includes("ITI")) {
-      setSubjects([
-        "Electrician",
-        "Fitter",
-        "Welder",
-        "Wireman",
-        "Mechanic",
-        "Draftsman",
-      ]);
-      setSelectedSubject("");
-      return;
-    }
-  }, [selectedCourse]);
-
-  /* ================= SUBMIT FORM ================= */
   const handleSubmit = async () => {
-    if (
-      !name ||
-      !phone ||
-      !email ||
-      (!selectedSubject && !selectedCourse.includes("9th & 10th"))
-    ) {
+    if (!name || !phone || !email || !selectedCourse || !monthlyFee) {
       setMessage("Please fill all required fields.");
       return;
     }
@@ -111,7 +51,7 @@ const Admission = () => {
           email,
           phone,
           className: selectedCourse,
-          subject: selectedSubject,
+          monthlyFee: Number(monthlyFee),
         }),
       });
 
@@ -119,7 +59,8 @@ const Admission = () => {
 
       if (data.success) {
         setMessage("🎉 Admission Form Submitted Successfully!");
-        setPhone(""); // optional reset
+        setPhone("");
+        sessionStorage.removeItem("admissionData"); // ✅ clean
       } else {
         setMessage(data.message || "Failed to submit form");
       }
@@ -143,7 +84,6 @@ const Admission = () => {
         </p>
 
         <div className="bg-white p-6 rounded-xl shadow-md border">
-          {/* COURSE */}
           <div className="mb-4">
             <label className="font-semibold text-gray-700">
               Selected Course
@@ -152,11 +92,10 @@ const Admission = () => {
               type="text"
               value={selectedCourse}
               readOnly
-              className="w-full mt-1 px-3 py-2 border rounded bg-gray-100 text-gray-700"
+              className="w-full mt-1 px-3 py-2 border rounded bg-gray-100"
             />
           </div>
 
-          {/* NAME */}
           <div className="mb-4">
             <label className="font-semibold text-gray-700">
               Student Name
@@ -169,7 +108,6 @@ const Admission = () => {
             />
           </div>
 
-          {/* PHONE */}
           <div className="mb-4">
             <label className="font-semibold text-gray-700">
               Mobile Number
@@ -182,9 +120,10 @@ const Admission = () => {
             />
           </div>
 
-          {/* EMAIL */}
           <div className="mb-4">
-            <label className="font-semibold text-gray-700">Email</label>
+            <label className="font-semibold text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               value={email}
@@ -193,33 +132,6 @@ const Admission = () => {
             />
           </div>
 
-          {/* SUBJECT */}
-          <div className="mb-4">
-            <label className="font-semibold text-gray-700">
-              Select Subject
-            </label>
-
-            {selectedCourse.includes("9th & 10th") ? (
-              <input
-                readOnly
-                value="All Subjects"
-                className="w-full mt-1 px-3 py-2 border rounded bg-gray-100"
-              />
-            ) : (
-              <select
-                className="w-full mt-1 px-3 py-2 border rounded"
-                value={selectedSubject}
-                onChange={(e) => setSelectedSubject(e.target.value)}
-              >
-                <option value="">Select Subject</option>
-                {subjects.map((sub, i) => (
-                  <option key={i}>{sub}</option>
-                ))}
-              </select>
-            )}
-          </div>
-
-          {/* SUBMIT */}
           <button
             onClick={handleSubmit}
             disabled={loading}
