@@ -3,12 +3,7 @@ const { sendMail } = require("../../utils/email");
 
 async function sendNotification(req, res) {
   try {
-    const {
-      type,        // "holiday" | "dueFees" | "test"
-      fromDate,
-      toDate,
-      course
-    } = req.body;
+    const { type, fromDate, toDate, course } = req.body;
 
     if (!type) {
       return res.status(400).json({
@@ -19,24 +14,50 @@ async function sendNotification(req, res) {
 
     let students = [];
 
-    // =========================
-    // 🔴 DUE FEES NOTIFICATION
-    // =========================
+    /* ================= DUE FEES (🔥 FIXED) ================= */
     if (type === "dueFees") {
-      students = await Student.find({
-        "fees.remaining": { $gt: 0 },   // ✅ FIXED
+      // 1️⃣ fetch approved students only
+      const all = await Student.find({
         admissionStatus: "Approved"
+      });
+
+      const now = new Date();
+
+      students = all.filter((s) => {
+        const monthlyFee = Number(s.fees?.monthlyFee || 0);
+        if (!monthlyFee) return false;
+
+        // admission starts after 3 days
+        const start = new Date(
+          new Date(s.admissionDate).getTime() + 3 * 24 * 60 * 60 * 1000
+        );
+
+        const monthsDue =
+          (now.getFullYear() * 12 + now.getMonth()) -
+          (start.getFullYear() * 12 + start.getMonth()) + 1;
+
+        let paidMonths = 0;
+
+        if (Array.isArray(s.fees?.history)) {
+          s.fees.history.forEach((h) => {
+            const from = new Date(h.fromMonth + "-01");
+            const to = new Date(h.toMonth + "-01");
+            paidMonths +=
+              (to.getFullYear() * 12 + to.getMonth()) -
+              (from.getFullYear() * 12 + from.getMonth());
+          });
+        }
+
+        return monthsDue - paidMonths > 0; // 🔥 REAL DUE FEES
       });
     }
 
-    // =========================
-    // 🟡 HOLIDAY NOTIFICATION
-    // =========================
+    /* ================= HOLIDAY ================= */
     if (type === "holiday") {
       if (!fromDate) {
         return res.status(400).json({
           success: false,
-          message: "Holiday start date is required"
+          message: "Holiday date required"
         });
       }
 
@@ -45,9 +66,7 @@ async function sendNotification(req, res) {
       });
     }
 
-    // =========================
-    // 🔵 TEST NOTIFICATION
-    // =========================
+    /* ================= TEST ================= */
     if (type === "test") {
       if (!course) {
         return res.status(400).json({
@@ -57,8 +76,8 @@ async function sendNotification(req, res) {
       }
 
       students = await Student.find({
-        className: course,
-        admissionStatus: "Approved"
+        admissionStatus: "Approved",
+        className: course
       });
     }
 
@@ -69,69 +88,37 @@ async function sendNotification(req, res) {
       });
     }
 
-    // =========================
-    // 📧 SEND EMAILS
-    // =========================
+    /* ================= SEND EMAIL ================= */
     for (const s of students) {
       if (!s.email) continue;
 
       let html = "";
 
-      // 🔴 DUE FEES MAIL
       if (type === "dueFees") {
-        const lastHistory = s.fees.history?.slice(-1)[0];
-
         html = `
           <p>Hello <b>${s.name}</b>,</p>
-
-          <p>This is a reminder that your fees is pending.</p>
-
-          <p>
-            <b>Remaining Amount:</b> ₹${s.fees.remaining}<br/>
-            <b>Last Payment:</b> ${
-              lastHistory
-                ? `${lastHistory.amount} (on ${new Date(lastHistory.date).toLocaleDateString()})`
-                : "No payment yet"
-            }
-          </p>
-
-          <p>Please clear the pending fees at the earliest.</p>
-
-          <p>– <b>SP Coaching</b></p>
+          <p>This is a reminder that your fees are pending.</p>
+          <p>Please clear the fees at the earliest.</p>
+          <p>– SP Coaching</p>
         `;
       }
 
-      // 🟡 HOLIDAY MAIL
       if (type === "holiday") {
         html = `
           <p>Hello <b>${s.name}</b>,</p>
-
-          <p>There will be a holiday from:</p>
-
-          <p>
-            <b>${fromDate}${toDate ? ` to ${toDate}` : ""}</b>
-          </p>
-
-          <p>Enjoy your time 😊</p>
-
-          <p>– <b>SP Coaching</b></p>
+          <p>There will be a holiday:</p>
+          <p><b>${fromDate}${toDate ? ` to ${toDate}` : ""}</b></p>
+          <p>– SP Coaching</p>
         `;
       }
 
-      // 🔵 TEST MAIL
       if (type === "test") {
         html = `
           <p>Hello <b>${s.name}</b>,</p>
-
-          <p>An upcoming test has been scheduled.</p>
-
-          <p>
-            <b>Course:</b> ${course}
-          </p>
-
+          <p>An upcoming test is scheduled for:</p>
+          <p><b>${course}</b></p>
           <p>Please be prepared.</p>
-
-          <p>– <b>SP Coaching</b></p>
+          <p>– SP Coaching</p>
         `;
       }
 

@@ -1,10 +1,10 @@
 const Student = require("../../models/Student");
 
-function monthsBetween(startDate, endDate) {
+function monthDiff(from, to) {
   return (
-    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-    (endDate.getMonth() - startDate.getMonth()) +
-    1
+    to.getFullYear() * 12 +
+    to.getMonth() -
+    (from.getFullYear() * 12 + from.getMonth())
   );
 }
 
@@ -17,60 +17,59 @@ async function getStudents(req, res) {
     if (className) query.className = className;
     if (search) query.name = { $regex: search, $options: "i" };
 
-    const students = await Student
-      .find(query)
-      .sort({ admissionDate: -1 })
-      .lean();
+    const students = await Student.find(query).sort({ admissionDate: -1 });
 
     const now = new Date();
 
-    const result = students.map((s) => {
-      const monthlyFee = Number(s?.fees?.monthlyFee || 0);
-      const history = Array.isArray(s?.fees?.history)
-        ? s.fees.history
-        : [];
+    const enriched = students.map((s) => {
+      const monthlyFee = Number(s.fees?.monthlyFee || 0);
 
-      const feeStartDate = new Date(
+      // Admission starts after 3 days
+      const admissionStart = new Date(
         new Date(s.admissionDate).getTime() + 3 * 24 * 60 * 60 * 1000
       );
 
-      let monthsDue = 0;
-      if (monthlyFee > 0 && now >= feeStartDate) {
-        monthsDue = monthsBetween(feeStartDate, now);
+      const dueMonths =
+        monthlyFee > 0
+          ? Math.max(monthDiff(admissionStart, now) + 1, 0)
+          : 0;
+
+      // Paid months calculation from history
+      let paidMonths = 0;
+      let totalPaid = 0;
+      let lastPaidMonth = null;
+
+      if (Array.isArray(s.fees?.history)) {
+        s.fees.history.forEach((h) => {
+          const from = new Date(h.fromMonth + "-01");
+          const to = new Date(h.toMonth + "-01");
+          const m = monthDiff(from, to);
+          paidMonths += m;
+          totalPaid += Number(h.amount || 0);
+          lastPaidMonth = h.toMonth;
+        });
       }
 
-      const totalPayable = monthsDue * monthlyFee;
-      const totalPaid = history.reduce(
-        (sum, h) => sum + Number(h.amount || 0),
-        0
-      );
-
-      const remaining = Math.max(totalPayable - totalPaid, 0);
-      const advanceBalance =
-        totalPaid > totalPayable ? totalPaid - totalPayable : 0;
-
-      const lastPayment =
-        history.length > 0 ? history[history.length - 1] : null;
+      const remainingMonths = Math.max(dueMonths - paidMonths, 0);
+      const remainingAmount = remainingMonths * monthlyFee;
 
       return {
-        ...s,
+        ...s.toObject(),
         calculatedFees: {
           monthlyFee,
-          monthsDue,
-          totalPayable,
+          dueMonths,
+          paidMonths,
+          remainingMonths,
+          remaining: remainingAmount,
           totalPaid,
-          remaining,
-          advanceBalance,
-          lastPayment,
-          isCompleted:
-            monthlyFee > 0 && monthsDue > 0 && remaining === 0,
+          lastMonth: lastPaidMonth,
         },
       };
     });
 
     res.json({
       success: true,
-      students: result,
+      students: enriched,
     });
   } catch (err) {
     res.status(500).json({

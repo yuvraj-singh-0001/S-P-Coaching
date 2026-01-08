@@ -125,7 +125,7 @@ const Dashboard = () => {
           {/* FEES COMPLETED */}
           <button
             onClick={() => navigate("/admin/fees-completed")}
-            className="bg-indigo-700 hover:bg-indigo-800 text-white py-3 rounded shadow transition"
+            className="bg-gray-300 hover:bg-indigo-800 text-white py-3 rounded shadow transition"
           >
             ✅ Fees Completed
           </button>
