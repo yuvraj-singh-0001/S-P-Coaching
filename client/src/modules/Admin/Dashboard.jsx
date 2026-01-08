@@ -43,7 +43,7 @@ const Dashboard = () => {
       label: "All Students",
       value: totalStudents,
       path: "/admin/students",
-      color: "bg-blue-600",
+      color: "bg-blue-500",
     },
     {
       label: "Pending",
@@ -55,25 +55,25 @@ const Dashboard = () => {
       label: "Approved",
       value: approvedCount,
       path: "/admin/students/approved",
-      color: "bg-green-600",
+      color: "bg-green-500",
     },
     {
       label: "Rejected",
       value: rejectedCount,
       path: "/admin/students/rejected",
-      color: "bg-red-600",
+      color: "bg-red-500",
     },
     {
       label: "Due Fees",
       value: dueFeesCount,
       path: "/admin/fees",
-      color: "bg-purple-600",
+      color: "bg-purple-500",
     },
     {
       label: "Fees Completed",
       value: feesCompletedCount,
       path: "/admin/fees-completed",
-      color: "bg-indigo-600",
+      color: "bg-indigo-500",
     },
   ];
 
@@ -89,7 +89,7 @@ const Dashboard = () => {
           <div
             key={card.label}
             onClick={() => navigate(card.path)}
-            className={`${card.color} text-white p-5 rounded shadow cursor-pointer hover:opacity-90 transition`}
+            className={`${card.color} text-white p-5 rounded shadow-xl cursor-pointer hover:opacity-90 transition hover:shadow-2xl hover:scale-105`}
           >
             <p className="text-sm">{card.label}</p>
             <p className="text-2xl font-bold">
@@ -109,7 +109,7 @@ const Dashboard = () => {
           {/* SEND NOTIFICATION */}
           <button
             onClick={() => navigate("/admin/notifications")}
-            className="bg-blue-700 hover:bg-blue-800 text-white py-3 rounded shadow transition"
+            className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded shadow transition"
           >
             🔔 Send Notification
           </button>
@@ -117,7 +117,7 @@ const Dashboard = () => {
           {/* MANAGE FEES */}
           <button
             onClick={() => navigate("/admin/fees")}
-            className="bg-green-700 hover:bg-green-800 text-white py-3 rounded shadow transition"
+            className="bg-green-500 hover:bg-green-600 text-white py-3 rounded shadow transition"
           >
             💰 Manage Fees
           </button>
@@ -125,7 +125,7 @@ const Dashboard = () => {
           {/* FEES COMPLETED */}
           <button
             onClick={() => navigate("/admin/fees-completed")}
-            className="bg-gray-300 hover:bg-indigo-800 text-white py-3 rounded shadow transition"
+            className="bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded shadow transition"
           >
             ✅ Fees Completed
           </button>

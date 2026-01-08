@@ -10,13 +10,18 @@ const DueFees = () => {
       s.calculatedFees.remaining > 0
   );
 
+  const dueStudentsSorted = [...dueStudents].sort(
+    (a, b) =>
+      b.calculatedFees.remaining - a.calculatedFees.remaining
+  );
+
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">
         Due Fees Students
       </h2>
 
-      {dueStudents.length === 0 ? (
+      {dueStudentsSorted.length === 0 ? (
         <p className="text-gray-500">
           No students with due fees 🎉
         </p>
@@ -32,15 +37,15 @@ const DueFees = () => {
               </tr>
             </thead>
             <tbody>
-              {dueStudents.map((s) => (
+              {dueStudentsSorted.map((s) => (
                 <tr key={s._id} className="border-b">
                   <td className="p-3">{s.name}</td>
                   <td className="p-3">{s.className}</td>
                   <td className="p-3 font-bold text-red-600">
                     ₹{s.calculatedFees.remaining}
                   </td>
-                  <td className="p-3">
-                    {s.calculatedFees.monthsDue}
+                  <td className="p-3 font-semibold">
+                    {s.calculatedFees.dueMonths}
                   </td>
                 </tr>
               ))}
