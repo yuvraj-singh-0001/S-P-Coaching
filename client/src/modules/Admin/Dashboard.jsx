@@ -105,7 +105,7 @@ const Dashboard = () => {
           Quick Actions
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {/* SEND NOTIFICATION */}
           <button
             onClick={() => navigate("/admin/notifications")}
@@ -128,6 +128,17 @@ const Dashboard = () => {
             className="bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded shadow transition"
           >
             ✅ Fees Completed
+          </button>
+
+          {/* CREATE TEST / ASSIGNMENT (EXTERNAL – SAME TAB) */}
+          <button
+            onClick={() => {
+              window.location.href =
+                "https://wayground.com/admin?tab=create";
+            }}
+            className="bg-orange-500 hover:bg-orange-600 text-white py-3 rounded shadow transition"
+          >
+            📝 Create Test / Assignment
           </button>
         </div>
       </div>
