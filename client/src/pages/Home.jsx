@@ -14,7 +14,7 @@ const Home = () => {
       {/* ---- ABOUT ---- */}
       <div
         id="about"
-        className="scroll-mt-[110px]"  // fixed navbar ke liye perfect offset
+        className="scroll-mt-[80px]"
       >
         <About />
       </div>
@@ -22,7 +22,7 @@ const Home = () => {
       {/* ---- COURSES ---- */}
       <div
         id="courses"
-        className="scroll-mt-[110px]"
+        className="scroll-mt-[80px]"
       >
         <Courses />
       </div>
@@ -30,7 +30,7 @@ const Home = () => {
       {/* ---- CONTACT ---- */}
       <div
         id="contact"
-        className="scroll-mt-[110px]"
+        className="scroll-mt-[80px]"
       >
         <Contact />
       </div>
