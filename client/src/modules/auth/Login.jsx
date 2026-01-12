@@ -4,6 +4,8 @@ import axios from "axios";
 import API from "../../config/apiconfig";
 import { useAdminAuth } from "../Admin/AdminAuthContext";
 import { GoogleLogin } from "@react-oauth/google";
+import Layout from "../../components/layout/Layout";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -97,8 +100,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white w-full max-w-md rounded-lg shadow p-6">
+    <Layout>
+      <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center bg-gray-50 px-4 pt-24 pb-10">
+        <div className="bg-white w-full max-w-md rounded-xl shadow-lg border border-gray-100 p-6">
         <h2 className="text-2xl font-bold text-center mb-2">
           Welcome Back
         </h2>
@@ -108,7 +112,7 @@ const Login = () => {
         )}
 
         {/* EMAIL LOGIN */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <input
             name="email"
             type="email"
@@ -116,23 +120,32 @@ const Login = () => {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
           />
 
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            required
-            className="w-full border p-2 rounded"
-          />
+          <div className="relative">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 p-2 rounded pr-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded disabled:opacity-60"
+            className="w-full bg-[#0C4A8B] hover:bg-blue-800 text-white py-2 rounded font-semibold disabled:opacity-60 transition"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
@@ -153,12 +166,13 @@ const Login = () => {
 
         <p className="text-center text-sm mt-4">
           Don&apos;t have an account?{" "}
-          <Link to="/signup" className="text-blue-600 font-semibold">
+          <Link to="/signup" className="text-yellow-500 font-semibold">
             Sign up
           </Link>
         </p>
       </div>
-    </div>
+      </div>
+    </Layout>
   );
 };
 
