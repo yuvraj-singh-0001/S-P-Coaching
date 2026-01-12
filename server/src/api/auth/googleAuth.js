@@ -72,6 +72,7 @@ const googleAuth = async (req, res) => {
           name: user.name,
           email: user.email,
           role: user.role,
+          admissionStatus: user.admissionStatus,
         },
         isNewUser, // ✅ IMPORTANT FLAG
       });

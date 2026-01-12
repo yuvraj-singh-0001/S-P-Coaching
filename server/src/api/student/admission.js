@@ -2,37 +2,52 @@ const Student = require("../../models/Student");
 
 async function admission(req, res) {
   try {
-    const { name, email, phone, className, monthlyFee } = req.body;
+    const user = req.user; // 🔐 from auth middleware
 
-    if (!name || !email || !phone || !className || !monthlyFee) {
+    const { phone, className, monthlyFee } = req.body;
+
+    // 🔎 BASIC VALIDATION
+    if (!phone || !className || !monthlyFee) {
       return res.status(400).json({
         success: false,
         message: "All fields required"
       });
     }
 
-    const existing = await Student.findOne({ email });
-    if (existing) {
+    // ❌ BLOCK DUPLICATE ADMISSION (USER BASED)
+    const existingStudent = await Student.findOne({ userId: user._id });
+    if (existingStudent) {
       return res.status(400).json({
         success: false,
-        message: "Student already admitted"
+        message: "Admission already submitted"
       });
     }
 
+    // ✅ CREATE STUDENT (AUTO-FILLED DATA)
     const student = await Student.create({
-      name,
-      email,
+      userId: user._id,        // 🔥 REQUIRED FIX
+      name: user.name,         // auto from login
+      email: user.email,       // auto from login
       phone,
       className,
+      admissionStatus: "Pending",
       fees: {
-        monthlyFee
+        monthlyFee: Number(monthlyFee)
       }
     });
 
-    res.json({ success: true, data: student });
+    res.json({
+      success: true,
+      message: "🎉 Admission Form Submitted Successfully!",
+      studentId: student._id
+    });
 
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error("Admission Error:", err.message);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 }
 

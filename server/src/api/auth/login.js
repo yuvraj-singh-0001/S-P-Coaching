@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const Student = require("../../models/Student"); // ✅ ADD
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -25,10 +26,22 @@ async function login(req, res) {
     user.token = token;
     await user.save();
 
+    // 🔽 DEFAULT
+    let admissionStatus = null;
+
+    // 🔍 ONLY FOR STUDENT (lightweight query)
+    if (user.role === "student") {
+      const student = await Student.findOne({ userId: user._id })
+        .select("admissionStatus")
+        .lean();
+
+      admissionStatus = student?.admissionStatus || "Pending";
+    }
+
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none"
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     });
 
     res.json({
@@ -38,11 +51,13 @@ async function login(req, res) {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        admissionStatus // ✅ NOW FRONTEND CAN DECIDE
       }
     });
 
   } catch (err) {
+    console.error("Login error:", err.message);
     res.status(500).json({
       success: false,
       message: "Server error"

@@ -7,10 +7,8 @@ const ProtectedRoute = ({ children, allowRoles }) => {
 
   if (loading) return null;
 
+  // 🔐 Not logged in
   if (!user) {
-    if (location.pathname === "/login") {
-      return children;
-    }
     return (
       <Navigate
         to="/login"
@@ -20,8 +18,9 @@ const ProtectedRoute = ({ children, allowRoles }) => {
     );
   }
 
+  // 🔒 Role based protection
   if (allowRoles && !allowRoles.includes(user.role)) {
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;
