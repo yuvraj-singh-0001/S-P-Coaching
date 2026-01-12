@@ -54,7 +54,8 @@ const Login = () => {
         if (user.admissionStatus === "Approved") {
           navigate("/student/dashboard", { replace: true });
         } else {
-          navigate("/admission", { replace: true });
+          // first time / not approved yet → always go to fees page
+          navigate("/fees", { replace: true });
         }
       }
 
@@ -89,7 +90,8 @@ const Login = () => {
       if (user.admissionStatus === "Approved") {
         navigate("/student/dashboard", { replace: true });
       } else {
-        navigate("/admission", { replace: true });
+        // first time / not approved yet → always go to fees page
+        navigate("/fees", { replace: true });
       }
 
     } catch {

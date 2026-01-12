@@ -1,6 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const Student = require("../../models/Student");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -58,6 +59,18 @@ const googleAuth = async (req, res) => {
     user.token = jwtToken;
     await user.save();
 
+    // 🔽 DEFAULT
+    let admissionStatus = null;
+
+    // 🔍 ONLY FOR STUDENT (same logic as email login)
+    if (user.role === "student") {
+      const student = await Student.findOne({ userId: user._id })
+        .select("admissionStatus")
+        .lean();
+
+      admissionStatus = student?.admissionStatus || "Pending";
+    }
+
     // 🍪 Set cookie
     res
       .cookie("token", jwtToken, {
@@ -72,7 +85,7 @@ const googleAuth = async (req, res) => {
           name: user.name,
           email: user.email,
           role: user.role,
-          admissionStatus: user.admissionStatus,
+          admissionStatus,
         },
         isNewUser, // ✅ IMPORTANT FLAG
       });
