@@ -2,27 +2,18 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// ================= LOGIN ==================
 async function login(req, res) {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-
     if (!user) {
-      return res.json({
-        success: false,
-        message: "User not found"
-      });
+      return res.json({ success: false, message: "User not found" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      return res.json({
-        success: false,
-        message: "Invalid Password"
-      });
+      return res.json({ success: false, message: "Invalid password" });
     }
 
     const token = jwt.sign(
@@ -36,20 +27,25 @@ async function login(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+      secure: true,
+      sameSite: "none"
     });
 
     res.json({
       success: true,
-      message: "Login Successful",
-      user
+      message: "Login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
     });
 
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: err.message
+      message: "Server error"
     });
   }
 }
