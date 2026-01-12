@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 const Courses = () => {
+  const navigate = useNavigate();
+
   const [expandedCard, setExpandedCard] = useState(null);
   // Course Data with details and features
   const courses = [
@@ -76,8 +80,8 @@ const Courses = () => {
 
   return (
     <section
-
-      className="w-full py-8 md:py-12 bg-[#F9FAFB] ">
+      className="w-full py-8 md:py-12 bg-[#F9FAFB] "
+    >
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
 
         {/* TITLE */}
@@ -205,14 +209,14 @@ const Courses = () => {
           {/* GRID */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
             {[
-              { icon: "👨‍🏫", title: "Expert Faculty", desc: "10+ years experience" },
-              { icon: "📚", title: "Study Material", desc: "Notes & PYQs" },
-              { icon: "🎯", title: "Regular Tests", desc: "Weekly assessments" },
-              { icon: "💻", title: "Digital Support", desc: "Online features" },
-              { icon: "💬", title: "Doubt Sessions", desc: "3 per week" },
-              { icon: "📊", title: "Progress Reports", desc: "Regular tracking" },
-              { icon: "🏫", title: "Good Facilities", desc: "Quality classrooms" },
-              { icon: "💰", title: "Affordable Fees", desc: "Reasonable cost" }
+              { icon: "", title: "Expert Faculty", desc: "10+ years experience" },
+              { icon: "", title: "Study Material", desc: "Notes & PYQs" },
+              { icon: "", title: "Regular Tests", desc: "Weekly assessments" },
+              { icon: "", title: "Digital Support", desc: "Online features" },
+              { icon: "", title: "Doubt Sessions", desc: "3 per week" },
+              { icon: "", title: "Progress Reports", desc: "Regular tracking" },
+              { icon: "", title: "Good Facilities", desc: "Quality classrooms" },
+              { icon: "", title: "Affordable Fees", desc: "Reasonable cost" }
             ].map((item, index) => (
               <div
                 key={index}
@@ -244,16 +248,24 @@ const Courses = () => {
                 Start Your Learning Journey
               </h3>
               <p className="mb-4 opacity-90 text-sm md:text-base">
-                Limited seats available for 2024-25 session.
+                Limited seats available for 2026-27 session.
               </p>
               <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center">
-                <button className="bg-yellow-400 text-gray-900 px-4 md:px-6 py-2 md:py-3 rounded-lg 
-                font-semibold hover:bg-yellow-300 transition-all duration-300 text-sm md:text-base">
-                  Book Free Demo Class
+                <button
+                  onClick={() => navigate("/fees")}
+                  className="bg-yellow-400 text-gray-900 px-4 md:px-6 py-2 md:py-3 rounded-lg 
+                font-semibold hover:bg-yellow-300 transition-all duration-300 text-sm md:text-base"
+                >
+                  Book Free Admission
                 </button>
-                <button className="bg-transparent border border-white text-white px-4 md:px-6 py-2 md:py-3 rounded-lg 
-                font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300 text-sm md:text-base">
-                  📞 Call: +91 88875 81808
+                <button
+                  onClick={() => {
+                    window.location.href = "tel:+918887581808";
+                  }}
+                  className="bg-transparent border border-white text-white px-4 md:px-6 py-2 md:py-3 rounded-lg 
+                font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300 text-sm md:text-base"
+                >
+                  Call: +91 88875 81808
                 </button>
               </div>
             </div>

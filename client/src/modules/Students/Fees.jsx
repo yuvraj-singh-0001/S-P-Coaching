@@ -138,7 +138,7 @@ const PriceCard = ({ item }) => {
 
       <div className="mt-3 flex gap-2">
         <button
-          className="w-1/2 bg-blue-700 hover:bg-blue-800 text-white py-1.5 rounded-md transition text-xs"
+          className="w-1/2 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-1.5  border border-blue-400 rounded-md transition text-xs"
           onClick={handleAdmission}
         >
           Enroll Now
@@ -148,7 +148,7 @@ const PriceCard = ({ item }) => {
           className="w-1/2 border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white py-1.5 rounded-md transition text-xs"
           onClick={handleAdmission}
         >
-          Book Demo
+          Take Admission
         </button>
       </div>
     </div>
@@ -165,7 +165,8 @@ const Fees = () => {
           </h1>
           <div className="w-24 h-[3px] bg-yellow-400 mx-auto mt-1"></div>
           <p className="text-gray-600 mt-2 text-sm">
-            Transparent, affordable and student-friendly fee plans
+            First choose your course and how many subjects you want. Then click on the
+            Take Admission button to continue with your admission after login.
           </p>
         </div>
 
