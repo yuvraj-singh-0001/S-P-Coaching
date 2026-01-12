@@ -50,13 +50,23 @@ const Footer = () => {
             <p className="text-gray-300 text-sm mb-5">and
             result-focused learning since 2010.</p>
 
-            {/* SOCIAL ICONS ) */}
+            {/* SOCIAL ICONS */}
             <div className="flex gap-3">
-              <a className="w-9 h-9 bg-gray-800 border border-gray-400 rounded-full flex items-center justify-center hover:border-blue-400 transition">
+              <a
+                href="https://www.facebook.com/profile.php?id=61586353255674&mibextid=rS40aB7S9Ucbxw6v"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 bg-gray-800 border border-gray-400 rounded-full flex items-center justify-center hover:border-blue-400 transition"
+              >
                 <Facebook size={18} />
               </a>
 
-              <a className="w-9 h-9 bg-gray-800 border border-gray-400 rounded-full flex items-center justify-center hover:border-blue-400 transition">
+              <a
+                href="https://www.instagram.com/spcoachingclasses88/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 bg-gray-800 border border-gray-400 rounded-full flex items-center justify-center hover:border-blue-400 transition"
+              >
                 <Instagram size={18} />
               </a>
 
@@ -64,7 +74,12 @@ const Footer = () => {
                 <Twitter size={18} />
               </a>
 
-              <a className="w-9 h-9 bg-gray-800 border border-gray-400 rounded-full flex items-center justify-center hover:border-blue-400 transition">
+              <a
+                href="https://www.youtube.com/@s.pcoachingclasses8147"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 bg-gray-800 border border-gray-400 rounded-full flex items-center justify-center hover:border-blue-400 transition"
+              >
                 <Youtube size={18} />
               </a>
             </div>

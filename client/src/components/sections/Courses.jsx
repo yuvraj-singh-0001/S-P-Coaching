@@ -256,7 +256,7 @@ const Courses = () => {
                   className="bg-yellow-400 text-gray-900 px-4 md:px-6 py-2 md:py-3 rounded-lg 
                 font-semibold hover:bg-yellow-300 transition-all duration-300 text-sm md:text-base"
                 >
-                  Book Free Admission
+                  Book Free Class Course
                 </button>
                 <button
                   onClick={() => {
