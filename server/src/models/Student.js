@@ -29,6 +29,12 @@ const studentSchema = new mongoose.Schema({
   phone: String,
   className: String,
 
+  // 📚 For per-subject courses (11th/12th, B.Sc etc.)
+  subjectsCount: {
+    type: Number,
+    default: 1
+  },
+
   admissionStatus: {
     type: String,
     enum: ["Pending", "Approved", "Rejected"],

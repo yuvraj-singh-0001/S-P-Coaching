@@ -4,7 +4,7 @@ async function admission(req, res) {
   try {
     const user = req.user; // 🔐 from auth middleware
 
-    const { phone, className, monthlyFee } = req.body;
+    const { phone, className, monthlyFee, subjectCount } = req.body;
 
     // 🔎 BASIC VALIDATION
     if (!phone || !className || !monthlyFee) {
@@ -30,6 +30,7 @@ async function admission(req, res) {
       email: user.email,       // auto from login
       phone,
       className,
+      subjectsCount: subjectCount ? Number(subjectCount) : 1,
       admissionStatus: "Pending",
       fees: {
         monthlyFee: Number(monthlyFee)

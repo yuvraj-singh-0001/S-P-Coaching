@@ -22,6 +22,12 @@ const Admission = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
+  const isPerSubjectCourse =
+    selectedCourse.includes("11th & 12th (Per Subject)") ||
+    selectedCourse.includes("B.Sc (Per Subject)");
+
+  const [subjectCount, setSubjectCount] = useState(1);
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -39,8 +45,19 @@ const Admission = () => {
       return;
     }
 
+    if (isPerSubjectCourse && (!subjectCount || subjectCount < 1)) {
+      setMessage("Please enter how many subjects you want to take.");
+      return;
+    }
+
     setLoading(true);
     setMessage("");
+
+    const finalSubjectCount = isPerSubjectCourse ? Number(subjectCount) : 1;
+    const perSubjectFee = Number(monthlyFee);
+    const finalMonthlyFee = isPerSubjectCourse
+      ? perSubjectFee * finalSubjectCount
+      : perSubjectFee;
 
     try {
       const res = await fetch(`${API.STUDENT}/admission`, {
@@ -52,7 +69,8 @@ const Admission = () => {
           email,
           phone,
           className: selectedCourse,
-          monthlyFee: Number(monthlyFee),
+          monthlyFee: finalMonthlyFee,
+          subjectCount: finalSubjectCount,
         }),
       });
 
@@ -61,6 +79,7 @@ const Admission = () => {
       if (data.success) {
         setMessage("🎉 Admission Form Submitted Successfully!");
         setPhone("");
+        sessionStorage.removeItem("admissionData"); // clean
         sessionStorage.removeItem("admissionData"); // ✅ clean
       } else {
         setMessage(data.message || "Failed to submit form");
@@ -96,6 +115,29 @@ const Admission = () => {
               className="w-full mt-1 px-3 py-2 border rounded bg-gray-100"
             />
           </div>
+
+          {/* SUBJECT COUNT FOR PER-SUBJECT COURSES */}
+          {isPerSubjectCourse && (
+            <div className="mb-4">
+              <label className="font-semibold text-gray-700">
+                How many subjects do you want to choose?
+              </label>
+              <select
+                value={subjectCount}
+                onChange={(e) => setSubjectCount(Number(e.target.value))}
+                className="w-full mt-1 px-3 py-2 border rounded bg-white"
+              >
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <option key={n} value={n}>
+                    {n} subject{n > 1 ? "s" : ""}
+                  </option>
+                ))}
+              </select>
+              <p className="mt-1 text-xs text-gray-500">
+                Fee will be calculated as per-subject price × number of subjects.
+              </p>
+            </div>
+          )}
 
           <div className="mb-4">
             <label className="font-semibold text-gray-700">
