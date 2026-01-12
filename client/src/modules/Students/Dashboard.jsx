@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import apiconfig from "../../config/apiconfig";
-import Layout from "../../components/layout/Layout";
 
 const JOIN_CLASS_URL =
   "https://wayground.com/join?source=marketing_page_nav_btn&feat=school-plan-quote&pageSource=marketing";
@@ -63,9 +62,8 @@ const Dashboard = () => {
   );
 
   return (
-    <Layout>
-      <section className="pt-24 pb-10 bg-gray-50 min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 space-y-6">
+    <section className="pt-24 pb-10 bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 space-y-6">
 
           {/* ===== PAGE TITLE ===== */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -196,7 +194,6 @@ const Dashboard = () => {
         </div>
       </div>
     </section>
-  </Layout>
   );
 };
 
