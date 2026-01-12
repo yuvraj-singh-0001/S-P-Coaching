@@ -10,10 +10,15 @@ const routes = require("./src/routes/router");
 const app = express();
 
 // ===== CORS (IMPORTANT FOR LOGIN COOKIES) =====
+const allowedOrigins = [
+  "http://localhost:3100",
+  process.env.CLIENT_URL
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: "http://localhost:3100", // your frontend URL
-    credentials: true
+    origin: allowedOrigins,
+    credentials: true,
   })
 );
 

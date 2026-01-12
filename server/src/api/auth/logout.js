@@ -9,11 +9,13 @@ async function logout(req, res) {
       await User.findOneAndUpdate({ token }, { token: "" });
     }
 
+    const isProd = process.env.NODE_ENV === "production";
+
     // Clear auth cookie with same options used when setting it
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
     });
 
     res.json({

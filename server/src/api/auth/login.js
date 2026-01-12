@@ -38,10 +38,12 @@ async function login(req, res) {
       admissionStatus = student?.admissionStatus || "Pending";
     }
 
+    const isProd = process.env.NODE_ENV === "production";
+
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
     });
 
     res.json({

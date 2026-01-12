@@ -72,11 +72,13 @@ const googleAuth = async (req, res) => {
     }
 
     // 🍪 Set cookie
+    const isProd = process.env.NODE_ENV === "production";
+
     res
       .cookie("token", jwtToken, {
         httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
+        sameSite: isProd ? "none" : "lax",
+        secure: isProd,
       })
       .json({
         success: true,
