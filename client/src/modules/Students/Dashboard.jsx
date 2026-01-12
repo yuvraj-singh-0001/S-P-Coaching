@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 import apiconfig from "../../config/apiconfig";
+import Layout from "../../components/layout/Layout";
+
+const JOIN_CLASS_URL =
+  "https://wayground.com/join?source=marketing_page_nav_btn&feat=school-plan-quote&pageSource=marketing";
+
+const JIO_CLASS_EMAIL = "spcoachingclasses888@gmail.com";
 
 const Dashboard = () => {
   const [dashboard, setDashboard] = useState(null);
@@ -38,6 +44,14 @@ const Dashboard = () => {
 
   const { profile, fees } = dashboard;
 
+  const handleJoinClass = () => {
+    window.location.href = JOIN_CLASS_URL; // same tab
+  };
+
+  const handleJioClassInfo = () => {
+    window.location.href = `mailto:${JIO_CLASS_EMAIL}?subject=Jio%20Class%20Information%20Request`;
+  };
+
   // ✅ DATE FORMAT: Day Month Year
   const admissionDate = new Date(profile.admissionDate).toLocaleDateString(
     "en-GB",
@@ -49,19 +63,41 @@ const Dashboard = () => {
   );
 
   return (
-    <section className="pt-20 pb-10 bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 space-y-6">
+    <Layout>
+      <section className="pt-24 pb-10 bg-gray-50 min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 space-y-6">
 
-        {/* ===== PAGE TITLE ===== */}
-        <div className="text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-            Student Dashboard
-          </h1>
-          <div className="w-24 h-[3px] bg-yellow-400 mx-auto mt-2"></div>
-        </div>
+          {/* ===== PAGE TITLE ===== */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="text-center md:text-left flex-1">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+                Student Dashboard
+              </h1>
+              <div className="w-24 h-[3px] bg-yellow-400 mt-2 md:ml-0 mx-auto md:mx-0"></div>
+              <p className="mt-3 text-sm md:text-base text-gray-600 max-w-xl">
+                Here you can see your basic details and your fee status in one place.
+                This page helps you track how much fee you have paid and how much is left.
+              </p>
+            </div>
 
-        {/* ===== GRID WRAPPER ===== */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="flex flex-wrap justify-center md:justify-end gap-2">
+              <button
+                onClick={handleJoinClass}
+                className="px-3 py-1.5 text-sm rounded bg-[#0C4A8B] text-white font-semibold hover:bg-blue-800 transition"
+              >
+                Join Online Jio Class
+              </button>
+              <button
+                onClick={handleJioClassInfo}
+                className="px-3 py-1.5 text-sm rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+              >
+                Jio Class Information
+              </button>
+            </div>
+          </div>
+
+          {/* ===== GRID WRAPPER ===== */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
           {/* ================= PROFILE CARD ================= */}
           <div className="bg-white rounded-xl shadow-md border p-6">
@@ -158,6 +194,7 @@ const Dashboard = () => {
         </div>
       </div>
     </section>
+  </Layout>
   );
 };
 
