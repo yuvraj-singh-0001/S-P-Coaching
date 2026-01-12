@@ -167,7 +167,9 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <p className="text-gray-600">Remaining Months</p>
+                <p className="text-gray-600">
+                  Remaining Months (including current month)
+                </p>
                 <p className="font-semibold text-gray-800">
                   {fees.remainingMonths}
                 </p>
