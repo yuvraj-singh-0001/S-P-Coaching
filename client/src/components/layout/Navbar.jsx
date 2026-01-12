@@ -10,11 +10,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // ✅ FINAL NAV ITEMS
   const navItems = [
     { id: 1, title: "Home", path: "/" },
-    { id: 2, title: "About Us", path: "/about" },
+    { id: 2, title: "About Us", path: "/about" }, // scroll section
     { id: 3, title: "Courses", path: "/courses" },
-    { id: 4, title: "Contact Us", path: "/contact" },
+    { id: 4, title: "Fees", path: "/fees" },
   ];
 
   const JOIN_CLASS_URL =
@@ -29,19 +30,18 @@ const Navbar = () => {
   const handleJoinClass = () => {
     setIsOpen(false);
     setResourceOpen(false);
-    window.location.href = JOIN_CLASS_URL;
+    window.location.href = JOIN_CLASS_URL; // same tab
   };
 
   const isActive = (path) => location.pathname === path;
 
-  // ✅ RIGHT-ALIGNED DROPDOWN POSITION (MAIN FIX)
+  // ✅ Dropdown position (right safe)
   const dropdownStyle = () => {
     if (!resourceBtnRef.current) return {};
     const rect = resourceBtnRef.current.getBoundingClientRect();
-
     return {
       top: rect.bottom + 8,
-      right: window.innerWidth - rect.right, // 🔥 KEY FIX
+      right: window.innerWidth - rect.right,
     };
   };
 
@@ -61,7 +61,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Desktop Menu */}
+          {/* ================= Desktop Menu ================= */}
           <div className="hidden md:flex items-center gap-10 text-white text-lg font-medium">
             {navItems.map((item) => (
               <button
@@ -84,7 +84,7 @@ const Navbar = () => {
               </button>
             ))}
 
-            {/* Resources Button */}
+            {/* Resources */}
             <button
               ref={resourceBtnRef}
               onClick={() => setResourceOpen(!resourceOpen)}
@@ -92,9 +92,17 @@ const Navbar = () => {
             >
               Resources <ChevronDown size={18} />
             </button>
+
+            {/* Login */}
+            <button
+              onClick={() => navigate("/login")}
+              className="ml-4 bg-yellow-400 text-[#0C4A8B] px-4 py-1.5 rounded font-semibold hover:bg-yellow-300 transition"
+            >
+              Login
+            </button>
           </div>
 
-          {/* Mobile Button */}
+          {/* ================= Mobile Button ================= */}
           <button
             className="md:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
@@ -103,7 +111,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* ================= Mobile Menu ================= */}
         {isOpen && (
           <div className="md:hidden bg-[#0C4A8B] px-6 pb-4 border-t border-blue-800">
             {navItems.map((item) => (
@@ -120,6 +128,7 @@ const Navbar = () => {
               </button>
             ))}
 
+            {/* Resources Mobile */}
             <button
               onClick={() => setResourceOpen(!resourceOpen)}
               className="w-full text-left py-3 text-white hover:text-yellow-300 flex justify-between items-center"
@@ -143,11 +152,19 @@ const Navbar = () => {
                 </button>
               </div>
             )}
+
+            {/* Login Mobile */}
+            <button
+              onClick={() => navigate("/login")}
+              className="mt-3 w-full bg-yellow-400 text-[#0C4A8B] py-2 rounded font-semibold"
+            >
+              Login
+            </button>
           </div>
         )}
       </nav>
 
-      {/* ✅ Desktop Dropdown (RIGHT SAFE – NEVER CUTS) */}
+      {/* ================= Desktop Resources Dropdown ================= */}
       {resourceOpen && (
         <div
           style={dropdownStyle()}
