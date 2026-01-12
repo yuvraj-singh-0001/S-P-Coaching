@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 import Layout from "../components/layout/Layout";
-import ProtectedRoute from "../protected/protected.jsx";
+import ProtectedRoute from "../protected/ProtectedRoute";
 
 /* PUBLIC */
 import Home from "../pages/Home";
