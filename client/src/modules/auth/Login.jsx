@@ -10,8 +10,6 @@ const Login = () => {
   const location = useLocation();
   const { setUser } = useAdminAuth();
 
-  const redirectTo = location.state?.from || "/";
-
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -42,12 +40,19 @@ const Login = () => {
         return;
       }
 
-      setUser(res.data.user);
+      const user = res.data.user;
+      setUser(user);
 
-      if (res.data.user.role === "admin") {
+      // ===== ROLE BASED REDIRECT (NO EXTRA API CALL) =====
+      if (user.role === "admin") {
         navigate("/admin/dashboard", { replace: true });
       } else {
-        navigate(redirectTo, { replace: true });
+        // STUDENT
+        if (user.admissionStatus === "Approved") {
+          navigate("/student/dashboard", { replace: true });
+        } else {
+          navigate("/admission", { replace: true });
+        }
       }
 
     } catch {
@@ -57,7 +62,7 @@ const Login = () => {
     }
   };
 
-  /* ================= GOOGLE LOGIN (BACKEND CONNECTED) ================= */
+  /* ================= GOOGLE LOGIN ================= */
   const handleGoogleSuccess = async (credentialResponse) => {
     setError("");
     setLoading(true);
@@ -65,9 +70,7 @@ const Login = () => {
     try {
       const res = await axios.post(
         `${API.AUTH}/google`,
-        {
-          token: credentialResponse.credential,
-        },
+        { token: credentialResponse.credential },
         { withCredentials: true }
       );
 
@@ -76,11 +79,15 @@ const Login = () => {
         return;
       }
 
-      // ✅ sync context
-      setUser(res.data.user);
+      const user = res.data.user;
+      setUser(user);
 
-      // ✅ Google login only for STUDENT
-      navigate(redirectTo || "/admission", { replace: true });
+      // Google login = STUDENT ONLY
+      if (user.admissionStatus === "Approved") {
+        navigate("/student/dashboard", { replace: true });
+      } else {
+        navigate("/admission", { replace: true });
+      }
 
     } catch {
       setError("Google login failed");

@@ -45,8 +45,8 @@ export const AdminAuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await fetch(`${API.AUTH}/logout`, {
-        method: "POST",
-        credentials: "include"
+        method: "GET",
+        credentials: "include",
       });
     } catch (err) {}
 

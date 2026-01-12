@@ -46,6 +46,7 @@ const Admission = () => {
       const res = await fetch(`${API.STUDENT}/admission`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           name,
           email,

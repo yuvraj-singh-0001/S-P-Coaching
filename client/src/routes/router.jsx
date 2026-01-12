@@ -11,6 +11,9 @@ import Admission from "../modules/Students/Admission";
 import Teachers from "../pages/Teachers";
 import Resources from "../pages/Resources";
 
+/* STUDENT */
+import StudentDashboard from "../modules/Students/Dashboard";
+
 /* AUTH */
 import Login from "../modules/auth/Login";
 import Signup from "../modules/auth/Signup";
@@ -66,6 +69,18 @@ const AppRouter = () => {
         {/* ================= AUTH ================= */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* ================= STUDENT DASHBOARD ================= */}
+        <Route
+          path="/student/dashboard"
+          element={
+            <ProtectedRoute allowRoles={["student"]}>
+              <Layout>
+                <StudentDashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
         {/* ================= ADMISSION (LOGIN REQUIRED) ================= */}
         <Route
