@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import useSEO from "../../hooks/useSEO";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 const Courses = () => {
   const navigate = useNavigate();
+
+
+
+  useSEO({
+    title: "Courses Offered | Class 9–12, BSc & Polytechnic Coaching in Deoria",
+    description:
+      "Explore Class 9–12 Science, Mathemetics, Biology Class, BSc and Polytechnic coaching courses at SP Coaching Classes, Deoria."
+  });
+
 
   const [expandedCard, setExpandedCard] = useState(null);
   // Course Data with details and features

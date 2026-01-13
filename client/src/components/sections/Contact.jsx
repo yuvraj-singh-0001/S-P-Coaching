@@ -1,9 +1,16 @@
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useState } from "react";
 import API from "../../config/apiconfig";
+import useSEO from "../../hooks/useSEO";
+
 
 
 const Contact = () => {
+  useSEO({
+  title: "Contact SP Coaching Classes | Paudali Bazar Deoria",
+  description:
+    "Contact SP Coaching Classes in Paudali Bazar, Deoria for admission and course enquiries."
+});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -209,7 +216,7 @@ const Contact = () => {
                 <div>
                   <h4 className="font-semibold text-gray-900 text-sm">Email</h4>
                   <a href="mailto:contact@spcoaching.com" className="text-gray-700 hover:text-blue-600 text-sm transition-colors">
-                   spcoachingclasses888@gmail.com
+                    spcoachingclasses888@gmail.com
                   </a>
                 </div>
               </div>
