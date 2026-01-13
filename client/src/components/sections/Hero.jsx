@@ -57,7 +57,7 @@ const Hero = () => {
 
               {/* Start Free Demo → Courses Section */}
               <Button
-                onClick={() => navigate("/courses")}
+                onClick={() => navigate("/fees")}
                 className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 md:px-7 py-3 rounded-md font-semibold w-full sm:w-auto text-center transition-colors"
               >
                 Start Free Admission
