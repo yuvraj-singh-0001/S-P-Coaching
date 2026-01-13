@@ -30,7 +30,7 @@ const Home = () => {
       {/* ---- CONTACT ---- */}
       <div
         id="contact"
-        className="scroll-mt-[80px]"
+        // className="scroll-mt-[80px]"
       >
         <Contact />
       </div>

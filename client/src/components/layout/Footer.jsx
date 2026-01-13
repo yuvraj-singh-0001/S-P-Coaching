@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone, Contact } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -10,6 +10,7 @@ const Footer = () => {
     { title: "Courses", path: "/courses" },
     { title: "Teachers", path: "/teachers"},
     { title: "Resources", path: "/resources" },
+   
   ];
 
   return (
@@ -120,6 +121,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 text-yellow-400">
               Contact Info
             </h3>
+          
 
             <ul className="space-y-3 text-sm">
 
@@ -147,6 +149,14 @@ const Footer = () => {
                   href="mailto:contact@spcoaching.com"
                   className="text-gray-300 hover:text-yellow-400 transition text-left">
                   spcoachingclasses888@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Contact className="text-yellow-400" size={18} />
+                <a
+                  href="/contact"
+                  className="text-gray-300 hover:text-yellow-400 transition text-left">
+                  Contact Us Page
                 </a>
               </li>
 
