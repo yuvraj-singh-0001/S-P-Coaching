@@ -38,7 +38,7 @@ async function updateStatus(req, res) {
       htmlMessage = `
         <h2>Hello ${student.name},</h2>
         <p>Your admission request has been <b>REJECTED</b>.</p>
-        <p>Please contact the institute.</p>
+        <p>Please contact the institute ( Santosh sir +91 88875 81808 ).</p>
         <p>Regards,<br/>SP Coaching</p>
       `;
     }
