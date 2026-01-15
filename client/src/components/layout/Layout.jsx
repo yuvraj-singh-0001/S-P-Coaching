@@ -21,7 +21,19 @@ const Layout = ({ children }) => {
       {showTakeAdmission && (
         <button
           onClick={handleTakeAdmission}
-          className="fixed right-4 bottom-6 z-40 px-6 py-2 rounded-full bg-gradient-to-r from-[#0C4A8B] to-blue-500 text-white font-semibold shadow-lg shadow-blue-500/40 border border-white/20 hover:scale-105 hover:shadow-blue-500/60 transition-transform transition-shadow"
+          className="
+  fixed right-4 
+  bottom-20 sm:bottom-4
+  z-40 
+  px-6 py-2 
+  rounded-full 
+  bg-gradient-to-r from-[#0C4A8B] to-blue-500 
+  text-white font-semibold 
+  shadow-lg shadow-blue-500/40 
+  border border-white/20 
+  hover:scale-105 hover:shadow-blue-500/60 
+  transition-transform transition-shadow
+"
         >
           Take Admission
         </button>
