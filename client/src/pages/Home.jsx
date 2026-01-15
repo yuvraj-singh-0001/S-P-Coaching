@@ -11,7 +11,7 @@ const Home = () => {
   // ================= SEO (SAFE, NO SIDE EFFECT) =================
   useSEO({
     title:
-      "Best Coaching Classes in Deoria | Class 9–12 | BSc | Polytechnic",
+      " SP Coaching Paudali Best Coaching Classes in Deoria | Class 9–12 | BSc | Polytechnic",
     description:
       "SP Coaching Classes in Paudali Bazar, Deoria offers expert coaching for Class 9–12, BSc and Polytechnic students with disciplined guidance and proven results."
   });
