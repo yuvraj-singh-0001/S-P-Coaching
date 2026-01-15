@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+import { Link } from "react-router-dom";
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
@@ -201,12 +201,12 @@ const About = () => {
               </li>
             </ul>
 
-            <a
-              href="/teachers"
+            <Link
+              to="/teachers"
               className="inline-block px-5 md:px-6 py-2 md:py-3 bg-yellow-600 text-white font-medium rounded-lg hover:bg-yellow-700 transition text-sm md:text-base"
             >
               See All Teachers
-            </a>
+            </Link>
           </div>
         </div>
 
