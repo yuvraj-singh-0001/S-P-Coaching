@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAdminAuth } from "../../modules/Admin/AdminAuthContext";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ onMobileMenu }) => {
   const { user, logout } = useAdminAuth();
@@ -29,12 +30,13 @@ const Navbar = ({ onMobileMenu }) => {
 
           {open && (
             <div className="absolute right-0 mt-2 bg-white shadow rounded w-40 z-50">
-              <a
-                href="/admin/profile"
+              <Link
+                to="/admin/profile"
+                onClick={() => setOpen(false)}
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 My Profile
-              </a>
+              </Link>
 
               <button
                 onClick={logout}
