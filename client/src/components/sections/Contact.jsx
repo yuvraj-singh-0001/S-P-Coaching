@@ -66,7 +66,7 @@ const Contact = () => {
   };
 
   const openGoogleMaps = () => {
-    window.open("https://maps.app.goo.gl/2CbDJdqSJ55mFyQE8", "_blank");
+    window.open("https://www.google.com/maps/place/SP+Coaching+Classes/@26.6714742,83.7896354,259m/data=!3m1!1e3!4m6!3m5!1s0x3993e9265cd32d47:0x4711c2987f85d8a3!8m2!3d26.6712349!4d83.7905336!16s%2Fg%2F11mzcq47tj?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D", "_blank");
   };
 
   return (
