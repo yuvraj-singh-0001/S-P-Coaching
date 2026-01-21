@@ -14,10 +14,9 @@ const teachers = [
     image: "/images/Santosh-sir.webp",
   },
   {
-    name: "Priya Ma'am",
+    name: "Priya Miss",
     role: "Mathematics & English Faculty",
     qualification: "B.A (Maths), B.Ed, M.A | TET | CTET | BSTET",
-    rank: "University 2st Rank Holder in B.A (Maths)",
     experience: "6+ Years of Teaching Experience",
     achievements:
       "Students consistently scoring above 95% with outstanding improvement in weak students.",

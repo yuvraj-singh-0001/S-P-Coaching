@@ -13,7 +13,7 @@ const googleAuth = require("../../api/auth/googleAuth");
 router.post("/google", googleAuth);
 
 // PROTECTED ROUTE - UPDATE PROFILE
-router.put("/update-profile", updateProfile);
+router.put("/update-profile", auth, updateProfile);
 
 // AUTH ROUTES
 router.get("/me", auth, me);
