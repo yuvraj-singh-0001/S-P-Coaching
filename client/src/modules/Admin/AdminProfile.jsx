@@ -11,19 +11,56 @@ const AdminProfile = () => {
     password: ""
   });
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError("");
+    setMessage("");
   };
 
   const saveProfile = async () => {
-    await axios.put(
-      `${API.AUTH}/update-profile`,
-      form,
-      { withCredentials: true }
-    );
-    refreshUser();
-    setMessage("Profile updated successfully");
+    try {
+      setLoading(true);
+      setError("");
+      setMessage("");
+
+      if (!form.name.trim()) {
+        setError("Name is required");
+        return;
+      }
+
+      if (!form.email.trim()) {
+        setError("Email is required");
+        return;
+      }
+
+      const res = await axios.put(
+        `${API.AUTH}/update-profile`,
+        form,
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        setMessage("Profile updated successfully");
+        await refreshUser();
+        
+        // Reset password field after successful update
+        setForm(prev => ({
+          ...prev,
+          password: ""
+        }));
+
+        // Clear message after 3 seconds
+        setTimeout(() => setMessage(""), 3000);
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || "Failed to update profile";
+      setError(errorMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,6 +70,12 @@ const AdminProfile = () => {
       {message && (
         <div className="mb-4 text-green-700 bg-green-100 p-2 rounded">
           {message}
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-4 text-red-700 bg-red-100 p-2 rounded">
+          {error}
         </div>
       )}
 
@@ -54,6 +97,7 @@ const AdminProfile = () => {
 
       <input
         name="password"
+        type="password"
         value={form.password}
         onChange={handleChange}
         className="border p-2 w-full mb-3"
@@ -62,9 +106,10 @@ const AdminProfile = () => {
 
       <button
         onClick={saveProfile}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        disabled={loading}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
       >
-        Save Changes
+        {loading ? "Saving..." : "Save Changes"}
       </button>
     </div>
   );

@@ -41,6 +41,27 @@ export const AdminAuthProvider = ({ children }) => {
     };
   }, []);
 
+  /* ================= REFRESH USER ================= */
+  const refreshUser = async () => {
+    try {
+      const res = await fetch(`${API.AUTH}/me`, {
+        credentials: "include"
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setUser(data.user);
+        sessionStorage.setItem(
+          "auth_user",
+          JSON.stringify(data.user)
+        );
+      }
+    } catch (err) {
+      console.warn("Failed to refresh user:", err);
+    }
+  };
+
   /* ================= LOGOUT ================= */
   const logout = async () => {
     try {
@@ -56,7 +77,7 @@ export const AdminAuthProvider = ({ children }) => {
 
   return (
     <AdminAuthContext.Provider
-      value={{ user, loading, setUser, logout }}
+      value={{ user, loading, setUser, logout, refreshUser }}
     >
       {children}
     </AdminAuthContext.Provider>
