@@ -50,24 +50,10 @@ const Courses = () => {
       ],
       details: "Comprehensive coaching for B.Sc students with emphasis on both theory and practicals."
     },
+
     {
       id: 3,
-      title: "ITI Courses",
-      subjects: ["Technical Training", "Vocational Skills"],
-      duration: "1-2 Years",
-      image: "/images/iti.webp",
-      features: [
-        "Practical Workshops",
-        "Skill Development",
-        "Placement Assistance",
-        "Certificate Courses",
-        "Hands-on Experience"
-      ],
-      details: "Job-oriented technical training with practical workshops and industry exposure."
-    },
-    {
-      id: 4,
-      title: "Polytechnic",
+        title: "Polytechnic",
       subjects: ["Diploma in Engineering"],
       duration: "3 Years",
       image: "/images/hero-pages.webp",
@@ -80,7 +66,23 @@ const Courses = () => {
         "Project Guidance"
       ],
       details: "Complete support for Polytechnic diploma students with focus on engineering concepts."
-    }
+    },
+
+    {
+      id: 4,
+        title: "Competitive Exam Preparation",
+      subjects: ["General Studies", "Quantitative Aptitude", "Reasoning", "English"],
+      duration: "6–12 Months",
+      image: "/images/competition.webp",
+      features: [
+        "Complete Syllabus Coverage",
+        "Regular Mock Tests",
+        "Previous Year Questions",
+        "Exam-Oriented Study Material",
+        "Performance Analysis"
+      ],
+      details: "Comprehensive preparation course for competitive exams with structured syllabus, practice tests, and exam-focused guidance."
+    },
   ];
 
   const toggleExpand = (id) => {
