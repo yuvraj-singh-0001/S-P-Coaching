@@ -34,7 +34,7 @@ const Hero = () => {
               Premier Coaching for
             </p>
             <p className="text-xl md:text-2xl font-semibold mb-6 text-yellow-300">
-              Class 9-12 • B.Sc • ITI • Polytechnic
+            Class 9-12 • B.Sc • Polytechnic • Competitive Exams
             </p>
 
             {/* KEY BENEFIT */}
