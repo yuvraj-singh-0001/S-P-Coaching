@@ -72,7 +72,7 @@ const Courses = () => {
       id: 4,
         title: "Competitive Exam Preparation",
       subjects: ["General Studies", "Quantitative Aptitude", "Reasoning", "English"],
-      duration: "6–12 Months",
+      duration: "2–5 Months",
       image: "/images/competition.webp",
       features: [
         "Complete Syllabus Coverage",
